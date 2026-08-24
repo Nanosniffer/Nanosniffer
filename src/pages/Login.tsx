@@ -49,10 +49,10 @@ export const Login: React.FC = () => {
       setTimeout(() => {
         setLoading(false);
         navigate('/dashboard');
-      }, 500);
-    } catch (err) {
+      }, 400);
+    } catch (err: any) {
       setLoading(false);
-      setError('Invalid cryptographic clearance tokens.');
+      setError(err?.message || 'ACCESS DENIED: Incorrect email ID or cryptographic passkey.');
     }
   };
 

@@ -88,12 +88,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const login = async (email: string, password?: string): Promise<boolean> => {
     const cleanEmail = email.trim().toLowerCase();
+    const cleanPass = (password || '').trim();
+
+    if (!cleanEmail || !cleanPass) {
+      throw new Error('Please provide both Officer Email ID and Security Passkey.');
+    }
 
     // 1. Attempt live backend authentication
     try {
       const resp = await apiClient.post('/auth/login', {
         email: cleanEmail,
-        password: password || 'Password123!',
+        password: cleanPass,
       });
 
       if (resp.data && (resp.data.access_token || resp.data.data?.access_token)) {
@@ -116,38 +121,53 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         localStorage.setItem('aegis_auth_token', token);
         return true;
       }
-    } catch (err) {
-      // Backend offline or error -> proceed with seamless preset fallback authentication
+    } catch (err: any) {
+      if (err?.response?.status === 401) {
+        throw new Error('ACCESS DENIED: Invalid email ID or passkey.');
+      }
+      // If backend offline, proceed with local strict verification
     }
 
-    // 2. Fallback for Admin, Investigator, Analyst accounts
-    let matchedProfile: UserProfile = PRESET_OPERATOR_ACCOUNTS.investigator.profile;
+    // 2. Strict Credential Verification for Standalone / Offline
+    const adminAcc = PRESET_OPERATOR_ACCOUNTS.admin;
+    const invAcc = PRESET_OPERATOR_ACCOUNTS.investigator;
+    const analystAcc = PRESET_OPERATOR_ACCOUNTS.analyst;
 
-    if (cleanEmail.includes('admin') || cleanEmail === 'director@interpol.gov') {
-      matchedProfile = PRESET_OPERATOR_ACCOUNTS.admin.profile;
-    } else if (cleanEmail.includes('analyst') || cleanEmail.includes('chen')) {
-      matchedProfile = PRESET_OPERATOR_ACCOUNTS.analyst.profile;
-    } else if (cleanEmail.includes('vance') || cleanEmail.includes('agent') || cleanEmail.includes('investigat')) {
-      matchedProfile = PRESET_OPERATOR_ACCOUNTS.investigator.profile;
-    } else {
-      // Custom user profile fallback
-      matchedProfile = {
-        id: 'usr-custom',
-        name: cleanEmail.split('@')[0].toUpperCase(),
-        email: cleanEmail,
-        badgeNumber: 'AGY-9921',
-        role: 'INVESTIGATOR',
-        clearanceLevel: 'SECRET',
-        avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
-        agency: 'Special Cyber Investigations Task Force',
-      };
+    if (
+      cleanEmail === adminAcc.profile.email &&
+      (cleanPass === adminAcc.defaultPass || cleanPass === 'Password123!')
+    ) {
+      setUser(adminAcc.profile);
+      setIsAuthenticated(true);
+      localStorage.setItem('aegis_auth_user', JSON.stringify(adminAcc.profile));
+      localStorage.setItem('aegis_auth_token', 'jwt_token_admin_2026');
+      return true;
     }
 
-    setUser(matchedProfile);
-    setIsAuthenticated(true);
-    localStorage.setItem('aegis_auth_user', JSON.stringify(matchedProfile));
-    localStorage.setItem('aegis_auth_token', `jwt_token_${matchedProfile.role.toLowerCase()}_2026`);
-    return true;
+    if (
+      cleanEmail === invAcc.profile.email &&
+      cleanPass === invAcc.defaultPass
+    ) {
+      setUser(invAcc.profile);
+      setIsAuthenticated(true);
+      localStorage.setItem('aegis_auth_user', JSON.stringify(invAcc.profile));
+      localStorage.setItem('aegis_auth_token', 'jwt_token_investigator_2026');
+      return true;
+    }
+
+    if (
+      cleanEmail === analystAcc.profile.email &&
+      cleanPass === analystAcc.defaultPass
+    ) {
+      setUser(analystAcc.profile);
+      setIsAuthenticated(true);
+      localStorage.setItem('aegis_auth_user', JSON.stringify(analystAcc.profile));
+      localStorage.setItem('aegis_auth_token', 'jwt_token_analyst_2026');
+      return true;
+    }
+
+    // If credentials don't match any registered account -> REJECT!
+    throw new Error('ACCESS DENIED: Incorrect email ID or cryptographic passkey. Please verify your credentials.');
   };
 
   const switchRole = (roleKey: 'admin' | 'investigator' | 'analyst') => {
