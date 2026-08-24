@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth, PRESET_OPERATOR_ACCOUNTS } from '../context/AuthContext';
+import { useAuth } from '../context/AuthContext';
 import { 
   Shield, 
   Lock, 
@@ -11,7 +11,7 @@ import {
   Crown, 
   Search, 
   LineChart,
-  UserCheck
+  AlertTriangle
 } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
@@ -29,10 +29,8 @@ export const Login: React.FC = () => {
   const navigate = useNavigate();
 
   const handleSelectRole = (roleKey: 'admin' | 'investigator' | 'analyst') => {
-    setSelectedRole(roleKey);
-    const preset = PRESET_OPERATOR_ACCOUNTS[roleKey];
-    setEmail(preset.profile.email);
-    setPassword(preset.defaultPass);
+    // Toggle role selection without filling email or password
+    setSelectedRole(prev => prev === roleKey ? null : roleKey);
     setError('');
   };
 
@@ -50,6 +48,29 @@ export const Login: React.FC = () => {
     } catch (err: any) {
       setLoading(false);
       setError(err?.message || 'ACCESS DENIED: Incorrect email ID or cryptographic passkey.');
+    }
+  };
+
+  const getRoleBadge = (role: 'admin' | 'investigator' | 'analyst') => {
+    switch (role) {
+      case 'admin':
+        return {
+          title: 'ADMINISTRATOR CLEARANCE',
+          desc: 'Requires Global Director credentials (TOP SECRET // SCI)',
+          border: 'border-purple-500/80 bg-purple-950/40 text-purple-300',
+        };
+      case 'investigator':
+        return {
+          title: 'INVESTIGATOR CLEARANCE',
+          desc: 'Requires Lead Agent credentials (TOP SECRET // SCI)',
+          border: 'border-cyan-500/80 bg-cyan-950/40 text-cyan-300',
+        };
+      case 'analyst':
+        return {
+          title: 'ANALYST CLEARANCE',
+          desc: 'Requires Intelligence Telemetry credentials (SECRET)',
+          border: 'border-emerald-500/80 bg-emerald-950/40 text-emerald-300',
+        };
     }
   };
 
@@ -95,19 +116,19 @@ export const Login: React.FC = () => {
             </span>
           </div>
 
-          {/* Quick-Fill Role Selector Tabs */}
+          {/* Role Clearance Selection Buttons (Does NOT fill email or password) */}
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <label className="text-[11px] font-mono text-slate-400 uppercase tracking-wider block">
-                QUICK-FILL PRESET ROLE (OPTIONAL)
+                SELECT CLEARANCE ROLE TIER
               </label>
               {selectedRole && (
                 <button
                   type="button"
-                  onClick={() => { setSelectedRole(null); setEmail(''); setPassword(''); }}
+                  onClick={() => setSelectedRole(null)}
                   className="text-[10px] font-mono text-slate-500 hover:text-slate-300 underline"
                 >
-                  Clear
+                  Reset Tier
                 </button>
               )}
             </div>
@@ -118,7 +139,7 @@ export const Login: React.FC = () => {
                 onClick={() => handleSelectRole('admin')}
                 className={`p-2.5 rounded-xl border text-left transition flex flex-col items-center justify-center gap-1.5 ${
                   selectedRole === 'admin'
-                    ? 'bg-purple-950/40 border-purple-500/80 text-purple-300 shadow-sm shadow-purple-500/20'
+                    ? 'bg-purple-950/50 border-purple-500 text-purple-300 shadow-sm shadow-purple-500/20 ring-1 ring-purple-500'
                     : 'bg-agency-950 hover:bg-slate-900 border-slate-800 text-slate-400 hover:text-slate-200'
                 }`}
               >
@@ -133,7 +154,7 @@ export const Login: React.FC = () => {
                 onClick={() => handleSelectRole('investigator')}
                 className={`p-2.5 rounded-xl border text-left transition flex flex-col items-center justify-center gap-1.5 ${
                   selectedRole === 'investigator'
-                    ? 'bg-cyan-950/40 border-cyan-500/80 text-cyan-300 shadow-sm shadow-cyan-500/20'
+                    ? 'bg-cyan-950/50 border-cyan-500 text-cyan-300 shadow-sm shadow-cyan-500/20 ring-1 ring-cyan-500'
                     : 'bg-agency-950 hover:bg-slate-900 border-slate-800 text-slate-400 hover:text-slate-200'
                 }`}
               >
@@ -148,7 +169,7 @@ export const Login: React.FC = () => {
                 onClick={() => handleSelectRole('analyst')}
                 className={`p-2.5 rounded-xl border text-left transition flex flex-col items-center justify-center gap-1.5 ${
                   selectedRole === 'analyst'
-                    ? 'bg-emerald-950/40 border-emerald-500/80 text-emerald-300 shadow-sm shadow-emerald-500/20'
+                    ? 'bg-emerald-950/50 border-emerald-500 text-emerald-300 shadow-sm shadow-emerald-500/20 ring-1 ring-emerald-500'
                     : 'bg-agency-950 hover:bg-slate-900 border-slate-800 text-slate-400 hover:text-slate-200'
                 }`}
               >
@@ -159,38 +180,22 @@ export const Login: React.FC = () => {
             </div>
           </div>
 
-          {/* Active Profile Summary if Role Selected */}
+          {/* Selected Role Clearance Details Banner */}
           {selectedRole && (
-            <div className="p-3 rounded-xl bg-agency-950 border border-slate-800 flex items-center gap-3 animate-in fade-in">
-              <img
-                src={PRESET_OPERATOR_ACCOUNTS[selectedRole].profile.avatarUrl}
-                alt="Avatar"
-                className="w-10 h-10 rounded-lg object-cover border border-slate-700"
-              />
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center justify-between">
-                  <p className="text-xs font-bold text-slate-100 truncate">
-                    {PRESET_OPERATOR_ACCOUNTS[selectedRole].profile.name}
-                  </p>
-                  <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-900 border border-slate-700 text-cyber-cyan">
-                    {PRESET_OPERATOR_ACCOUNTS[selectedRole].profile.badgeNumber}
-                  </span>
-                </div>
-                <p className="text-[10px] font-mono text-slate-400 truncate">
-                  {PRESET_OPERATOR_ACCOUNTS[selectedRole].profile.agency}
-                </p>
-                <div className="flex items-center gap-1.5 mt-1">
-                  <span className="text-[9px] font-mono font-semibold text-emerald-400">
-                    {PRESET_OPERATOR_ACCOUNTS[selectedRole].profile.clearanceLevel}
-                  </span>
-                </div>
+            <div className={`p-2.5 rounded-xl border text-xs font-mono animate-in fade-in ${getRoleBadge(selectedRole).border}`}>
+              <div className="flex items-center gap-2">
+                <span className="font-bold">{getRoleBadge(selectedRole).title}</span>
               </div>
+              <p className="text-[11px] opacity-80 mt-0.5">
+                {getRoleBadge(selectedRole).desc}
+              </p>
             </div>
           )}
 
           {error && (
-            <div className="p-3 rounded-lg bg-red-950/40 border border-red-500/50 text-red-400 text-xs font-mono animate-in shake">
-              {error}
+            <div className="p-3 rounded-lg bg-red-950/40 border border-red-500/50 text-red-400 text-xs font-mono animate-in shake flex items-center gap-2">
+              <AlertTriangle className="w-4 h-4 shrink-0" />
+              <span>{error}</span>
             </div>
           )}
 
@@ -204,7 +209,7 @@ export const Login: React.FC = () => {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter officer email (e.g. agent.vance@interpol.gov)"
+                placeholder="Enter officer email (e.g. name@interpol.gov)"
                 icon={<Mail className="w-4 h-4" />}
                 autoComplete="email"
               />
@@ -246,7 +251,7 @@ export const Login: React.FC = () => {
               </label>
               {selectedRole && (
                 <span className="text-[11px] text-slate-400">
-                  Role: <strong className="text-cyber-cyan">{selectedRole.toUpperCase()}</strong>
+                  Target Tier: <strong className="text-cyber-cyan">{selectedRole.toUpperCase()}</strong>
                 </span>
               )}
             </div>
