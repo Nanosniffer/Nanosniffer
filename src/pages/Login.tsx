@@ -8,9 +8,6 @@ import {
   KeyRound, 
   Eye, 
   EyeOff, 
-  Radio, 
-  CheckCircle, 
-  Cpu, 
   Crown, 
   Search, 
   LineChart,
@@ -20,9 +17,9 @@ import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 
 export const Login: React.FC = () => {
-  const [selectedRole, setSelectedRole] = useState<'admin' | 'investigator' | 'analyst'>('investigator');
-  const [email, setEmail] = useState(PRESET_OPERATOR_ACCOUNTS.investigator.profile.email);
-  const [password, setPassword] = useState(PRESET_OPERATOR_ACCOUNTS.investigator.defaultPass);
+  const [selectedRole, setSelectedRole] = useState<'admin' | 'investigator' | 'analyst' | null>(null);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -98,11 +95,22 @@ export const Login: React.FC = () => {
             </span>
           </div>
 
-          {/* 1-Click Role Selection Tab */}
+          {/* Quick-Fill Role Selector Tabs */}
           <div className="space-y-2">
-            <label className="text-[11px] font-mono text-slate-400 uppercase tracking-wider block">
-              SELECT OPERATOR CLEARANCE ROLE
-            </label>
+            <div className="flex items-center justify-between">
+              <label className="text-[11px] font-mono text-slate-400 uppercase tracking-wider block">
+                QUICK-FILL PRESET ROLE (OPTIONAL)
+              </label>
+              {selectedRole && (
+                <button
+                  type="button"
+                  onClick={() => { setSelectedRole(null); setEmail(''); setPassword(''); }}
+                  className="text-[10px] font-mono text-slate-500 hover:text-slate-300 underline"
+                >
+                  Clear
+                </button>
+              )}
+            </div>
             <div className="grid grid-cols-3 gap-2">
               {/* Admin Button */}
               <button
@@ -151,35 +159,37 @@ export const Login: React.FC = () => {
             </div>
           </div>
 
-          {/* Active Profile Summary */}
-          <div className="p-3 rounded-xl bg-agency-950 border border-slate-800 flex items-center gap-3">
-            <img
-              src={PRESET_OPERATOR_ACCOUNTS[selectedRole].profile.avatarUrl}
-              alt="Avatar"
-              className="w-10 h-10 rounded-lg object-cover border border-slate-700"
-            />
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center justify-between">
-                <p className="text-xs font-bold text-slate-100 truncate">
-                  {PRESET_OPERATOR_ACCOUNTS[selectedRole].profile.name}
+          {/* Active Profile Summary if Role Selected */}
+          {selectedRole && (
+            <div className="p-3 rounded-xl bg-agency-950 border border-slate-800 flex items-center gap-3 animate-in fade-in">
+              <img
+                src={PRESET_OPERATOR_ACCOUNTS[selectedRole].profile.avatarUrl}
+                alt="Avatar"
+                className="w-10 h-10 rounded-lg object-cover border border-slate-700"
+              />
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center justify-between">
+                  <p className="text-xs font-bold text-slate-100 truncate">
+                    {PRESET_OPERATOR_ACCOUNTS[selectedRole].profile.name}
+                  </p>
+                  <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-900 border border-slate-700 text-cyber-cyan">
+                    {PRESET_OPERATOR_ACCOUNTS[selectedRole].profile.badgeNumber}
+                  </span>
+                </div>
+                <p className="text-[10px] font-mono text-slate-400 truncate">
+                  {PRESET_OPERATOR_ACCOUNTS[selectedRole].profile.agency}
                 </p>
-                <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-900 border border-slate-700 text-cyber-cyan">
-                  {PRESET_OPERATOR_ACCOUNTS[selectedRole].profile.badgeNumber}
-                </span>
-              </div>
-              <p className="text-[10px] font-mono text-slate-400 truncate">
-                {PRESET_OPERATOR_ACCOUNTS[selectedRole].profile.agency}
-              </p>
-              <div className="flex items-center gap-1.5 mt-1">
-                <span className="text-[9px] font-mono font-semibold text-emerald-400">
-                  {PRESET_OPERATOR_ACCOUNTS[selectedRole].profile.clearanceLevel}
-                </span>
+                <div className="flex items-center gap-1.5 mt-1">
+                  <span className="text-[9px] font-mono font-semibold text-emerald-400">
+                    {PRESET_OPERATOR_ACCOUNTS[selectedRole].profile.clearanceLevel}
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
+          )}
 
           {error && (
-            <div className="p-3 rounded-lg bg-red-950/40 border border-red-500/50 text-red-400 text-xs font-mono">
+            <div className="p-3 rounded-lg bg-red-950/40 border border-red-500/50 text-red-400 text-xs font-mono animate-in shake">
               {error}
             </div>
           )}
@@ -187,15 +197,16 @@ export const Login: React.FC = () => {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="text-xs font-mono text-slate-300 block mb-1.5">
-                GOVERNMENT / INTERPOL EMAIL
+                GOVERNMENT / INTERPOL EMAIL ID
               </label>
               <Input
                 type="email"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="officer@interpol.gov"
+                placeholder="Enter officer email (e.g. agent.vance@interpol.gov)"
                 icon={<Mail className="w-4 h-4" />}
+                autoComplete="email"
               />
             </div>
 
@@ -209,8 +220,9 @@ export const Login: React.FC = () => {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Enter security key..."
+                  placeholder="Enter cryptographic passkey..."
                   icon={<Lock className="w-4 h-4" />}
+                  autoComplete="current-password"
                 />
                 <button
                   type="button"
@@ -232,9 +244,11 @@ export const Login: React.FC = () => {
                 />
                 <span>Remember Session</span>
               </label>
-              <span className="text-[11px] text-slate-400">
-                Role: <strong className="text-cyber-cyan">{selectedRole.toUpperCase()}</strong>
-              </span>
+              {selectedRole && (
+                <span className="text-[11px] text-slate-400">
+                  Role: <strong className="text-cyber-cyan">{selectedRole.toUpperCase()}</strong>
+                </span>
+              )}
             </div>
 
             <Button
@@ -249,8 +263,10 @@ export const Login: React.FC = () => {
                   <span className="w-4 h-4 border-2 border-slate-950 border-t-transparent rounded-full animate-spin" />
                   AUTHENTICATING CREDENTIALS...
                 </span>
+              ) : selectedRole ? (
+                `AUTHENTICATE AS ${selectedRole.toUpperCase()}`
               ) : (
-                `LOGIN AS ${selectedRole.toUpperCase()}`
+                'AUTHENTICATE & ACCESS COMMAND'
               )}
             </Button>
           </form>
