@@ -69,19 +69,21 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<UserProfile | null>(() => {
+    const token = localStorage.getItem('aegis_auth_token');
     const saved = localStorage.getItem('aegis_auth_user');
-    if (saved) {
+    if (token && token !== 'false' && saved) {
       try {
         return JSON.parse(saved);
       } catch (e) {
-        return PRESET_OPERATOR_ACCOUNTS.investigator.profile;
+        return null;
       }
     }
-    return PRESET_OPERATOR_ACCOUNTS.investigator.profile;
+    return null;
   });
 
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
-    return localStorage.getItem('aegis_auth_token') !== 'false';
+    const token = localStorage.getItem('aegis_auth_token');
+    return !!token && token !== 'false';
   });
 
   const login = async (email: string, password?: string): Promise<boolean> => {
@@ -118,7 +120,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       // Backend offline or error -> proceed with seamless preset fallback authentication
     }
 
-    // 2. Offline Fallback for Admin, Investigator, Analyst accounts
+    // 2. Fallback for Admin, Investigator, Analyst accounts
     let matchedProfile: UserProfile = PRESET_OPERATOR_ACCOUNTS.investigator.profile;
 
     if (cleanEmail.includes('admin') || cleanEmail === 'director@interpol.gov') {
