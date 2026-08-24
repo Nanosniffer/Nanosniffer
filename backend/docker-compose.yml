@@ -1,0 +1,135 @@
+version: '3.8'
+
+services:
+  # 1. FastAPI Web Application
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: criminal_intel_api
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - ENVIRONMENT=production
+      - DEBUG=False
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/criminal_intel
+      - NEO4J_URI=bolt://neo4j:7687
+      - NEO4J_USER=neo4j
+      - NEO4J_PASSWORD=criminal_intel_password
+      - NEO4J_DATABASE=neo4j
+      - REDIS_URL=redis://redis:6379/0
+      - CELERY_BROKER_URL=redis://redis:6379/1
+      - CELERY_RESULT_BACKEND=redis://redis:6379/2
+      - STORAGE_TYPE=local
+      - STORAGE_DIR=/app/storage
+    volumes:
+      - app_storage:/app/storage
+    depends_on:
+      postgres:
+        condition: service_healthy
+      neo4j:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - intel_net
+
+  # 2. Celery Background Worker
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: criminal_intel_worker
+    restart: unless-stopped
+    command: ["celery", "-A", "app.tasks.celery_app", "worker", "--loglevel=info", "--concurrency=2"]
+    environment:
+      - ENVIRONMENT=production
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/criminal_intel
+      - NEO4J_URI=bolt://neo4j:7687
+      - NEO4J_USER=neo4j
+      - NEO4J_PASSWORD=criminal_intel_password
+      - REDIS_URL=redis://redis:6379/0
+      - CELERY_BROKER_URL=redis://redis:6379/1
+      - CELERY_RESULT_BACKEND=redis://redis:6379/2
+      - STORAGE_TYPE=local
+      - STORAGE_DIR=/app/storage
+    volumes:
+      - app_storage:/app/storage
+    depends_on:
+      - api
+      - redis
+      - postgres
+    networks:
+      - intel_net
+
+  # 3. PostgreSQL Database
+  postgres:
+    image: postgres:16-alpine
+    container_name: criminal_intel_postgres
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: criminal_intel
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - intel_net
+
+  # 4. Neo4j Graph Database
+  neo4j:
+    image: neo4j:5.18.0-community
+    container_name: criminal_intel_neo4j
+    restart: unless-stopped
+    ports:
+      - "7474:7474" # Neo4j Browser UI
+      - "7687:7687" # Bolt Protocol
+    environment:
+      NEO4J_AUTH: neo4j/criminal_intel_password
+      NEO4J_PLUGINS: '["apoc"]'
+      NEO4J_dbms_security_procedures_unrestricted: "apoc.*"
+    volumes:
+      - neo4j_data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "cypher-shell -u neo4j -p criminal_intel_password 'RETURN 1' || exit 1"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+      start_period: 20s
+    networks:
+      - intel_net
+
+  # 5. Redis Cache & Celery Broker
+  redis:
+    image: redis:7-alpine
+    container_name: criminal_intel_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - intel_net
+
+volumes:
+  postgres_data:
+  neo4j_data:
+  redis_data:
+  app_storage:
+
+networks:
+  intel_net:
+    driver: bridge

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Search,
   Bell,
@@ -8,10 +9,14 @@ import {
   ShieldAlert,
   Activity,
   Cpu,
-  Clock
+  Clock,
+  Crown,
+  UserCheck,
+  ChevronDown,
+  LogOut
 } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth, PRESET_OPERATOR_ACCOUNTS } from '../../context/AuthContext';
 import { useNotifications } from '../../context/NotificationContext';
 import { NotificationCenter } from '../common/NotificationCenter';
 
@@ -22,10 +27,12 @@ interface NavbarProps {
 
 export const Navbar: React.FC<NavbarProps> = ({ onOpenSearch, onOpenMobileMenu }) => {
   const { theme, toggleTheme } = useTheme();
-  const { user } = useAuth();
+  const { user, switchRole, logout } = useAuth();
   const { unreadCount } = useNotifications();
   const [showNotifications, setShowNotifications] = useState(false);
+  const [showRoleMenu, setShowRoleMenu] = useState(false);
   const [currentTime, setCurrentTime] = useState<string>('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const updateTime = () => {
@@ -37,6 +44,24 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenSearch, onOpenMobileMenu }
     const interval = setInterval(updateTime, 1000);
     return () => clearInterval(interval);
   }, []);
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
+
+  const getRoleBadgeColor = (role?: string) => {
+    switch (role?.toUpperCase()) {
+      case 'ADMIN':
+        return 'bg-purple-950/60 text-purple-300 border-purple-500/40';
+      case 'INVESTIGATOR':
+        return 'bg-cyan-950/60 text-cyan-300 border-cyan-500/40';
+      case 'ANALYST':
+        return 'bg-emerald-950/60 text-emerald-300 border-emerald-500/40';
+      default:
+        return 'bg-slate-900 text-slate-300 border-slate-700';
+    }
+  };
 
   return (
     <header className="h-16 sticky top-0 z-30 bg-agency-950/80 border-b border-slate-800/80 backdrop-blur-md px-4 sm:px-6 flex items-center justify-between gap-4">
@@ -109,12 +134,82 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenSearch, onOpenMobileMenu }
           )}
         </div>
 
-        {/* User Clearance Indicator */}
-        <div className="hidden sm:flex items-center gap-2 pl-2 border-l border-slate-800">
-          <div className="flex flex-col text-right">
-            <span className="text-xs font-semibold text-slate-200">{user?.name}</span>
-            <span className="text-[10px] font-mono text-slate-400">{user?.agency}</span>
-          </div>
+        {/* User Clearance Indicator & Role Switcher */}
+        <div className="relative">
+          <button
+            onClick={() => setShowRoleMenu(!showRoleMenu)}
+            className="flex items-center gap-2 pl-2 border-l border-slate-800 text-left hover:opacity-90 transition"
+          >
+            <img
+              src={user?.avatarUrl || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80'}
+              alt={user?.name || 'Operator'}
+              className="w-8 h-8 rounded-lg object-cover border border-slate-700"
+            />
+            <div className="hidden sm:flex flex-col text-right">
+              <div className="flex items-center gap-1.5 justify-end">
+                <span className="text-xs font-semibold text-slate-200">{user?.name}</span>
+                <span className={`text-[9px] font-mono font-bold px-1.5 py-0.2 rounded border ${getRoleBadgeColor(user?.role)}`}>
+                  {user?.role}
+                </span>
+              </div>
+              <span className="text-[10px] font-mono text-slate-400">{user?.agency}</span>
+            </div>
+            <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
+          </button>
+
+          {/* Quick Switch Dropdown */}
+          {showRoleMenu && (
+            <div className="absolute right-0 mt-2 w-64 rounded-xl bg-agency-950 border border-slate-800 shadow-2xl p-2 z-50 animate-in fade-in zoom-in-95 font-mono text-xs">
+              <div className="p-2 border-b border-slate-800 mb-1">
+                <p className="text-[10px] text-slate-500 uppercase tracking-wider">ACTIVE OPERATOR SESSION</p>
+                <p className="text-xs font-bold text-slate-200">{user?.name}</p>
+                <p className="text-[10px] text-cyber-cyan">{user?.clearanceLevel}</p>
+              </div>
+
+              <div className="space-y-1 py-1">
+                <p className="text-[9px] text-slate-500 px-2 py-0.5 uppercase tracking-wider">SWITCH ROLE CLEARANCE</p>
+                
+                <button
+                  onClick={() => { switchRole('admin'); setShowRoleMenu(false); }}
+                  className={`w-full text-left px-2.5 py-1.5 rounded-lg flex items-center justify-between transition ${
+                    user?.role === 'ADMIN' ? 'bg-purple-950/50 text-purple-300 border border-purple-500/40' : 'hover:bg-slate-900 text-slate-300'
+                  }`}
+                >
+                  <span className="flex items-center gap-2">👑 Admin (Director)</span>
+                  {user?.role === 'ADMIN' && <span className="text-[10px] text-purple-400 font-bold">ACTIVE</span>}
+                </button>
+
+                <button
+                  onClick={() => { switchRole('investigator'); setShowRoleMenu(false); }}
+                  className={`w-full text-left px-2.5 py-1.5 rounded-lg flex items-center justify-between transition ${
+                    user?.role === 'INVESTIGATOR' ? 'bg-cyan-950/50 text-cyan-300 border border-cyan-500/40' : 'hover:bg-slate-900 text-slate-300'
+                  }`}
+                >
+                  <span className="flex items-center gap-2">🕵️ Investigator (Lead)</span>
+                  {user?.role === 'INVESTIGATOR' && <span className="text-[10px] text-cyan-400 font-bold">ACTIVE</span>}
+                </button>
+
+                <button
+                  onClick={() => { switchRole('analyst'); setShowRoleMenu(false); }}
+                  className={`w-full text-left px-2.5 py-1.5 rounded-lg flex items-center justify-between transition ${
+                    user?.role === 'ANALYST' ? 'bg-emerald-950/50 text-emerald-300 border border-emerald-500/40' : 'hover:bg-slate-900 text-slate-300'
+                  }`}
+                >
+                  <span className="flex items-center gap-2">📊 Analyst (Telemetry)</span>
+                  {user?.role === 'ANALYST' && <span className="text-[10px] text-emerald-400 font-bold">ACTIVE</span>}
+                </button>
+              </div>
+
+              <div className="pt-2 border-t border-slate-800 mt-1">
+                <button
+                  onClick={handleLogout}
+                  className="w-full text-left px-2.5 py-1.5 rounded-lg text-red-400 hover:bg-red-950/30 flex items-center gap-2 transition"
+                >
+                  <LogOut className="w-3.5 h-3.5" /> Log Out Session
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </header>

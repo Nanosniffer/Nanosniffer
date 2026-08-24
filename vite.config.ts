@@ -4,7 +4,7 @@ import path from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/criminal-network-analysis-system/',
+  base: process.env.VITE_BASE_PATH || './',
   plugins: [react()],
   resolve: {
     alias: {
@@ -12,13 +12,11 @@ export default defineConfig({
     },
   },
   server: {
-    port: 5174,
+    port: 5173,
     host: true,
-    allowedHosts: true,
   },
   preview: {
-    port: 5174,
+    port: 5173,
     host: true,
-    allowedHosts: true,
-  }
+  },
 });
