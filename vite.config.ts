@@ -4,7 +4,7 @@ import path from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: './', // Ensures assets load correctly on GitHub Pages (https://<username>.github.io/<repo>/)
+  base: './',
   plugins: [react()],
   resolve: {
     alias: {
@@ -12,7 +12,13 @@ export default defineConfig({
     },
   },
   server: {
-    port: 5173,
+    port: 5174,
     host: true,
+    allowedHosts: true,
   },
+  preview: {
+    port: 5174,
+    host: true,
+    allowedHosts: true,
+  }
 });
