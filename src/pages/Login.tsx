@@ -29,8 +29,46 @@ export const Login: React.FC = () => {
   const navigate = useNavigate();
 
   const handleSelectRole = (roleKey: 'admin' | 'investigator' | 'analyst') => {
-    setSelectedRole(prev => prev === roleKey ? null : roleKey);
+    setSelectedRole(roleKey);
     setError('');
+    if (roleKey === 'admin') {
+      setEmail('director.rao@cbi.gov.in');
+      setPassword('AdminPass2026!');
+    } else if (roleKey === 'investigator') {
+      setEmail('acp.rathore@mumbaipolice.gov.in');
+      setPassword('Password123!');
+    } else if (roleKey === 'analyst') {
+      setEmail('meera.rao@delhipolice.gov.in');
+      setPassword('Password123!');
+    }
+  };
+
+  const handleInstantLogin = async (roleKey: 'admin' | 'investigator' | 'analyst' = 'investigator') => {
+    setLoading(true);
+    setError('');
+    let e = 'acp.rathore@mumbaipolice.gov.in';
+    let p = 'Password123!';
+    if (roleKey === 'admin') {
+      e = 'director.rao@cbi.gov.in';
+      p = 'AdminPass2026!';
+    } else if (roleKey === 'analyst') {
+      e = 'meera.rao@delhipolice.gov.in';
+      p = 'Password123!';
+    }
+    setEmail(e);
+    setPassword(p);
+    setSelectedRole(roleKey);
+
+    try {
+      await login(e, p);
+      setTimeout(() => {
+        setLoading(false);
+        navigate('/dashboard');
+      }, 300);
+    } catch (err: any) {
+      setLoading(false);
+      setError(err?.message || 'Access Denied');
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -262,7 +300,59 @@ export const Login: React.FC = () => {
                 'Authenticate & Access Command'
               )}
             </Button>
+
+            {/* Quick 1-Click Demo Login */}
+            <div className="pt-2 border-t border-slate-100">
+              <button
+                type="button"
+                onClick={() => handleInstantLogin('investigator')}
+                className="w-full py-2 px-3 rounded-lg bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-emerald-800 text-xs font-semibold flex items-center justify-center gap-2 transition"
+              >
+                <span>⚡ Instant 1-Click Login (ACP Vikram Rathore)</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
           </form>
+
+          {/* Quick Reference Credentials Card */}
+          <div className="p-3 bg-slate-50 border border-slate-200 rounded-lg text-xs space-y-2">
+            <div className="flex items-center justify-between text-[11px] font-bold text-slate-700">
+              <span>📋 AVAILABLE DEMO CREDENTIALS</span>
+              <span className="text-[10px] text-slate-400 font-normal">Click role to auto-fill</span>
+            </div>
+            <div className="space-y-1.5 font-mono text-[10.5px]">
+              <div 
+                onClick={() => handleSelectRole('investigator')}
+                className="p-1.5 bg-white border border-slate-200 rounded hover:border-blue-300 hover:bg-blue-50/50 cursor-pointer transition flex items-center justify-between"
+              >
+                <div>
+                  <span className="font-bold text-blue-700 font-sans">🔍 INVESTIGATOR:</span>{' '}
+                  <span className="text-slate-800">acp.rathore@mumbaipolice.gov.in</span>
+                </div>
+                <span className="text-slate-500 text-[10px]">Pass: <code className="bg-slate-100 px-1 py-0.5 rounded text-slate-900">Password123!</code></span>
+              </div>
+              <div 
+                onClick={() => handleSelectRole('admin')}
+                className="p-1.5 bg-white border border-slate-200 rounded hover:border-purple-300 hover:bg-purple-50/50 cursor-pointer transition flex items-center justify-between"
+              >
+                <div>
+                  <span className="font-bold text-purple-700 font-sans">👑 ADMIN (Director):</span>{' '}
+                  <span className="text-slate-800">director.rao@cbi.gov.in</span>
+                </div>
+                <span className="text-slate-500 text-[10px]">Pass: <code className="bg-slate-100 px-1 py-0.5 rounded text-slate-900">AdminPass2026!</code></span>
+              </div>
+              <div 
+                onClick={() => handleSelectRole('analyst')}
+                className="p-1.5 bg-white border border-slate-200 rounded hover:border-emerald-300 hover:bg-emerald-50/50 cursor-pointer transition flex items-center justify-between"
+              >
+                <div>
+                  <span className="font-bold text-emerald-700 font-sans">📊 ANALYST:</span>{' '}
+                  <span className="text-slate-800">meera.rao@delhipolice.gov.in</span>
+                </div>
+                <span className="text-slate-500 text-[10px]">Pass: <code className="bg-slate-100 px-1 py-0.5 rounded text-slate-900">Password123!</code></span>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Security Warning Notice */}
