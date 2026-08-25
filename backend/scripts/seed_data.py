@@ -133,7 +133,7 @@ async def seed_database():
             {
                 "id": "ent-002",
                 "entity_id": "CR-5519",
-                "name": "Viktor Kozlov",
+                "name": "Sujal Cauhan",
                 "alias": "The Broker",
                 "type": "person",
                 "sub_type": "Financial Architect",
@@ -144,7 +144,7 @@ async def seed_database():
                 "photo_url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80",
                 "age": "47",
                 "gender": "Male",
-                "nationality": "Cypriot / Russian",
+                "nationality": "Cypriot / Indian",
                 "biography": "Master financial engineer laundering narcotics and cyber extortion profits into real estate and crypto liquidity pools.",
                 "ai_threat_summary": "High financial intelligence. Controls 12 shell companies across Panama, Cyprus, and UAE.",
                 "address": "450 Wall Street",
@@ -165,7 +165,7 @@ async def seed_database():
             {
                 "id": "ent-003",
                 "entity_id": "CR-7721",
-                "name": "Nikolai Vane",
+                "name": "Jayraj Makwana",
                 "alias": "Ghost",
                 "type": "person",
                 "sub_type": "Cyber Operative",
@@ -193,7 +193,7 @@ async def seed_database():
             {
                 "id": "ent-004",
                 "entity_id": "CR-3304",
-                "name": "Carlos Mendez",
+                "name": "Hat Patel",
                 "alias": "El Martillo",
                 "type": "person",
                 "sub_type": "Tactical Enforcer",
@@ -221,7 +221,7 @@ async def seed_database():
             {
                 "id": "ent-005",
                 "entity_id": "CR-1198",
-                "name": "Samantha Reed",
+                "name": "Taxil Pambhar",
                 "alias": "Valkyrie",
                 "type": "person",
                 "sub_type": "Logistics Broker",
@@ -249,7 +249,7 @@ async def seed_database():
             {
                 "id": "ent-006",
                 "entity_id": "CR-6642",
-                "name": "Tariq Al-Qasimi",
+                "name": "Sahaj Bhimani",
                 "alias": "The Banker",
                 "type": "person",
                 "sub_type": "Hawala Operator",
@@ -276,7 +276,7 @@ async def seed_database():
             {
                 "id": "ent-007",
                 "entity_id": "ORG-501",
-                "name": "Viper Tactical Syndicate",
+                "name": "Deep Patel",
                 "alias": "Viper Cartel",
                 "type": "organization",
                 "sub_type": "Cartel",
