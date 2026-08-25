@@ -7,9 +7,6 @@ import {
   Mail, 
   Eye, 
   EyeOff, 
-  Crown, 
-  Search, 
-  LineChart,
   AlertTriangle,
   Info
 } from 'lucide-react';
@@ -21,7 +18,6 @@ export const Login: React.FC = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
 
-  const [selectedRole, setSelectedRole] = useState<'admin' | 'investigator' | 'analyst' | null>(null);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -31,19 +27,10 @@ export const Login: React.FC = () => {
   const [transferNotice, setTransferNotice] = useState<string | null>(null);
 
   useEffect(() => {
-    if (location.state?.preselectedRole) {
-      setSelectedRole(location.state.preselectedRole);
-    }
     if (location.state?.notice) {
       setTransferNotice(location.state.notice);
     }
   }, [location.state]);
-
-  const handleSelectRole = (roleKey: 'admin' | 'investigator' | 'analyst') => {
-    // Select or toggle role tier WITHOUT autofilling or changing credentials
-    setSelectedRole(prev => (prev === roleKey ? null : roleKey));
-    setError('');
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -59,29 +46,6 @@ export const Login: React.FC = () => {
     } catch (err: any) {
       setLoading(false);
       setError(err?.message || 'ACCESS DENIED: Incorrect email ID or cryptographic passkey.');
-    }
-  };
-
-  const getRoleBadge = (role: 'admin' | 'investigator' | 'analyst') => {
-    switch (role) {
-      case 'admin':
-        return {
-          title: 'DIRECTOR CLEARANCE (ADMIN)',
-          desc: 'Global task force command authority • TOP SECRET // SCI',
-          border: 'border-purple-200 bg-purple-50 text-purple-800',
-        };
-      case 'investigator':
-        return {
-          title: 'LEAD INVESTIGATOR CLEARANCE',
-          desc: 'Case management & operative surveillance • TOP SECRET // SCI',
-          border: 'border-blue-200 bg-blue-50 text-blue-800',
-        };
-      case 'analyst':
-        return {
-          title: 'SENIOR ANALYST CLEARANCE',
-          desc: 'Predictive link analysis & telemetry reporting • SECRET',
-          border: 'border-emerald-200 bg-emerald-50 text-emerald-800',
-        };
     }
   };
 
@@ -108,7 +72,7 @@ export const Login: React.FC = () => {
         </div>
 
         {/* Authentication Card */}
-        <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-card space-y-5">
+        <div className="bg-white p-6 sm:p-7 rounded-xl border border-slate-200 shadow-card space-y-5">
           <div className="flex items-center justify-between border-b border-slate-100 pb-3">
             <span className="text-xs font-semibold text-slate-900">
               Officer Authentication Gateway
@@ -117,80 +81,6 @@ export const Login: React.FC = () => {
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" /> System Ready
             </span>
           </div>
-
-          {/* Role Clearance Selection Buttons (Does NOT autofill email or password) */}
-          <div className="space-y-1.5">
-            <div className="flex items-center justify-between">
-              <label className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider block">
-                SELECT CLEARANCE ROLE TIER
-              </label>
-              {selectedRole && (
-                <button
-                  type="button"
-                  onClick={() => setSelectedRole(null)}
-                  className="text-[10px] text-slate-400 hover:text-slate-700 underline"
-                >
-                  Reset Tier
-                </button>
-              )}
-            </div>
-            <div className="grid grid-cols-3 gap-2">
-              {/* Admin Button */}
-              <button
-                type="button"
-                onClick={() => handleSelectRole('admin')}
-                className={`p-2.5 rounded-lg border text-left transition flex flex-col items-center justify-center gap-1 ${
-                  selectedRole === 'admin'
-                    ? 'bg-purple-50 border-purple-300 text-purple-900 shadow-subtle ring-1 ring-purple-400'
-                    : 'bg-white hover:bg-slate-50 border-slate-200 text-slate-600'
-                }`}
-              >
-                <Crown className={`w-4 h-4 ${selectedRole === 'admin' ? 'text-purple-700' : 'text-slate-400'}`} />
-                <span className="text-xs font-bold">ADMIN</span>
-                <span className="text-[9px] text-slate-400">Director</span>
-              </button>
-
-              {/* Investigator Button */}
-              <button
-                type="button"
-                onClick={() => handleSelectRole('investigator')}
-                className={`p-2.5 rounded-lg border text-left transition flex flex-col items-center justify-center gap-1 ${
-                  selectedRole === 'investigator'
-                    ? 'bg-blue-50 border-blue-300 text-blue-900 shadow-subtle ring-1 ring-blue-400'
-                    : 'bg-white hover:bg-slate-50 border-slate-200 text-slate-600'
-                }`}
-              >
-                <Search className={`w-4 h-4 ${selectedRole === 'investigator' ? 'text-blue-700' : 'text-slate-400'}`} />
-                <span className="text-xs font-bold">INVESTIGATOR</span>
-                <span className="text-[9px] text-slate-400">Lead Agent</span>
-              </button>
-
-              {/* Analyst Button */}
-              <button
-                type="button"
-                onClick={() => handleSelectRole('analyst')}
-                className={`p-2.5 rounded-lg border text-left transition flex flex-col items-center justify-center gap-1 ${
-                  selectedRole === 'analyst'
-                    ? 'bg-emerald-50 border-emerald-300 text-emerald-900 shadow-subtle ring-1 ring-emerald-400'
-                    : 'bg-white hover:bg-slate-50 border-slate-200 text-slate-600'
-                }`}
-              >
-                <LineChart className={`w-4 h-4 ${selectedRole === 'analyst' ? 'text-emerald-700' : 'text-slate-400'}`} />
-                <span className="text-xs font-bold">ANALYST</span>
-                <span className="text-[9px] text-slate-400">Telemetry</span>
-              </button>
-            </div>
-          </div>
-
-          {/* Selected Role Clearance Details Banner */}
-          {selectedRole && (
-            <div className={`p-2.5 rounded-lg border text-xs animate-in fade-in ${getRoleBadge(selectedRole).border}`}>
-              <span className="font-bold block text-[11px]">{getRoleBadge(selectedRole).title}</span>
-              <p className="text-[11px] opacity-90 mt-0.5">
-                {getRoleBadge(selectedRole).desc}
-              </p>
-            </div>
-          )}
 
           {transferNotice && (
             <div className="p-3 rounded-lg bg-blue-50 border border-blue-200 text-blue-800 text-xs animate-in fade-in flex items-start gap-2">
@@ -209,7 +99,7 @@ export const Login: React.FC = () => {
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-3.5">
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="text-xs font-semibold text-slate-700 block mb-1">
                 Government / Interpol Email ID
@@ -259,11 +149,6 @@ export const Login: React.FC = () => {
                 />
                 <span>Remember Session</span>
               </label>
-              {selectedRole && (
-                <span className="text-[11px] text-slate-500">
-                  Target Tier: <strong className="text-slate-900">{selectedRole.toUpperCase()}</strong>
-                </span>
-              )}
             </div>
 
             <Button
@@ -271,15 +156,13 @@ export const Login: React.FC = () => {
               variant="default"
               size="lg"
               disabled={loading}
-              className="w-full font-bold h-9 shadow-sm"
+              className="w-full font-bold h-10 shadow-sm"
             >
               {loading ? (
                 <span className="flex items-center gap-2">
                   <span className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />
                   Authenticating Credentials...
                 </span>
-              ) : selectedRole ? (
-                `Authenticate as ${selectedRole.toUpperCase()}`
               ) : (
                 'Authenticate & Access Command'
               )}
