@@ -5,11 +5,13 @@ import { CriminalTable } from '../components/tables/CriminalTable';
 import { CriminalProfileDrawer } from '../components/drawers/CriminalProfileDrawer';
 import { TableSkeleton } from '../components/common/SkeletonLoaders';
 import { Criminal } from '../types';
-import { RefreshCw } from 'lucide-react';
+import { RefreshCw, UserPlus } from 'lucide-react';
 import { Button } from '../components/ui/button';
+import { EvidenceIntakeModal } from '../components/modals/EvidenceIntakeModal';
 
 export const CriminalProfiles: React.FC = () => {
   const [selectedCriminal, setSelectedCriminal] = useState<Criminal | null>(null);
+  const [intakeOpen, setIntakeOpen] = useState(false);
 
   const { data: res, isLoading, refetch, isFetching } = useQuery({
     queryKey: ['criminals'],
@@ -41,6 +43,16 @@ export const CriminalProfiles: React.FC = () => {
 
         <div className="flex items-center gap-2 shrink-0">
           <Button
+            variant="default"
+            size="sm"
+            onClick={() => setIntakeOpen(true)}
+            className="gap-1.5 bg-brand-600 hover:bg-brand-700 text-white font-semibold"
+          >
+            <UserPlus className="w-3.5 h-3.5" />
+            <span>Register Suspect</span>
+          </Button>
+
+          <Button
             variant="secondary"
             size="sm"
             onClick={() => refetch()}
@@ -71,6 +83,11 @@ export const CriminalProfiles: React.FC = () => {
           const found = criminals.find((c) => c.id === id);
           if (found) setSelectedCriminal(found);
         }}
+      />
+
+      <EvidenceIntakeModal
+        isOpen={intakeOpen}
+        onClose={() => setIntakeOpen(false)}
       />
     </div>
   );

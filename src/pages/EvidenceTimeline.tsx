@@ -5,11 +5,13 @@ import { EvidenceTimelineView } from '../components/timeline/EvidenceTimelineVie
 import { CriminalProfileDrawer } from '../components/drawers/CriminalProfileDrawer';
 import { TableSkeleton } from '../components/common/SkeletonLoaders';
 import { Criminal } from '../types';
-import { Clock, RefreshCw } from 'lucide-react';
+import { Clock, RefreshCw, PlusCircle } from 'lucide-react';
 import { Button } from '../components/ui/button';
+import { EvidenceIntakeModal } from '../components/modals/EvidenceIntakeModal';
 
 export const EvidenceTimeline: React.FC = () => {
   const [selectedCriminal, setSelectedCriminal] = useState<Criminal | null>(null);
+  const [intakeOpen, setIntakeOpen] = useState(false);
 
   const { data: timelineRes, isLoading, refetch, isFetching } = useQuery({
     queryKey: ['timeline'],
@@ -31,7 +33,7 @@ export const EvidenceTimeline: React.FC = () => {
         <div>
           <div className="flex items-center gap-2">
             <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
-              FORENSIC SEQUENCE & RECONSTRUCTION
+              FORENSIC SEQUENCE
             </span>
             <span className="text-[10px] font-semibold px-1.5 py-0.2 rounded bg-slate-100 text-slate-700 border border-slate-200">
               {events.length} Events Logged
@@ -46,6 +48,16 @@ export const EvidenceTimeline: React.FC = () => {
         </div>
 
         <div className="flex items-center gap-2 shrink-0">
+          <Button
+            variant="default"
+            size="sm"
+            onClick={() => setIntakeOpen(true)}
+            className="gap-1.5 bg-brand-600 hover:bg-brand-700 text-white font-semibold"
+          >
+            <PlusCircle className="w-3.5 h-3.5" />
+            <span>Log Evidence</span>
+          </Button>
+
           <Button
             variant="secondary"
             size="sm"
@@ -76,6 +88,12 @@ export const EvidenceTimeline: React.FC = () => {
       <CriminalProfileDrawer
         criminal={selectedCriminal}
         onClose={() => setSelectedCriminal(null)}
+      />
+
+      {/* Police Field Data & Evidence Intake Portal */}
+      <EvidenceIntakeModal
+        isOpen={intakeOpen}
+        onClose={() => setIntakeOpen(false)}
       />
     </div>
   );

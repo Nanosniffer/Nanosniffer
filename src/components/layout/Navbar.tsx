@@ -8,7 +8,8 @@ import {
   ChevronDown,
   LogOut,
   Shield,
-  Clock
+  Clock,
+  PlusCircle
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useNotifications } from '../../context/NotificationContext';
@@ -19,12 +20,14 @@ interface NavbarProps {
   onOpenSearch: () => void;
   onOpenMobileMenu: () => void;
   onOpenAiAssistant: () => void;
+  onOpenIntake?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
   onOpenSearch,
   onOpenMobileMenu,
   onOpenAiAssistant,
+  onOpenIntake,
 }) => {
   const { user, switchRole, logout } = useAuth();
   const { unreadCount } = useNotifications();
@@ -108,6 +111,19 @@ export const Navbar: React.FC<NavbarProps> = ({
         >
           <Search className="w-4 h-4" />
         </button>
+
+        {/* Police Data Intake / Evidence Collection Button */}
+        {onOpenIntake && (
+          <Button
+            variant="default"
+            size="sm"
+            onClick={onOpenIntake}
+            className="gap-1.5 h-7 px-2.5 bg-brand-600 hover:bg-brand-700 text-white shadow-sm font-semibold border-transparent"
+          >
+            <PlusCircle className="w-3.5 h-3.5" />
+            <span className="text-[11px]">Collect Evidence</span>
+          </Button>
+        )}
 
         {/* AI Investigator Button */}
         <Button
