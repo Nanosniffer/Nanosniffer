@@ -5,9 +5,8 @@ import { EvidenceTimelineView } from '../components/timeline/EvidenceTimelineVie
 import { CriminalProfileDrawer } from '../components/drawers/CriminalProfileDrawer';
 import { TableSkeleton } from '../components/common/SkeletonLoaders';
 import { Criminal } from '../types';
-import { Clock, Download, RefreshCw } from 'lucide-react';
+import { Clock, RefreshCw } from 'lucide-react';
 import { Button } from '../components/ui/button';
-import { downloadJSON } from '../utils/exportUtils';
 
 export const EvidenceTimeline: React.FC = () => {
   const [selectedCriminal, setSelectedCriminal] = useState<Criminal | null>(null);
@@ -56,16 +55,6 @@ export const EvidenceTimeline: React.FC = () => {
           >
             <RefreshCw className={`w-3.5 h-3.5 ${isFetching ? 'animate-spin' : ''}`} />
             <span>Sync</span>
-          </Button>
-
-          <Button
-            variant="secondary"
-            size="sm"
-            onClick={() => downloadJSON(events, 'ACN_Evidence_Timeline.json')}
-            className="gap-1.5"
-          >
-            <Download className="w-3.5 h-3.5" />
-            <span>Export Timeline (JSON)</span>
           </Button>
         </div>
       </div>

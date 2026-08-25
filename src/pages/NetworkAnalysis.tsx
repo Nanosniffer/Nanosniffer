@@ -6,7 +6,7 @@ import { GraphAnalyticsWidgets } from '../components/graph/GraphAnalyticsWidgets
 import { CriminalProfileDrawer } from '../components/drawers/CriminalProfileDrawer';
 import { DashboardSkeleton } from '../components/common/SkeletonLoaders';
 import { Criminal } from '../types';
-import { Share2, Info, Download, Filter, Sparkles, RefreshCw } from 'lucide-react';
+import { Share2, Info, Filter, Sparkles, RefreshCw } from 'lucide-react';
 import { Button } from '../components/ui/button';
 
 export const NetworkAnalysis: React.FC = () => {
@@ -25,16 +25,6 @@ export const NetworkAnalysis: React.FC = () => {
   const graphData = graphRes?.data;
   const isFallback = graphRes?.isFallback ?? false;
   const criminals = criminalsRes?.data || [];
-
-  const handleExportJSON = () => {
-    if (!graphData) return;
-    const blob = new Blob([JSON.stringify(graphData, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `ACN-Network-Topology-${new Date().toISOString().slice(0, 10)}.json`;
-    a.click();
-  };
 
   return (
     <div className="space-y-4 animate-in fade-in duration-150">
@@ -65,16 +55,6 @@ export const NetworkAnalysis: React.FC = () => {
           >
             <RefreshCw className={`w-3.5 h-3.5 ${isFetching ? 'animate-spin' : ''}`} />
             <span>Sync Graph</span>
-          </Button>
-
-          <Button
-            variant="secondary"
-            size="sm"
-            onClick={handleExportJSON}
-            className="gap-1.5"
-          >
-            <Download className="w-3.5 h-3.5" />
-            <span>Export Topology</span>
           </Button>
         </div>
       </div>

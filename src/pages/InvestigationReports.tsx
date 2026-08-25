@@ -51,16 +51,6 @@ export const InvestigationReports: React.FC = () => {
             <RefreshCw className={`w-3.5 h-3.5 ${isFetching ? 'animate-spin' : ''}`} />
             <span>Sync</span>
           </Button>
-
-          <Button
-            variant="secondary"
-            size="sm"
-            onClick={() => downloadJSON(reports, 'ACN_Investigation_Reports_Bundle.json')}
-            className="gap-1.5"
-          >
-            <Download className="w-3.5 h-3.5" />
-            <span>Export Bundle (JSON)</span>
-          </Button>
         </div>
       </div>
 
