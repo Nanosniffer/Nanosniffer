@@ -253,7 +253,7 @@ export const EvidenceIntakeModal: React.FC<EvidenceIntakeModalProps> = ({ isOpen
             <div>
               <div className="flex items-center gap-2">
                 <h2 className="text-sm font-bold text-white tracking-tight">
-                  Police Field Data & Evidence Intake
+                  Add Suspect Profile & Evidence Intake
                 </h2>
                 <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-slate-800 text-brand-300 border border-slate-700">
                   CLASSIFIED // LAW ENFORCEMENT

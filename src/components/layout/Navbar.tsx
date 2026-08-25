@@ -9,7 +9,8 @@ import {
   LogOut,
   Shield,
   Clock,
-  PlusCircle
+  PlusCircle,
+  UserPlus
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useNotifications } from '../../context/NotificationContext';
@@ -52,7 +53,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     const p = location.pathname;
     if (p.includes('network')) return { section: 'Investigations', page: 'Network Analysis' };
     if (p.includes('criminals')) return { section: 'Investigations', page: 'Criminal Profiles' };
-    if (p.includes('collect-evidence') || p.includes('intake')) return { section: 'Investigations', page: 'Collect Evidence' };
+    if (p.includes('collect-evidence') || p.includes('intake')) return { section: 'Investigations', page: 'Add Suspect Profile' };
     if (p.includes('feed')) return { section: 'Intelligence', page: 'Intelligence Feed' };
     if (p.includes('alerts')) return { section: 'Intelligence', page: 'Risk & Alerts' };
     if (p.includes('timeline')) return { section: 'Intelligence', page: 'Evidence Timeline' };
@@ -113,7 +114,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           <Search className="w-4 h-4" />
         </button>
 
-        {/* Police Data Intake / Evidence Collection Button */}
+        {/* Police Data Intake / Add Suspect Profile Button */}
         {onOpenIntake && (
           <Button
             variant="default"
@@ -121,8 +122,8 @@ export const Navbar: React.FC<NavbarProps> = ({
             onClick={onOpenIntake}
             className="gap-1.5 h-7 px-2.5 bg-brand-600 hover:bg-brand-700 text-white shadow-sm font-semibold border-transparent"
           >
-            <PlusCircle className="w-3.5 h-3.5" />
-            <span className="text-[11px]">Collect Evidence</span>
+            <UserPlus className="w-3.5 h-3.5" />
+            <span className="text-[11px]">Add Suspect Profile</span>
           </Button>
         )}
 
