@@ -11,7 +11,6 @@ import {
   Search, 
   LineChart,
   AlertTriangle,
-  ArrowRight,
   Info
 } from 'lucide-react';
 import { Button } from '../components/ui/button';
@@ -33,7 +32,7 @@ export const Login: React.FC = () => {
 
   useEffect(() => {
     if (location.state?.preselectedRole) {
-      handleSelectRole(location.state.preselectedRole);
+      setSelectedRole(location.state.preselectedRole);
     }
     if (location.state?.notice) {
       setTransferNotice(location.state.notice);
@@ -41,18 +40,9 @@ export const Login: React.FC = () => {
   }, [location.state]);
 
   const handleSelectRole = (roleKey: 'admin' | 'investigator' | 'analyst') => {
-    setSelectedRole(roleKey);
+    // Select or toggle role tier WITHOUT autofilling or changing credentials
+    setSelectedRole(prev => (prev === roleKey ? null : roleKey));
     setError('');
-    if (roleKey === 'admin') {
-      setEmail('director.rao@cbi.gov.in');
-      setPassword('AdminPass2026!');
-    } else if (roleKey === 'investigator') {
-      setEmail('acp.rathore@mumbaipolice.gov.in');
-      setPassword('Password123!');
-    } else if (roleKey === 'analyst') {
-      setEmail('meera.rao@delhipolice.gov.in');
-      setPassword('Password123!');
-    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -128,7 +118,7 @@ export const Login: React.FC = () => {
             </span>
           </div>
 
-          {/* Role Clearance Selection Buttons */}
+          {/* Role Clearance Selection Buttons (Does NOT autofill email or password) */}
           <div className="space-y-1.5">
             <div className="flex items-center justify-between">
               <label className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider block">
@@ -231,7 +221,7 @@ export const Login: React.FC = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter officer email (e.g. name@interpol.gov)"
                 icon={<Mail className="w-4 h-4" />}
-                autoComplete="email"
+                autoComplete="off"
               />
             </div>
 
@@ -245,9 +235,9 @@ export const Login: React.FC = () => {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Enter security key..."
+                  placeholder="Enter security passkey..."
                   icon={<Lock className="w-4 h-4" />}
-                  autoComplete="current-password"
+                  autoComplete="off"
                 />
                 <button
                   type="button"
