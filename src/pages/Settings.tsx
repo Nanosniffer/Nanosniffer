@@ -55,7 +55,7 @@ export const Settings: React.FC = () => {
     } catch {
       setLatencyMs(0);
       setConnectionMode('standalone');
-      setServerDetails('NETRA Autonomous Intelligence Core Active (0ms local telemetry)');
+      setServerDetails('ACN Autonomous Intelligence Core Active (0ms local telemetry)');
     }
   };
 
@@ -173,7 +173,7 @@ export const Settings: React.FC = () => {
             <div className="flex-1 min-w-0">
               <div className="flex items-center justify-between">
                 <p className="font-semibold text-slate-900">
-                  {connectionMode === 'live' ? 'FastAPI Backend Connected' : 'NETRA Intelligence Core Operational'}
+                  {connectionMode === 'live' ? 'FastAPI Backend Connected' : 'ACN Intelligence Core Operational'}
                 </p>
                 <span className="text-[10px] text-slate-500 font-mono">
                   {latencyMs}ms Latency

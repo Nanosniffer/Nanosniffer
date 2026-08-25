@@ -32,7 +32,7 @@ export const NetworkAnalysis: React.FC = () => {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `NETRA-Network-Topology-${new Date().toISOString().slice(0, 10)}.json`;
+    a.download = `ACN-Network-Topology-${new Date().toISOString().slice(0, 10)}.json`;
     a.click();
   };
 

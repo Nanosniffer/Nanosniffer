@@ -49,7 +49,7 @@ export const AiInvestigatorDrawer: React.FC<{ isOpen: boolean; onClose: () => vo
     {
       id: 'msg-1',
       sender: 'ai',
-      text: 'Greetings, Officer. I am the NETRA AI Intelligence Assistant. Ask any question about criminal syndicates, entity linkages, financial transaction paths, or risk anomalies.',
+      text: 'Greetings, Officer. I am the ACN AI Intelligence Assistant. Ask any question about criminal syndicates, entity linkages, financial transaction paths, or risk anomalies.',
       timestamp: 'Just now',
     },
   ]);

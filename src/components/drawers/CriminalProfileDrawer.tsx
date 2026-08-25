@@ -375,7 +375,7 @@ export const CriminalProfileDrawer: React.FC<CriminalProfileDrawerProps> = ({
         {/* Footer */}
         <div className="p-3 px-5 border-t border-slate-200 bg-slate-50 flex items-center justify-between gap-3 shrink-0">
           <span className="text-[10px] font-mono text-slate-400">
-            NETRA Intelligence Dossier • Defcon Level 2
+            ACN Intelligence Dossier • Defcon Level 2
           </span>
           <Button variant="default" size="sm" onClick={onClose} className="h-7 text-xs">
             Close Dossier

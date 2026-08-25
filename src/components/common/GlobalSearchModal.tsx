@@ -215,7 +215,7 @@ export const GlobalSearchModal: React.FC<{ isOpen: boolean; onClose: () => void 
             <span>↑↓ to navigate</span>
             <span>↵ to open</span>
           </div>
-          <span>NETRA Global Command Search</span>
+          <span>ACN Global Command Search</span>
         </div>
       </div>
     </div>

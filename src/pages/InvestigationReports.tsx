@@ -55,7 +55,7 @@ export const InvestigationReports: React.FC = () => {
           <Button
             variant="secondary"
             size="sm"
-            onClick={() => downloadJSON(reports, 'NETRA_Investigation_Reports_Bundle.json')}
+            onClick={() => downloadJSON(reports, 'ACN_Investigation_Reports_Bundle.json')}
             className="gap-1.5"
           >
             <Download className="w-3.5 h-3.5" />

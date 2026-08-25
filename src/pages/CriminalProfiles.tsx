@@ -55,7 +55,7 @@ export const CriminalProfiles: React.FC = () => {
           <Button
             variant="secondary"
             size="sm"
-            onClick={() => downloadJSON(criminals, 'NETRA_Target_Roster.json')}
+            onClick={() => downloadJSON(criminals, 'ACN_Target_Roster.json')}
             className="gap-1.5"
           >
             <Download className="w-3.5 h-3.5" />

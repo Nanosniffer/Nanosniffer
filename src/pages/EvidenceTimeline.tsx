@@ -61,7 +61,7 @@ export const EvidenceTimeline: React.FC = () => {
           <Button
             variant="secondary"
             size="sm"
-            onClick={() => downloadJSON(events, 'NETRA_Evidence_Timeline.json')}
+            onClick={() => downloadJSON(events, 'ACN_Evidence_Timeline.json')}
             className="gap-1.5"
           >
             <Download className="w-3.5 h-3.5" />
