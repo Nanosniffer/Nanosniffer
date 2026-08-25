@@ -3,7 +3,7 @@ import { InvestigationReport } from '../../types';
 import { Card } from '../ui/card';
 import { Button } from '../ui/button';
 import { formatDate } from '../../utils/formatters';
-import { FileText, Download, Eye, FileCode, Shield, CheckCircle2 } from 'lucide-react';
+import { FileText, Download, Eye, FileCode, CheckCircle2, Shield } from 'lucide-react';
 import { downloadJSON, triggerPrintDossier } from '../../utils/exportUtils';
 
 interface ReportCardProps {
@@ -13,73 +13,79 @@ interface ReportCardProps {
 
 export const ReportCard: React.FC<ReportCardProps> = ({ report, onPreview }) => {
   return (
-    <Card className="p-5 bg-agency-900/90 border-slate-800 hover:border-cyber-cyan/40 transition-all duration-300 flex flex-col justify-between">
+    <Card className="p-4 bg-white border border-slate-200 shadow-card hover:border-slate-300 transition-all flex flex-col justify-between space-y-3">
       <div>
         {/* Classification & Number */}
-        <div className="flex items-center justify-between gap-2 mb-2.5">
-          <span className="text-xs font-mono font-bold text-cyber-cyan bg-cyan-950/60 px-2 py-0.5 rounded border border-cyan-500/30">
+        <div className="flex items-center justify-between gap-2 mb-2">
+          <span className="text-[10px] font-mono font-bold text-slate-700 bg-slate-100 px-2 py-0.5 rounded border border-slate-200">
             {report.reportNumber}
           </span>
-          <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-red-950/80 text-red-400 border border-red-500/40">
+          <span
+            className={`text-[10px] font-semibold px-2 py-0.5 rounded border ${
+              report.classificationLevel.includes('TOP SECRET')
+                ? 'bg-red-50 text-red-700 border-red-200'
+                : 'bg-indigo-50 text-indigo-700 border-indigo-200'
+            }`}
+          >
             {report.classificationLevel}
           </span>
         </div>
 
-        <h3 className="text-base font-bold text-slate-100 mb-1.5">{report.title}</h3>
-        <p className="text-xs text-slate-400 mb-3 line-clamp-2">{report.summary}</p>
+        <h3 className="text-sm font-bold text-slate-900 mb-1 leading-snug">{report.title}</h3>
+        <p className="text-xs text-slate-600 mb-3 line-clamp-2 leading-relaxed">{report.summary}</p>
 
         {/* Metadata info */}
-        <div className="grid grid-cols-2 gap-2 p-2.5 rounded-lg bg-agency-950/80 border border-slate-800 text-xs font-mono mb-3">
+        <div className="grid grid-cols-2 gap-2 p-2.5 rounded-md bg-slate-50 border border-slate-100 text-xs mb-3">
           <div>
-            <span className="text-slate-500 block text-[10px]">TARGET ENTITY</span>
-            <span className="text-slate-200 truncate block">{report.targetEntity}</span>
+            <span className="text-slate-400 block text-[10px]">TARGET ENTITY</span>
+            <span className="text-slate-800 font-semibold truncate block">{report.targetEntity}</span>
           </div>
           <div>
-            <span className="text-slate-500 block text-[10px]">GENERATED DATE</span>
-            <span className="text-slate-200 truncate block">{formatDate(report.dateGenerated)}</span>
+            <span className="text-slate-400 block text-[10px]">DATE GENERATED</span>
+            <span className="text-slate-700 truncate block font-mono text-[11px]">{formatDate(report.dateGenerated)}</span>
           </div>
         </div>
 
         {/* Key findings highlights */}
-        <div className="space-y-1.5 mb-4">
-          <span className="text-[10px] font-mono uppercase text-slate-400 tracking-wider block">
-            Key Findings Summary
+        <div className="space-y-1.5 mb-2">
+          <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider block">
+            Executive Findings
           </span>
           {report.keyFindings.slice(0, 2).map((kf, i) => (
-            <div key={i} className="flex items-start gap-2 text-xs text-slate-300">
-              <CheckCircle2 className="w-3.5 h-3.5 text-cyber-cyan shrink-0 mt-0.5" />
-              <span className="line-clamp-2 leading-relaxed">{kf}</span>
+            <div key={i} className="flex items-start gap-1.5 text-xs text-slate-700">
+              <CheckCircle2 className="w-3.5 h-3.5 text-brand-600 shrink-0 mt-0.5" />
+              <span className="line-clamp-2 leading-relaxed text-[11px]">{kf}</span>
             </div>
           ))}
         </div>
       </div>
 
       {/* Actions */}
-      <div className="pt-3 border-t border-slate-800/80 flex items-center justify-between gap-2">
+      <div className="pt-2.5 border-t border-slate-100 flex items-center justify-between gap-2">
         <Button
-          variant="outline"
+          variant="secondary"
           size="sm"
           onClick={() => onPreview(report)}
-          className="text-xs py-1 gap-1.5 flex-1"
+          className="text-xs h-7 gap-1.5 flex-1"
         >
           <Eye className="w-3.5 h-3.5" /> Preview Report
         </Button>
         <Button
-          variant="cyan"
+          variant="default"
           size="sm"
           onClick={() => triggerPrintDossier(report.title)}
-          className="text-xs py-1 gap-1"
+          className="text-xs h-7 gap-1 px-2.5"
         >
           <Download className="w-3.5 h-3.5" /> PDF
         </Button>
         <Button
-          variant="ghost"
+          variant="secondary"
           size="sm"
           onClick={() => downloadJSON(report, `${report.reportNumber}.json`)}
           title="Export JSON"
-          className="text-xs py-1 p-2"
+          className="text-xs h-7 px-2"
         >
-          <FileCode className="w-4 h-4 text-purple-400" />
+          <FileCode className="w-3.5 h-3.5 text-slate-500" />
         </Button>
       </div>
     </Card>

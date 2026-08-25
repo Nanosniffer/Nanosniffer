@@ -11,47 +11,44 @@ import {
 } from 'recharts';
 
 interface FinancialTrendChartProps {
-  data: Array<{ date: string; volumeUSD: number; flaggedVolumeUSD: number }>;
+  data: Array<{ week: string; flaggedVolume: number; totalVolume: number }>;
 }
 
 export const FinancialTrendChart: React.FC<FinancialTrendChartProps> = ({ data }) => {
   return (
-    <div className="w-full h-72">
+    <div className="w-full h-64">
       <ResponsiveContainer width="100%" height="100%">
-        <LineChart data={data} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
-          <XAxis dataKey="date" stroke="#64748b" tick={{ fontSize: 11 }} />
-          <YAxis
-            stroke="#64748b"
-            tick={{ fontSize: 11 }}
-            tickFormatter={(val) => `$${val}M`}
-          />
+        <LineChart data={data} margin={{ top: 10, right: 10, left: -15, bottom: 0 }}>
+          <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
+          <XAxis dataKey="week" stroke="#94a3b8" fontSize={11} tickLine={false} axisLine={false} />
+          <YAxis stroke="#94a3b8" fontSize={11} tickLine={false} axisLine={false} />
           <Tooltip
             contentStyle={{
-              backgroundColor: 'rgba(11, 21, 45, 0.95)',
-              borderColor: 'rgba(16, 185, 129, 0.4)',
-              borderRadius: '8px',
-              color: '#f8fafc',
-              fontSize: '12px',
+              backgroundColor: '#ffffff',
+              borderColor: '#e2e8f0',
+              borderRadius: '6px',
+              color: '#0f172a',
+              fontSize: '11px',
+              boxShadow: '0 4px 12px rgba(15,23,42,0.08)',
             }}
             formatter={(value: any) => [`$${value}M USD`, '']}
           />
-          <Legend wrapperStyle={{ fontSize: '11px', color: '#94a3b8' }} />
+          <Legend verticalAlign="top" align="right" wrapperStyle={{ fontSize: '11px', paddingBottom: '10px' }} />
           <Line
             type="monotone"
-            dataKey="volumeUSD"
-            name="Gross Monitored Volume"
-            stroke="#3b82f6"
-            strokeWidth={2}
-            dot={{ r: 3, fill: '#3b82f6' }}
+            dataKey="totalVolume"
+            name="Monitored Flow"
+            stroke="#94a3b8"
+            strokeWidth={1.5}
+            dot={{ r: 3, fill: '#94a3b8' }}
           />
           <Line
             type="monotone"
-            dataKey="flaggedVolumeUSD"
-            name="Flagged Illicit Flow"
-            stroke="#ef4444"
-            strokeWidth={2.5}
-            dot={{ r: 4, fill: '#ef4444' }}
+            dataKey="flaggedVolume"
+            name="Illicit / Tumbler Capital"
+            stroke="#dc2626"
+            strokeWidth={2}
+            dot={{ r: 3.5, fill: '#dc2626' }}
           />
         </LineChart>
       </ResponsiveContainer>

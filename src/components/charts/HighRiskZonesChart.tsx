@@ -2,41 +2,52 @@ import React from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 
 interface HighRiskZonesChartProps {
-  data: Array<{ zone: string; threatLevel: number; activeSuspects: number; incidents: number }>;
+  data: Array<{ zone: string; threatScore: number; incidentsCount: number }>;
 }
 
 export const HighRiskZonesChart: React.FC<HighRiskZonesChartProps> = ({ data }) => {
   return (
-    <div className="w-full h-72">
+    <div className="w-full h-64">
       <ResponsiveContainer width="100%" height="100%">
-        <BarChart data={data} layout="vertical" margin={{ top: 5, right: 20, left: 40, bottom: 5 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" horizontal={false} />
-          <XAxis type="number" domain={[0, 100]} stroke="#64748b" tick={{ fontSize: 11 }} />
+        <BarChart data={data} layout="vertical" margin={{ top: 5, right: 20, left: 20, bottom: 5 }}>
+          <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" horizontal={false} />
+          <XAxis type="number" stroke="#94a3b8" fontSize={11} tickLine={false} axisLine={false} domain={[0, 100]} />
           <YAxis
             type="category"
             dataKey="zone"
-            stroke="#64748b"
-            tick={{ fontSize: 10 }}
-            width={120}
+            stroke="#475569"
+            fontSize={11}
+            tickLine={false}
+            axisLine={false}
+            width={90}
           />
           <Tooltip
             contentStyle={{
-              backgroundColor: 'rgba(11, 21, 45, 0.95)',
-              borderColor: 'rgba(239, 68, 68, 0.4)',
-              borderRadius: '8px',
-              color: '#f8fafc',
-              fontSize: '12px',
+              backgroundColor: '#ffffff',
+              borderColor: '#e2e8f0',
+              borderRadius: '6px',
+              color: '#0f172a',
+              fontSize: '11px',
+              boxShadow: '0 4px 12px rgba(15,23,42,0.08)',
             }}
             formatter={(value: any, name: string) => [
-              `${value}/100`,
-              name === 'threatLevel' ? 'Threat Score' : name,
+              name === 'threatScore' ? `${value}/100` : value,
+              name === 'threatScore' ? 'Threat Score' : 'Incidents',
             ]}
           />
-          <Bar dataKey="threatLevel" radius={[0, 4, 4, 0]}>
-            {data.map((entry, index) => {
-              const color = entry.threatLevel >= 90 ? '#ef4444' : entry.threatLevel >= 80 ? '#f59e0b' : '#06b6d4';
-              return <Cell key={`cell-${index}`} fill={color} />;
-            })}
+          <Bar dataKey="threatScore" name="threatScore" radius={[0, 4, 4, 0]} barSize={12}>
+            {data.map((entry, index) => (
+              <Cell
+                key={`cell-${index}`}
+                fill={
+                  entry.threatScore > 80
+                    ? '#dc2626'
+                    : entry.threatScore > 60
+                    ? '#ea580c'
+                    : '#2563eb'
+                }
+              />
+            ))}
           </Bar>
         </BarChart>
       </ResponsiveContainer>

@@ -5,13 +5,13 @@ import {
   Shield, 
   Lock, 
   Mail, 
-  KeyRound, 
   Eye, 
   EyeOff, 
   Crown, 
   Search, 
   LineChart,
-  AlertTriangle
+  AlertTriangle,
+  ArrowRight
 } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
@@ -29,7 +29,6 @@ export const Login: React.FC = () => {
   const navigate = useNavigate();
 
   const handleSelectRole = (roleKey: 'admin' | 'investigator' | 'analyst') => {
-    // Toggle role selection without filling email or password
     setSelectedRole(prev => prev === roleKey ? null : roleKey);
     setError('');
   };
@@ -55,78 +54,69 @@ export const Login: React.FC = () => {
     switch (role) {
       case 'admin':
         return {
-          title: 'ADMINISTRATOR CLEARANCE',
-          desc: 'Requires Global Director credentials (TOP SECRET // SCI)',
-          border: 'border-purple-500/80 bg-purple-950/40 text-purple-300',
+          title: 'DIRECTOR CLEARANCE (ADMIN)',
+          desc: 'Global task force command authority • TOP SECRET // SCI',
+          border: 'border-purple-200 bg-purple-50 text-purple-800',
         };
       case 'investigator':
         return {
-          title: 'INVESTIGATOR CLEARANCE',
-          desc: 'Requires Lead Agent credentials (TOP SECRET // SCI)',
-          border: 'border-cyan-500/80 bg-cyan-950/40 text-cyan-300',
+          title: 'LEAD INVESTIGATOR CLEARANCE',
+          desc: 'Case management & operative surveillance • TOP SECRET // SCI',
+          border: 'border-blue-200 bg-blue-50 text-blue-800',
         };
       case 'analyst':
         return {
-          title: 'ANALYST CLEARANCE',
-          desc: 'Requires Intelligence Telemetry credentials (SECRET)',
-          border: 'border-emerald-500/80 bg-emerald-950/40 text-emerald-300',
+          title: 'SENIOR ANALYST CLEARANCE',
+          desc: 'Predictive link analysis & telemetry reporting • SECRET',
+          border: 'border-emerald-200 bg-emerald-50 text-emerald-800',
         };
     }
   };
 
   return (
-    <div className="min-h-screen bg-agency-950 flex flex-col justify-center items-center px-4 relative overflow-hidden cyber-grid py-12">
-      {/* Tactical radar scanning beam animation */}
-      <div className="absolute w-[600px] h-[600px] rounded-full border border-cyber-cyan/10 pointer-events-none animate-pulse-glow" />
-      <div className="absolute w-[900px] h-[900px] rounded-full border border-cyber-purple/10 pointer-events-none" />
-
-      {/* Cyber scanning line */}
-      <div className="absolute inset-x-0 h-1 bg-gradient-to-r from-transparent via-cyber-cyan/40 to-transparent animate-scanline pointer-events-none" />
-
-      <div className="w-full max-w-lg relative z-10">
-        {/* Intelligence Agency Logo & Branding */}
-        <div className="text-center mb-6 space-y-2">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-cyber-cyan via-blue-600 to-cyber-purple p-0.5 shadow-neon-cyan mb-2">
-            <div className="w-full h-full bg-agency-950 rounded-[14px] flex items-center justify-center">
-              <Shield className="w-8 h-8 text-cyber-cyan-bright" />
-            </div>
+    <div className="min-h-screen bg-slate-50 flex flex-col justify-center items-center px-4 py-12">
+      <div className="w-full max-w-md space-y-5">
+        {/* Branding Header */}
+        <div className="text-center space-y-2">
+          <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-slate-900 text-white shadow-card mb-1">
+            <Shield className="w-6 h-6 text-brand-300" />
           </div>
           <div className="flex items-center justify-center gap-2">
-            <span className="font-mono text-xs text-cyber-cyan px-2 py-0.5 rounded bg-cyan-950/80 border border-cyan-500/40 font-semibold">
+            <span className="text-[10px] font-semibold text-slate-700 px-2 py-0.5 rounded bg-slate-100 border border-slate-200 uppercase tracking-wider">
               CLASSIFIED ACCESS
             </span>
-            <span className="font-mono text-[11px] text-slate-400">DEFCON 2</span>
+            <span className="text-[10px] text-slate-400 font-mono">DEFCON 2</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-wider text-slate-100 uppercase">
-            A.E.G.I.S. Command
+          <h1 className="text-2xl font-bold tracking-tight text-slate-900">
+            NETRA Intelligence System
           </h1>
-          <p className="text-xs font-mono text-slate-400">
-            Autonomous Criminal Network & Threat Intelligence System
+          <p className="text-xs text-slate-500">
+            Autonomous Criminal Network & Threat Intelligence Platform
           </p>
         </div>
 
-        {/* Login Glassmorphism Card */}
-        <div className="glass-panel p-6 sm:p-8 rounded-2xl border border-slate-800 shadow-2xl space-y-6">
-          <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-            <span className="text-xs font-mono text-slate-300 font-semibold flex items-center gap-1.5">
-              <KeyRound className="w-4 h-4 text-cyber-cyan" /> OFFICER AUTHENTICATION GATEWAY
+        {/* Authentication Card */}
+        <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-card space-y-5">
+          <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+            <span className="text-xs font-semibold text-slate-900">
+              Officer Authentication Gateway
             </span>
-            <span className="text-[10px] font-mono text-emerald-400 flex items-center gap-1">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" /> ONLINE
+            <span className="text-[10px] font-medium text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 flex items-center gap-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" /> System Ready
             </span>
           </div>
 
-          {/* Role Clearance Selection Buttons (Does NOT fill email or password) */}
-          <div className="space-y-2">
+          {/* Role Clearance Selection Buttons */}
+          <div className="space-y-1.5">
             <div className="flex items-center justify-between">
-              <label className="text-[11px] font-mono text-slate-400 uppercase tracking-wider block">
+              <label className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider block">
                 SELECT CLEARANCE ROLE TIER
               </label>
               {selectedRole && (
                 <button
                   type="button"
                   onClick={() => setSelectedRole(null)}
-                  className="text-[10px] font-mono text-slate-500 hover:text-slate-300 underline"
+                  className="text-[10px] text-slate-400 hover:text-slate-700 underline"
                 >
                   Reset Tier
                 </button>
@@ -137,72 +127,70 @@ export const Login: React.FC = () => {
               <button
                 type="button"
                 onClick={() => handleSelectRole('admin')}
-                className={`p-2.5 rounded-xl border text-left transition flex flex-col items-center justify-center gap-1.5 ${
+                className={`p-2.5 rounded-lg border text-left transition flex flex-col items-center justify-center gap-1 ${
                   selectedRole === 'admin'
-                    ? 'bg-purple-950/50 border-purple-500 text-purple-300 shadow-sm shadow-purple-500/20 ring-1 ring-purple-500'
-                    : 'bg-agency-950 hover:bg-slate-900 border-slate-800 text-slate-400 hover:text-slate-200'
+                    ? 'bg-purple-50 border-purple-300 text-purple-900 shadow-subtle ring-1 ring-purple-400'
+                    : 'bg-white hover:bg-slate-50 border-slate-200 text-slate-600'
                 }`}
               >
-                <Crown className={`w-4 h-4 ${selectedRole === 'admin' ? 'text-purple-400' : 'text-slate-500'}`} />
-                <span className="text-xs font-bold font-mono">ADMIN</span>
-                <span className="text-[9px] text-slate-500 font-mono">Director</span>
+                <Crown className={`w-4 h-4 ${selectedRole === 'admin' ? 'text-purple-700' : 'text-slate-400'}`} />
+                <span className="text-xs font-bold">ADMIN</span>
+                <span className="text-[9px] text-slate-400">Director</span>
               </button>
 
               {/* Investigator Button */}
               <button
                 type="button"
                 onClick={() => handleSelectRole('investigator')}
-                className={`p-2.5 rounded-xl border text-left transition flex flex-col items-center justify-center gap-1.5 ${
+                className={`p-2.5 rounded-lg border text-left transition flex flex-col items-center justify-center gap-1 ${
                   selectedRole === 'investigator'
-                    ? 'bg-cyan-950/50 border-cyan-500 text-cyan-300 shadow-sm shadow-cyan-500/20 ring-1 ring-cyan-500'
-                    : 'bg-agency-950 hover:bg-slate-900 border-slate-800 text-slate-400 hover:text-slate-200'
+                    ? 'bg-blue-50 border-blue-300 text-blue-900 shadow-subtle ring-1 ring-blue-400'
+                    : 'bg-white hover:bg-slate-50 border-slate-200 text-slate-600'
                 }`}
               >
-                <Search className={`w-4 h-4 ${selectedRole === 'investigator' ? 'text-cyan-400' : 'text-slate-500'}`} />
-                <span className="text-xs font-bold font-mono">INVESTIGATOR</span>
-                <span className="text-[9px] text-slate-500 font-mono">Lead Agent</span>
+                <Search className={`w-4 h-4 ${selectedRole === 'investigator' ? 'text-blue-700' : 'text-slate-400'}`} />
+                <span className="text-xs font-bold">INVESTIGATOR</span>
+                <span className="text-[9px] text-slate-400">Lead Agent</span>
               </button>
 
               {/* Analyst Button */}
               <button
                 type="button"
                 onClick={() => handleSelectRole('analyst')}
-                className={`p-2.5 rounded-xl border text-left transition flex flex-col items-center justify-center gap-1.5 ${
+                className={`p-2.5 rounded-lg border text-left transition flex flex-col items-center justify-center gap-1 ${
                   selectedRole === 'analyst'
-                    ? 'bg-emerald-950/50 border-emerald-500 text-emerald-300 shadow-sm shadow-emerald-500/20 ring-1 ring-emerald-500'
-                    : 'bg-agency-950 hover:bg-slate-900 border-slate-800 text-slate-400 hover:text-slate-200'
+                    ? 'bg-emerald-50 border-emerald-300 text-emerald-900 shadow-subtle ring-1 ring-emerald-400'
+                    : 'bg-white hover:bg-slate-50 border-slate-200 text-slate-600'
                 }`}
               >
-                <LineChart className={`w-4 h-4 ${selectedRole === 'analyst' ? 'text-emerald-400' : 'text-slate-500'}`} />
-                <span className="text-xs font-bold font-mono">ANALYST</span>
-                <span className="text-[9px] text-slate-500 font-mono">Telemetry</span>
+                <LineChart className={`w-4 h-4 ${selectedRole === 'analyst' ? 'text-emerald-700' : 'text-slate-400'}`} />
+                <span className="text-xs font-bold">ANALYST</span>
+                <span className="text-[9px] text-slate-400">Telemetry</span>
               </button>
             </div>
           </div>
 
           {/* Selected Role Clearance Details Banner */}
           {selectedRole && (
-            <div className={`p-2.5 rounded-xl border text-xs font-mono animate-in fade-in ${getRoleBadge(selectedRole).border}`}>
-              <div className="flex items-center gap-2">
-                <span className="font-bold">{getRoleBadge(selectedRole).title}</span>
-              </div>
-              <p className="text-[11px] opacity-80 mt-0.5">
+            <div className={`p-2.5 rounded-lg border text-xs animate-in fade-in ${getRoleBadge(selectedRole).border}`}>
+              <span className="font-bold block text-[11px]">{getRoleBadge(selectedRole).title}</span>
+              <p className="text-[11px] opacity-90 mt-0.5">
                 {getRoleBadge(selectedRole).desc}
               </p>
             </div>
           )}
 
           {error && (
-            <div className="p-3 rounded-lg bg-red-950/40 border border-red-500/50 text-red-400 text-xs font-mono animate-in shake flex items-center gap-2">
-              <AlertTriangle className="w-4 h-4 shrink-0" />
+            <div className="p-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-xs animate-in shake flex items-center gap-2">
+              <AlertTriangle className="w-4 h-4 shrink-0 text-red-600" />
               <span>{error}</span>
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-3.5">
             <div>
-              <label className="text-xs font-mono text-slate-300 block mb-1.5">
-                GOVERNMENT / INTERPOL EMAIL ID
+              <label className="text-xs font-semibold text-slate-700 block mb-1">
+                Government / Interpol Email ID
               </label>
               <Input
                 type="email"
@@ -216,8 +204,8 @@ export const Login: React.FC = () => {
             </div>
 
             <div>
-              <label className="text-xs font-mono text-slate-300 block mb-1.5">
-                ENCRYPTED PASSKEY / CREDENTIAL
+              <label className="text-xs font-semibold text-slate-700 block mb-1">
+                Encrypted Passkey / Cryptographic Credential
               </label>
               <div className="relative">
                 <Input
@@ -225,61 +213,61 @@ export const Login: React.FC = () => {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Enter cryptographic passkey..."
+                  placeholder="Enter security key..."
                   icon={<Lock className="w-4 h-4" />}
                   autoComplete="current-password"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700"
                 >
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
               </div>
             </div>
 
-            <div className="flex items-center justify-between text-xs font-mono">
-              <label className="flex items-center gap-2 cursor-pointer text-slate-300">
+            <div className="flex items-center justify-between text-xs pt-1">
+              <label className="flex items-center gap-2 cursor-pointer text-slate-600">
                 <input
                   type="checkbox"
                   checked={rememberMe}
                   onChange={(e) => setRememberMe(e.target.checked)}
-                  className="rounded bg-slate-900 border-slate-700 text-cyber-cyan focus:ring-0"
+                  className="rounded bg-white border-slate-300 text-slate-900 focus:ring-0"
                 />
                 <span>Remember Session</span>
               </label>
               {selectedRole && (
-                <span className="text-[11px] text-slate-400">
-                  Target Tier: <strong className="text-cyber-cyan">{selectedRole.toUpperCase()}</strong>
+                <span className="text-[11px] text-slate-500">
+                  Target Tier: <strong className="text-slate-900">{selectedRole.toUpperCase()}</strong>
                 </span>
               )}
             </div>
 
             <Button
               type="submit"
-              variant="cyan"
+              variant="default"
               size="lg"
               disabled={loading}
-              className="w-full font-bold shadow-neon-cyan"
+              className="w-full font-bold h-9 shadow-sm"
             >
               {loading ? (
                 <span className="flex items-center gap-2">
-                  <span className="w-4 h-4 border-2 border-slate-950 border-t-transparent rounded-full animate-spin" />
-                  AUTHENTICATING CREDENTIALS...
+                  <span className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  Authenticating Credentials...
                 </span>
               ) : selectedRole ? (
-                `AUTHENTICATE AS ${selectedRole.toUpperCase()}`
+                `Authenticate as ${selectedRole.toUpperCase()}`
               ) : (
-                'AUTHENTICATE & ACCESS COMMAND'
+                'Authenticate & Access Command'
               )}
             </Button>
           </form>
         </div>
 
         {/* Security Warning Notice */}
-        <p className="mt-6 text-center text-[10px] font-mono text-slate-500 max-w-sm mx-auto leading-relaxed">
-          UNAUTHORIZED ACCESS IS STRICTLY MONITORED UNDER APPLICABLE INTERNATIONAL CYBERSPACE CONVENTIONS. ALL SESSIONS PROTECTED VIA HS256 JWT & AES-256 ENCRYPTION.
+        <p className="text-center text-[10px] text-slate-400 max-w-sm mx-auto leading-relaxed">
+          UNAUTHORIZED ACCESS IS STRICTLY MONITORED UNDER APPLICABLE INTERNATIONAL CYBERSPACE CONVENTIONS. PROTECTED VIA HS256 JWT & AES-256 ENCRYPTION.
         </p>
       </div>
     </div>

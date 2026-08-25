@@ -3,9 +3,8 @@ import { useQuery } from '@tanstack/react-query';
 import { getReports } from '../api';
 import { ReportCard } from '../components/cards/ReportCard';
 import { TableSkeleton } from '../components/common/SkeletonLoaders';
-import { ErrorFallback } from '../components/common/ErrorFallback';
 import { InvestigationReport } from '../types';
-import { FileText, Download, X, Printer, Shield, CheckCircle2, FileCode } from 'lucide-react';
+import { FileText, Download, X, Printer, CheckCircle2, RefreshCw } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { downloadJSON, triggerPrintDossier } from '../utils/exportUtils';
 import { formatDate } from '../utils/formatters';
@@ -13,57 +12,63 @@ import { formatDate } from '../utils/formatters';
 export const InvestigationReports: React.FC = () => {
   const [previewReport, setPreviewReport] = useState<InvestigationReport | null>(null);
 
-  const { data: reportsRes, isLoading, refetch } = useQuery({
+  const { data: reportsRes, isLoading, refetch, isFetching } = useQuery({
     queryKey: ['reports'],
     queryFn: getReports,
   });
 
   const reports = reportsRes?.data || [];
-  const isFallback = reportsRes?.isFallback ?? false;
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-300">
+    <div className="space-y-4 animate-in fade-in duration-150">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white p-4 rounded-lg border border-slate-200 shadow-card">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-xs font-mono text-cyber-cyan uppercase tracking-wider font-semibold">
+            <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
               EXECUTIVE INTELLIGENCE BRIEFS
             </span>
-            <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-agency-900 border border-slate-700 text-slate-400">
-              {reports.length} READY FOR EXPORT
+            <span className="text-[10px] font-semibold px-1.5 py-0.2 rounded bg-slate-100 text-slate-700 border border-slate-200">
+              {reports.length} Reports Logged
             </span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-100 tracking-tight">
-            Investigation Reports & Dossiers
+          <h1 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
+            Investigation Reports & Intelligence Briefs
           </h1>
+          <p className="text-xs text-slate-500 mt-0.5">
+            Formal intelligence assessments, multi-tier evidence summaries, and forensic link graphs.
+          </p>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 shrink-0">
           <Button
-            variant="cyan"
+            variant="secondary"
             size="sm"
-            onClick={() => downloadJSON(reports, 'All_Investigation_Reports.json')}
-            className="text-xs gap-1.5 shadow-neon-cyan"
+            onClick={() => refetch()}
+            disabled={isFetching}
+            className="gap-1.5"
           >
-            <Download className="w-3.5 h-3.5" /> Export All (JSON Bundle)
+            <RefreshCw className={`w-3.5 h-3.5 ${isFetching ? 'animate-spin' : ''}`} />
+            <span>Sync</span>
+          </Button>
+
+          <Button
+            variant="secondary"
+            size="sm"
+            onClick={() => downloadJSON(reports, 'NETRA_Investigation_Reports_Bundle.json')}
+            className="gap-1.5"
+          >
+            <Download className="w-3.5 h-3.5" />
+            <span>Export Bundle (JSON)</span>
           </Button>
         </div>
       </div>
-
-      {isFallback && (
-        <ErrorFallback
-          title="Intelligence Reports Archive Active"
-          message="FastAPI backend offline. Displaying 6 full forensic and AI recommendation dossiers from local cache."
-          onRetry={() => refetch()}
-        />
-      )}
 
       {/* Reports Grid */}
       {isLoading ? (
         <TableSkeleton rows={4} />
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {reports.map((rep) => (
             <ReportCard
               key={rep.id}
@@ -76,93 +81,93 @@ export const InvestigationReports: React.FC = () => {
 
       {/* Printable Report Preview Dialog */}
       {previewReport && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-in fade-in duration-200">
-          <div className="relative w-full max-w-3xl max-h-[90vh] bg-agency-950 border border-cyber-cyan/50 rounded-2xl shadow-2xl overflow-y-auto glass-panel p-6 sm:p-8 space-y-6">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/40 backdrop-blur-xs animate-in fade-in duration-100">
+          <div className="relative w-full max-w-3xl max-h-[90vh] bg-white border border-slate-200 rounded-xl shadow-2xl overflow-y-auto p-6 space-y-5">
             {/* Header */}
-            <div className="flex items-start justify-between border-b border-slate-800 pb-4">
+            <div className="flex items-start justify-between border-b border-slate-200 pb-3">
               <div>
                 <div className="flex items-center gap-2 mb-1">
-                  <span className="text-xs font-mono font-bold text-cyber-cyan bg-cyan-950 px-2 py-0.5 rounded border border-cyan-500/40">
+                  <span className="text-xs font-mono font-bold text-slate-800 bg-slate-100 px-2 py-0.5 rounded border border-slate-200">
                     {previewReport.reportNumber}
                   </span>
-                  <span className="text-xs font-mono font-bold text-red-400 bg-red-950 px-2 py-0.5 rounded border border-red-500/40">
+                  <span className="text-xs font-semibold px-2 py-0.5 rounded bg-red-50 text-red-700 border border-red-200">
                     {previewReport.classificationLevel}
                   </span>
                 </div>
-                <h2 className="text-xl font-bold text-slate-100">{previewReport.title}</h2>
-                <p className="text-xs font-mono text-slate-400 mt-1">
-                  Author: <span className="text-slate-200">{previewReport.author}</span> • Date: {formatDate(previewReport.dateGenerated)}
+                <h2 className="text-lg font-bold text-slate-900">{previewReport.title}</h2>
+                <p className="text-xs text-slate-500 mt-0.5 font-mono">
+                  Author: {previewReport.author} • Generated: {formatDate(previewReport.dateGenerated)}
                 </p>
               </div>
 
               <button
                 onClick={() => setPreviewReport(null)}
-                className="p-1.5 text-slate-400 hover:text-slate-200 hover:bg-slate-800 rounded-lg transition"
+                className="p-1 rounded-md text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition"
               >
-                <X className="w-5 h-5" />
+                <X className="w-4 h-4" />
               </button>
             </div>
 
             {/* Executive Summary */}
-            <div className="space-y-2">
-              <h3 className="text-xs font-mono uppercase text-cyber-cyan tracking-wider font-bold">
+            <div className="space-y-1.5">
+              <h3 className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">
                 Executive Intelligence Summary
               </h3>
-              <p className="text-sm text-slate-200 leading-relaxed bg-agency-900/90 p-4 rounded-xl border border-slate-800">
+              <p className="text-xs text-slate-700 leading-relaxed bg-slate-50 p-3.5 rounded-lg border border-slate-200">
                 {previewReport.summary}
               </p>
             </div>
 
             {/* Target & Metrics Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 font-mono text-xs">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
               {Object.entries(previewReport.metrics).map(([key, val]) => (
-                <div key={key} className="p-3 rounded-lg bg-agency-900 border border-slate-800">
-                  <span className="text-slate-500 text-[10px] uppercase block truncate">{key}</span>
-                  <span className="text-cyber-cyan font-bold text-sm block mt-0.5 truncate">{String(val)}</span>
+                <div key={key} className="p-2.5 rounded-md bg-white border border-slate-200">
+                  <span className="text-slate-400 text-[10px] uppercase block truncate">{key}</span>
+                  <span className="text-slate-900 font-bold text-sm block mt-0.5 truncate">{String(val)}</span>
                 </div>
               ))}
             </div>
 
             {/* Key Findings List */}
             <div className="space-y-2">
-              <h3 className="text-xs font-mono uppercase text-slate-400 tracking-wider font-bold">
+              <h3 className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">
                 Key Analytical Findings & Evidence Trail
               </h3>
-              <div className="space-y-2">
+              <div className="space-y-1.5">
                 {previewReport.keyFindings.map((finding, idx) => (
-                  <div key={idx} className="flex items-start gap-2.5 p-3 rounded-lg bg-agency-900/60 border border-slate-800 text-xs text-slate-200">
-                    <CheckCircle2 className="w-4 h-4 text-cyber-cyan shrink-0 mt-0.5" />
-                    <span className="leading-relaxed">{finding}</span>
+                  <div key={idx} className="flex items-start gap-2 p-2.5 rounded-md bg-slate-50 border border-slate-100 text-xs text-slate-800">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-brand-600 shrink-0 mt-0.5" />
+                    <span className="leading-relaxed text-[11px]">{finding}</span>
                   </div>
                 ))}
               </div>
             </div>
 
             {/* Action Buttons */}
-            <div className="pt-4 border-t border-slate-800 flex items-center justify-between gap-3">
+            <div className="pt-3 border-t border-slate-200 flex items-center justify-between gap-3">
               <Button
-                variant="ghost"
+                variant="secondary"
                 size="sm"
                 onClick={() => setPreviewReport(null)}
-                className="text-xs"
+                className="text-xs h-8"
               >
                 Close Preview
               </Button>
 
               <div className="flex items-center gap-2">
                 <Button
-                  variant="outline"
+                  variant="default"
                   size="sm"
                   onClick={() => triggerPrintDossier(previewReport.title)}
-                  className="text-xs gap-1.5"
+                  className="text-xs h-8 gap-1.5"
                 >
                   <Printer className="w-3.5 h-3.5" /> Print / Save PDF
                 </Button>
                 <Button
-                  variant="cyan"
+                  variant="secondary"
                   size="sm"
                   onClick={() => downloadJSON(previewReport, `${previewReport.reportNumber}.json`)}
-                  className="text-xs gap-1.5 shadow-neon-cyan"
+                  className="text-xs h-8 gap-1.5"
                 >
                   <Download className="w-3.5 h-3.5" /> Export JSON
                 </Button>

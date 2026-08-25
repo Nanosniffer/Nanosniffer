@@ -5,9 +5,6 @@ import ReactFlow, {
   MiniMap,
   useNodesState,
   useEdgesState,
-  addEdge,
-  Connection,
-  Edge,
   Node,
   ReactFlowProvider,
   useReactFlow,
@@ -19,7 +16,6 @@ import { edgeTypes } from './CustomEdges';
 import { NetworkGraphData, NetworkNodeData } from '../../types';
 import { GraphControls } from './GraphControls';
 import { NodeDetailPanel } from './NodeDetailPanel';
-import { GraphAnalyticsWidgets } from './GraphAnalyticsWidgets';
 
 interface NetworkGraphProps {
   initialData: NetworkGraphData;
@@ -32,6 +28,7 @@ const GraphCanvas: React.FC<NetworkGraphProps> = ({ initialData, onOpenCriminalD
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialData.edges);
   
   const [selectedNodeData, setSelectedNodeData] = useState<NetworkNodeData | null>(null);
+  const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedType, setSelectedType] = useState('ALL');
   
@@ -44,7 +41,18 @@ const GraphCanvas: React.FC<NetworkGraphProps> = ({ initialData, onOpenCriminalD
 
   const { fitView } = useReactFlow();
 
-  // Filter nodes & edges based on type & search
+  // Find 1-hop neighbors of selected node
+  const connectedNodeIds = useMemo(() => {
+    if (!selectedNodeId) return null;
+    const connected = new Set<string>([selectedNodeId]);
+    initialData.edges.forEach((edge) => {
+      if (edge.source === selectedNodeId) connected.add(edge.target);
+      if (edge.target === selectedNodeId) connected.add(edge.source);
+    });
+    return connected;
+  }, [selectedNodeId, initialData.edges]);
+
+  // Filter nodes based on search, type, and selection
   const filteredNodes = useMemo(() => {
     return initialData.nodes.map((node) => {
       const matchesType = selectedType === 'ALL' || node.data.type === selectedType;
@@ -56,23 +64,30 @@ const GraphCanvas: React.FC<NetworkGraphProps> = ({ initialData, onOpenCriminalD
       const isPathActive = highlightedPathIds.nodes.size > 0;
       const isInPath = highlightedPathIds.nodes.has(node.id);
 
-      const isDimmed = (isPathActive && !isInPath) || (!matchesType || !matchesSearch);
+      const isConnected = connectedNodeIds ? connectedNodeIds.has(node.id) : true;
+      const isDimmed = (isPathActive && !isInPath) || (!matchesType || !matchesSearch) || (!isConnected && selectedNodeId !== null);
 
       return {
         ...node,
         style: {
           ...node.style,
-          opacity: isDimmed ? 0.2 : 1,
-          transition: 'opacity 0.3s ease',
+          opacity: isDimmed ? 0.25 : 1,
+          transition: 'opacity 0.2s ease',
         },
       };
     });
-  }, [initialData.nodes, selectedType, searchQuery, highlightedPathIds]);
+  }, [initialData.nodes, selectedType, searchQuery, highlightedPathIds, connectedNodeIds, selectedNodeId]);
 
   const filteredEdges = useMemo(() => {
     return initialData.edges.map((edge) => {
       const isPathActive = highlightedPathIds.edges.size > 0;
       const isInPath = highlightedPathIds.edges.has(edge.id);
+
+      const isEdgeConnected = selectedNodeId
+        ? edge.source === selectedNodeId || edge.target === selectedNodeId
+        : true;
+
+      const isDimmed = (isPathActive && !isInPath) || (!isEdgeConnected && selectedNodeId !== null);
 
       return {
         ...edge,
@@ -80,13 +95,13 @@ const GraphCanvas: React.FC<NetworkGraphProps> = ({ initialData, onOpenCriminalD
         animated: isInPath || edge.animated,
         style: {
           ...edge.style,
-          stroke: isInPath ? '#22d3ee' : undefined,
-          strokeWidth: isInPath ? 3 : 1.5,
-          opacity: isPathActive && !isInPath ? 0.15 : 0.85,
+          stroke: isInPath ? '#0f172a' : undefined,
+          strokeWidth: isInPath ? 2.5 : isEdgeConnected && selectedNodeId ? 2 : 1.25,
+          opacity: isDimmed ? 0.15 : 0.9,
         },
       };
     });
-  }, [initialData.edges, highlightedPathIds]);
+  }, [initialData.edges, highlightedPathIds, selectedNodeId]);
 
   // Sync state when filtered
   useEffect(() => {
@@ -100,13 +115,18 @@ const GraphCanvas: React.FC<NetworkGraphProps> = ({ initialData, onOpenCriminalD
   // Node click handler
   const onNodeClick = useCallback((_: React.MouseEvent, node: Node) => {
     setSelectedNodeData(node.data as NetworkNodeData);
+    setSelectedNodeId(node.id);
   }, []);
 
-  // Shortest Path Finder (BFS implementation)
+  const onPaneClick = useCallback(() => {
+    setSelectedNodeData(null);
+    setSelectedNodeId(null);
+  }, []);
+
+  // Shortest Path Finder (BFS)
   const handleFindPath = useCallback(() => {
     if (!sourceNode || !targetNode || sourceNode === targetNode) return;
 
-    // Build adjacency graph
     const adj = new Map<string, Array<{ neighbor: string; edgeId: string }>>();
     initialData.nodes.forEach((n) => adj.set(n.id, []));
 
@@ -114,15 +134,13 @@ const GraphCanvas: React.FC<NetworkGraphProps> = ({ initialData, onOpenCriminalD
       if (!adj.has(e.source)) adj.set(e.source, []);
       if (!adj.has(e.target)) adj.set(e.target, []);
       adj.get(e.source)!.push({ neighbor: e.target, edgeId: e.id });
-      adj.get(e.target)!.push({ neighbor: e.source, edgeId: e.id }); // undirected traversal
+      adj.get(e.target)!.push({ neighbor: e.source, edgeId: e.id });
     });
 
-    // BFS Queue
     const queue: Array<{ curr: string; pathNodes: string[]; pathEdges: string[] }> = [
       { curr: sourceNode, pathNodes: [sourceNode], pathEdges: [] },
     ];
     const visited = new Set<string>([sourceNode]);
-
     let foundPath: { nodes: string[]; edges: string[] } | null = null;
 
     while (queue.length > 0) {
@@ -151,8 +169,6 @@ const GraphCanvas: React.FC<NetworkGraphProps> = ({ initialData, onOpenCriminalD
         nodes: new Set(foundPath.nodes),
         edges: new Set(foundPath.edges),
       });
-    } else {
-      alert('No direct or intermediary path detected between the selected entities.');
     }
   }, [sourceNode, targetNode, initialData]);
 
@@ -166,7 +182,9 @@ const GraphCanvas: React.FC<NetworkGraphProps> = ({ initialData, onOpenCriminalD
     handleClearPath();
     setSearchQuery('');
     setSelectedType('ALL');
-    fitView({ duration: 800 });
+    setSelectedNodeData(null);
+    setSelectedNodeId(null);
+    fitView({ duration: 600 });
   };
 
   const nodesList = useMemo(() => {
@@ -174,9 +192,9 @@ const GraphCanvas: React.FC<NetworkGraphProps> = ({ initialData, onOpenCriminalD
   }, [initialData.nodes]);
 
   return (
-    <div className="relative w-full h-[750px] rounded-2xl overflow-hidden border border-slate-800 bg-agency-950 shadow-2xl flex flex-col">
+    <div className="relative w-full h-[720px] rounded-lg overflow-hidden border border-slate-200 bg-slate-50 shadow-card flex flex-col">
       {/* Controls Header */}
-      <div className="p-3 bg-agency-950/90 border-b border-slate-800 z-10">
+      <div className="p-2.5 bg-white border-b border-slate-200 z-10">
         <GraphControls
           searchQuery={searchQuery}
           onSearchChange={setSearchQuery}
@@ -202,6 +220,7 @@ const GraphCanvas: React.FC<NetworkGraphProps> = ({ initialData, onOpenCriminalD
           onNodesChange={onNodesChange}
           onEdgesChange={onEdgesChange}
           onNodeClick={onNodeClick}
+          onPaneClick={onPaneClick}
           nodeTypes={nodeTypes}
           edgeTypes={edgeTypes}
           fitView
@@ -209,34 +228,37 @@ const GraphCanvas: React.FC<NetworkGraphProps> = ({ initialData, onOpenCriminalD
           minZoom={0.2}
           maxZoom={2.5}
         >
-          <Background color="#1e293b" gap={24} size={1.5} />
-          <Controls className="!bg-agency-900 !border-slate-700" />
+          <Background color="#cbd5e1" gap={20} size={1} />
+          <Controls className="!bg-white !border-slate-200 !shadow-sm" />
           <MiniMap
             nodeColor={(n) => {
               switch (n.data?.type) {
                 case 'person':
-                  return '#06b6d4';
+                  return '#0f172a';
                 case 'phone':
                   return '#10b981';
                 case 'vehicle':
-                  return '#8b5cf6';
+                  return '#f59e0b';
                 case 'bank':
                   return '#3b82f6';
                 case 'organization':
-                  return '#f43f5e';
+                  return '#a855f7';
                 default:
-                  return '#f59e0b';
+                  return '#ef4444';
               }
             }}
-            maskColor="rgba(2, 6, 23, 0.85)"
-            className="!bg-agency-950 !border-slate-800"
+            maskColor="rgba(241, 245, 249, 0.75)"
+            className="!bg-white !border-slate-200"
           />
         </ReactFlow>
 
         {/* Node Detail Inspector Drawer */}
         <NodeDetailPanel
           nodeData={selectedNodeData}
-          onClose={() => setSelectedNodeData(null)}
+          onClose={() => {
+            setSelectedNodeData(null);
+            setSelectedNodeId(null);
+          }}
           onOpenCriminalDossier={onOpenCriminalDossier}
         />
       </div>

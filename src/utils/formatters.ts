@@ -49,41 +49,46 @@ export const getRiskColor = (level: RiskLevel): {
   text: string;
   border: string;
   badge: string;
-  glow: string;
+  dot: string;
+  hex: string;
 } => {
   switch (level) {
     case 'CRITICAL':
       return {
-        bg: 'bg-red-500/15',
-        text: 'text-red-400',
-        border: 'border-red-500/40',
-        badge: 'bg-red-950/80 text-red-400 border-red-500/50',
-        glow: 'shadow-[0_0_15px_rgba(239,68,68,0.4)]',
+        bg: 'bg-red-50',
+        text: 'text-red-700',
+        border: 'border-red-200',
+        badge: 'bg-red-50 text-red-700 border-red-200',
+        dot: 'bg-red-600',
+        hex: '#dc2626',
       };
     case 'HIGH':
       return {
-        bg: 'bg-amber-500/15',
-        text: 'text-amber-400',
-        border: 'border-amber-500/40',
-        badge: 'bg-amber-950/80 text-amber-400 border-amber-500/50',
-        glow: 'shadow-[0_0_15px_rgba(245,158,11,0.4)]',
+        bg: 'bg-orange-50',
+        text: 'text-orange-700',
+        border: 'border-orange-200',
+        badge: 'bg-orange-50 text-orange-700 border-orange-200',
+        dot: 'bg-orange-500',
+        hex: '#ea580c',
       };
     case 'MEDIUM':
       return {
-        bg: 'bg-yellow-500/15',
-        text: 'text-yellow-400',
-        border: 'border-yellow-500/40',
-        badge: 'bg-yellow-950/80 text-yellow-400 border-yellow-500/50',
-        glow: 'shadow-[0_0_15px_rgba(234,179,8,0.4)]',
+        bg: 'bg-amber-50',
+        text: 'text-amber-700',
+        border: 'border-amber-200',
+        badge: 'bg-amber-50 text-amber-700 border-amber-200',
+        dot: 'bg-amber-500',
+        hex: '#d97706',
       };
     case 'LOW':
     default:
       return {
-        bg: 'bg-cyan-500/15',
-        text: 'text-cyan-400',
-        border: 'border-cyan-500/40',
-        badge: 'bg-cyan-950/80 text-cyan-400 border-cyan-500/50',
-        glow: 'shadow-[0_0_15px_rgba(6,182,212,0.4)]',
+        bg: 'bg-blue-50',
+        text: 'text-blue-700',
+        border: 'border-blue-200',
+        badge: 'bg-blue-50 text-blue-700 border-blue-200',
+        dot: 'bg-blue-500',
+        hex: '#2563eb',
       };
   }
 };
@@ -91,15 +96,15 @@ export const getRiskColor = (level: RiskLevel): {
 export const getStatusBadgeStyle = (status: SuspectStatus): string => {
   switch (status) {
     case 'WANTED':
-      return 'bg-red-950/80 text-red-400 border-red-500/50 animate-pulse';
+      return 'bg-red-50 text-red-700 border-red-200 font-semibold';
     case 'UNDER_SURVEILLANCE':
-      return 'bg-cyan-950/80 text-cyan-400 border-cyan-500/50';
+      return 'bg-blue-50 text-blue-700 border-blue-200 font-medium';
     case 'IN_CUSTODY':
-      return 'bg-slate-800 text-slate-300 border-slate-600';
+      return 'bg-slate-100 text-slate-700 border-slate-300 font-medium';
     case 'BAIL':
-      return 'bg-purple-950/80 text-purple-400 border-purple-500/50';
+      return 'bg-indigo-50 text-indigo-700 border-indigo-200 font-medium';
     case 'INACTIVE':
     default:
-      return 'bg-slate-900 text-slate-500 border-slate-800';
+      return 'bg-slate-100 text-slate-500 border-slate-200 font-normal';
   }
 };

@@ -4,60 +4,65 @@ import { getCriminals } from '../api';
 import { CriminalTable } from '../components/tables/CriminalTable';
 import { CriminalProfileDrawer } from '../components/drawers/CriminalProfileDrawer';
 import { TableSkeleton } from '../components/common/SkeletonLoaders';
-import { ErrorFallback } from '../components/common/ErrorFallback';
 import { Criminal } from '../types';
-import { Users, UserPlus, Download, ShieldCheck } from 'lucide-react';
+import { Users, Download, RefreshCw } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { downloadJSON } from '../utils/exportUtils';
 
 export const CriminalProfiles: React.FC = () => {
   const [selectedCriminal, setSelectedCriminal] = useState<Criminal | null>(null);
 
-  const { data: res, isLoading, refetch } = useQuery({
+  const { data: res, isLoading, refetch, isFetching } = useQuery({
     queryKey: ['criminals'],
     queryFn: () => getCriminals(),
   });
 
   const criminals = res?.data || [];
-  const isFallback = res?.isFallback ?? false;
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-300">
+    <div className="space-y-4 animate-in fade-in duration-150">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white p-4 rounded-lg border border-slate-200 shadow-card">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-xs font-mono text-cyber-cyan uppercase tracking-wider font-semibold">
-              TASK FORCE DATABASE
+            <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
+              INTELLIGENCE DATABASE
             </span>
-            <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-agency-900 border border-slate-700 text-slate-400">
-              {criminals.length} TARGETS
+            <span className="text-[10px] font-semibold px-1.5 py-0.2 rounded bg-slate-100 text-slate-700 border border-slate-200">
+              {criminals.length} Subject Dossiers
             </span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-100 tracking-tight">
-            Criminal Profiles & Dossiers
+          <h1 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
+            Criminal Profiles & Surveillance Dossiers
           </h1>
+          <p className="text-xs text-slate-500 mt-0.5">
+            Query classified biometrics, associates, communications telemetry, and financial nodes.
+          </p>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 shrink-0">
           <Button
-            variant="outline"
+            variant="secondary"
             size="sm"
-            onClick={() => downloadJSON(criminals, 'Interpol_Target_Roster.json')}
-            className="text-xs gap-1.5"
+            onClick={() => refetch()}
+            disabled={isFetching}
+            className="gap-1.5"
           >
-            <Download className="w-3.5 h-3.5" /> Export Roster JSON
+            <RefreshCw className={`w-3.5 h-3.5 ${isFetching ? 'animate-spin' : ''}`} />
+            <span>Sync</span>
+          </Button>
+
+          <Button
+            variant="secondary"
+            size="sm"
+            onClick={() => downloadJSON(criminals, 'NETRA_Target_Roster.json')}
+            className="gap-1.5"
+          >
+            <Download className="w-3.5 h-3.5" />
+            <span>Export Roster JSON</span>
           </Button>
         </div>
       </div>
-
-      {isFallback && (
-        <ErrorFallback
-          title="Profiles Local Repository Active"
-          message="FastAPI backend offline. Displaying 20 verified target dossiers from local intelligence cache."
-          onRetry={() => refetch()}
-        />
-      )}
 
       {/* Main Criminals Table */}
       {isLoading ? (

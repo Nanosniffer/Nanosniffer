@@ -26,17 +26,17 @@ export const TacticalEdge = ({
   const getEdgeColor = (type?: string) => {
     switch (type) {
       case 'Money Transfer':
-        return '#8b5cf6'; // purple
+        return '#7c3aed'; // indigo/purple
       case 'Calls':
-        return '#10b981'; // emerald
+        return '#059669'; // emerald
       case 'Meeting':
-        return '#ef4444'; // red
+        return '#dc2626'; // red
       case 'Travel':
-        return '#06b6d4'; // cyan
+        return '#2563eb'; // blue
       case 'Supplies':
-        return '#f59e0b'; // amber
+        return '#d97706'; // amber
       default:
-        return '#64748b'; // slate
+        return '#94a3b8'; // slate-400
     }
   };
 
@@ -48,11 +48,11 @@ export const TacticalEdge = ({
         id={id}
         style={{
           ...style,
-          stroke: selected ? '#22d3ee' : strokeColor,
-          strokeWidth: selected ? 2.5 : 1.5,
-          strokeDasharray: data?.relationshipType === 'Calls' ? '5,5' : undefined,
+          stroke: selected ? '#0f172a' : strokeColor,
+          strokeWidth: selected ? 2 : 1.25,
+          strokeDasharray: data?.relationshipType === 'Calls' ? '4,4' : undefined,
         }}
-        className="react-flow__edge-path transition-all duration-300"
+        className="react-flow__edge-path transition-all duration-150"
         d={edgePath}
       />
       {data?.relationshipType && (
@@ -66,10 +66,10 @@ export const TacticalEdge = ({
             className="nodrag nopan"
           >
             <div
-              className={`px-1.5 py-0.5 rounded text-[9px] font-mono font-medium backdrop-blur-md border shadow-sm transition-all ${
+              className={`px-1.5 py-0.2 rounded text-[10px] font-medium border shadow-subtle transition-all ${
                 selected
-                  ? 'bg-cyber-cyan text-agency-950 border-white font-bold scale-110'
-                  : 'bg-agency-950/90 text-slate-300 border-slate-700/60 hover:border-cyber-cyan'
+                  ? 'bg-slate-900 text-white border-slate-900 font-semibold scale-105'
+                  : 'bg-white text-slate-700 border-slate-200 hover:border-slate-400'
               }`}
             >
               {data.relationshipType}

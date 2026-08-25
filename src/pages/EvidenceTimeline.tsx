@@ -4,16 +4,15 @@ import { getTimelineEvents, getCriminals } from '../api';
 import { EvidenceTimelineView } from '../components/timeline/EvidenceTimelineView';
 import { CriminalProfileDrawer } from '../components/drawers/CriminalProfileDrawer';
 import { TableSkeleton } from '../components/common/SkeletonLoaders';
-import { ErrorFallback } from '../components/common/ErrorFallback';
 import { Criminal } from '../types';
-import { Clock, Download, Zap, Calendar } from 'lucide-react';
+import { Clock, Download, RefreshCw } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { downloadJSON } from '../utils/exportUtils';
 
 export const EvidenceTimeline: React.FC = () => {
   const [selectedCriminal, setSelectedCriminal] = useState<Criminal | null>(null);
 
-  const { data: timelineRes, isLoading, refetch } = useQuery({
+  const { data: timelineRes, isLoading, refetch, isFetching } = useQuery({
     queryKey: ['timeline'],
     queryFn: () => getTimelineEvents(),
   });
@@ -24,46 +23,52 @@ export const EvidenceTimeline: React.FC = () => {
   });
 
   const events = timelineRes?.data || [];
-  const isFallback = timelineRes?.isFallback ?? false;
   const criminals = criminalsRes?.data || [];
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-300">
+    <div className="space-y-4 animate-in fade-in duration-150">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white p-4 rounded-lg border border-slate-200 shadow-card">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-xs font-mono text-cyber-cyan uppercase tracking-wider font-semibold">
-              CHRONOLOGICAL FORENSIC SEQUENCE
+            <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
+              FORENSIC SEQUENCE & RECONSTRUCTION
             </span>
-            <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-agency-900 border border-slate-700 text-slate-400">
-              {events.length} LOGGED EVENTS
+            <span className="text-[10px] font-semibold px-1.5 py-0.2 rounded bg-slate-100 text-slate-700 border border-slate-200">
+              {events.length} Events Logged
             </span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-100 tracking-tight">
+          <h1 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
             Evidence Timeline & Cross-Correlations
           </h1>
+          <p className="text-xs text-slate-500 mt-0.5">
+            Sequential reconstruction of wiretaps, ATM cashouts, CCTV sightings, and syndicate meetings.
+          </p>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 shrink-0">
           <Button
-            variant="outline"
+            variant="secondary"
             size="sm"
-            onClick={() => downloadJSON(events, 'Evidence_Timeline_100_Events.json')}
-            className="text-xs gap-1.5"
+            onClick={() => refetch()}
+            disabled={isFetching}
+            className="gap-1.5"
           >
-            <Download className="w-3.5 h-3.5" /> Export Full Timeline (JSON)
+            <RefreshCw className={`w-3.5 h-3.5 ${isFetching ? 'animate-spin' : ''}`} />
+            <span>Sync</span>
+          </Button>
+
+          <Button
+            variant="secondary"
+            size="sm"
+            onClick={() => downloadJSON(events, 'NETRA_Evidence_Timeline.json')}
+            className="gap-1.5"
+          >
+            <Download className="w-3.5 h-3.5" />
+            <span>Export Timeline (JSON)</span>
           </Button>
         </div>
       </div>
-
-      {isFallback && (
-        <ErrorFallback
-          title="Evidence Timeline Stream Active"
-          message="FastAPI backend offline. Displaying 100 chronological incidents across calls, ATM cashouts, CCTV sightings, and wire transfers from local cache."
-          onRetry={() => refetch()}
-        />
-      )}
 
       {/* Timeline view */}
       {isLoading ? (

@@ -8,74 +8,60 @@ export default {
   theme: {
     extend: {
       colors: {
-        agency: {
-          950: '#020617', // deepest void
-          900: '#060d1f', // deep navy dark
-          850: '#0b152d', // surface deep
-          800: '#0f1f42', // surface card
-          750: '#152957', // surface card hover
-          700: '#1e3a8a', // navy accent
-          600: '#2563eb', // blue
-          500: '#3b82f6',
+        // Enterprise Brand Colors
+        brand: {
+          50: '#f0f7ff',
+          100: '#e0effe',
+          200: '#bae0fd',
+          300: '#7cc7fb',
+          400: '#38a8f8',
+          500: '#0e8ce9',
+          600: '#026fc7',
+          700: '#0358a1',
+          800: '#074b85',
+          900: '#0c3f6e',
+          950: '#082849',
         },
-        cyber: {
-          cyan: '#06b6d4',
-          'cyan-bright': '#22d3ee',
-          'cyan-glow': 'rgba(6, 182, 212, 0.3)',
-          purple: '#8b5cf6',
-          'purple-bright': '#a78bfa',
-          'purple-glow': 'rgba(139, 92, 246, 0.3)',
-          amber: '#f59e0b',
-          crimson: '#ef4444',
-          emerald: '#10b981',
-          rose: '#f43f5e',
+        // Deep Navy / Slate Slate
+        navy: {
+          50: '#f8fafc',
+          100: '#f1f5f9',
+          200: '#e2e8f0',
+          300: '#cbd5e1',
+          400: '#94a3b8',
+          500: '#64748b',
+          600: '#475569',
+          700: '#334155',
+          800: '#1e293b',
+          900: '#0f172a',
+          950: '#020617',
         },
-        glass: {
-          light: 'rgba(255, 255, 255, 0.05)',
-          medium: 'rgba(15, 23, 42, 0.75)',
-          heavy: 'rgba(6, 13, 31, 0.90)',
-          border: 'rgba(148, 163, 184, 0.12)',
-          'border-highlight': 'rgba(6, 182, 212, 0.35)',
-        }
+        // Status & Risk Colors
+        risk: {
+          critical: '#dc2626', // Red
+          high: '#ea580c',     // Orange
+          medium: '#d97706',   // Amber
+          low: '#2563eb',      // Blue
+          success: '#16a34a',  // Green
+        },
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
-        mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+        sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+        mono: ['JetBrains Mono', 'Fira Code', 'ui-monospace', 'monospace'],
       },
       boxShadow: {
-        'neon-cyan': '0 0 15px -2px rgba(6, 182, 212, 0.45)',
-        'neon-purple': '0 0 15px -2px rgba(139, 92, 246, 0.45)',
-        'neon-crimson': '0 0 15px -2px rgba(239, 68, 68, 0.45)',
-        'neon-amber': '0 0 15px -2px rgba(245, 158, 11, 0.45)',
-        'glass-card': '0 8px 32px 0 rgba(0, 0, 0, 0.37)',
+        'subtle': '0 1px 2px 0 rgba(0, 0, 0, 0.04)',
+        'card': '0 1px 3px 0 rgba(15, 23, 42, 0.06), 0 1px 2px -1px rgba(15, 23, 42, 0.04)',
+        'card-hover': '0 4px 12px -2px rgba(15, 23, 42, 0.08), 0 2px 4px -2px rgba(15, 23, 42, 0.04)',
+        'popover': '0 10px 25px -5px rgba(15, 23, 42, 0.1), 0 8px 10px -6px rgba(15, 23, 42, 0.06)',
       },
-      animation: {
-        'radar-sweep': 'radarSweep 4s linear infinite',
-        'pulse-glow': 'pulseGlow 2s ease-in-out infinite',
-        'scanline': 'scanline 8s linear infinite',
-        'float-slow': 'float 6s ease-in-out infinite',
+      borderRadius: {
+        'sm': '4px',
+        'DEFAULT': '6px',
+        'md': '8px',
+        'lg': '10px',
+        'xl': '12px',
       },
-      keyframes: {
-        radarSweep: {
-          '0%': { transform: 'rotate(0deg)' },
-          '100%': { transform: 'rotate(360deg)' },
-        },
-        pulseGlow: {
-          '0%, 100%': { opacity: '0.4' },
-          '50%': { opacity: '1' },
-        },
-        scanline: {
-          '0%': { transform: 'translateY(-100%)' },
-          '100%': { transform: 'translateY(1000%)' },
-        },
-        float: {
-          '0%, 100%': { transform: 'translateY(0)' },
-          '50%': { transform: 'translateY(-8px)' },
-        }
-      },
-      backdropBlur: {
-        xs: '2px',
-      }
     },
   },
   plugins: [],

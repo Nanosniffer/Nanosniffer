@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Bell, Check, CheckCheck, Trash2, ShieldAlert, AlertTriangle, Lightbulb, FileText } from 'lucide-react';
+import { Bell, CheckCheck, Trash2, ShieldAlert, AlertTriangle, Lightbulb, FileText, ArrowRight } from 'lucide-react';
 import { useNotifications, TacticalNotification } from '../../context/NotificationContext';
 import { RiskBadge } from './StatusBadge';
 import { Button } from '../ui/button';
@@ -19,49 +19,49 @@ export const NotificationCenter: React.FC<NotificationCenterProps> = ({ isOpen, 
   const getIcon = (type: TacticalNotification['type']) => {
     switch (type) {
       case 'risk':
-        return <AlertTriangle className="w-4 h-4 text-red-400" />;
+        return <AlertTriangle className="w-3.5 h-3.5 text-red-600" />;
       case 'suspect':
-        return <ShieldAlert className="w-4 h-4 text-amber-400" />;
+        return <ShieldAlert className="w-3.5 h-3.5 text-amber-600" />;
       case 'ai_insight':
-        return <Lightbulb className="w-4 h-4 text-cyber-cyan" />;
+        return <Lightbulb className="w-3.5 h-3.5 text-brand-600" />;
       case 'investigation':
-        return <FileText className="w-4 h-4 text-purple-400" />;
+        return <FileText className="w-3.5 h-3.5 text-indigo-600" />;
       default:
-        return <Bell className="w-4 h-4 text-slate-400" />;
+        return <Bell className="w-3.5 h-3.5 text-slate-500" />;
     }
   };
 
   return (
-    <div className="absolute right-0 mt-2 w-96 max-w-[95vw] bg-agency-900 border border-slate-700/80 rounded-xl shadow-2xl glass-panel z-50 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
+    <div className="absolute right-0 mt-2 w-80 sm:w-96 max-w-[95vw] bg-white border border-slate-200 rounded-lg shadow-popover z-50 overflow-hidden animate-in fade-in zoom-in-95 duration-150 text-xs">
       {/* Header */}
-      <div className="flex items-center justify-between p-3.5 border-b border-slate-800 bg-agency-950/70">
+      <div className="flex items-center justify-between px-3.5 py-2.5 border-b border-slate-100 bg-slate-50">
         <div className="flex items-center gap-2">
-          <Bell className="w-4 h-4 text-cyber-cyan" />
-          <h3 className="text-sm font-semibold text-slate-100">Live Incident Alerts</h3>
+          <Bell className="w-3.5 h-3.5 text-slate-700" />
+          <h3 className="font-semibold text-slate-900">Intelligence Notifications</h3>
         </div>
         <div className="flex items-center gap-1">
           <button
             onClick={markAllAsRead}
             title="Mark all as read"
-            className="p-1 text-slate-400 hover:text-cyber-cyan text-xs rounded hover:bg-slate-800 transition"
+            className="p-1 text-slate-400 hover:text-slate-700 rounded hover:bg-slate-200 transition"
           >
-            <CheckCheck className="w-4 h-4" />
+            <CheckCheck className="w-3.5 h-3.5" />
           </button>
           <button
             onClick={clearNotifications}
             title="Clear all"
-            className="p-1 text-slate-400 hover:text-red-400 text-xs rounded hover:bg-slate-800 transition"
+            className="p-1 text-slate-400 hover:text-red-600 rounded hover:bg-slate-200 transition"
           >
-            <Trash2 className="w-4 h-4" />
+            <Trash2 className="w-3.5 h-3.5" />
           </button>
         </div>
       </div>
 
       {/* Notifications List */}
-      <div className="max-h-80 overflow-y-auto divide-y divide-slate-800/60">
+      <div className="max-h-80 overflow-y-auto divide-y divide-slate-100">
         {notifications.length === 0 ? (
-          <div className="py-8 text-center text-slate-500 text-xs">
-            No active tactical notifications.
+          <div className="py-8 text-center text-slate-400 text-xs">
+            No unread intelligence alerts.
           </div>
         ) : (
           notifications.map((item) => (
@@ -74,30 +74,30 @@ export const NotificationCenter: React.FC<NotificationCenterProps> = ({ isOpen, 
                   onClose();
                 }
               }}
-              className={`p-3 transition-colors cursor-pointer hover:bg-slate-800/60 flex items-start gap-3 ${
-                !item.isRead ? 'bg-cyber-cyan/5 border-l-2 border-cyber-cyan' : ''
+              className={`p-3 transition-colors cursor-pointer hover:bg-slate-50 flex items-start gap-2.5 ${
+                !item.isRead ? 'bg-blue-50/40' : ''
               }`}
             >
-              <div className="mt-0.5 p-1.5 rounded-lg bg-slate-800/80 shrink-0">
+              <div className="mt-0.5 p-1.5 rounded-md bg-white border border-slate-200 shrink-0">
                 {getIcon(item.type)}
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between gap-1 mb-0.5">
-                  <span className="text-xs font-semibold text-slate-200 truncate">
+                  <span className="font-semibold text-slate-900 truncate">
                     {item.title}
                   </span>
-                  <span className="text-[10px] font-mono text-slate-500 shrink-0">
+                  <span className="text-[10px] text-slate-400 font-mono shrink-0">
                     {item.time}
                   </span>
                 </div>
-                <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed">
+                <p className="text-slate-500 line-clamp-2 leading-relaxed text-[11px]">
                   {item.message}
                 </p>
                 <div className="mt-1.5 flex items-center justify-between">
                   <RiskBadge level={item.severity} className="text-[10px] py-0" />
                   {!item.isRead && (
-                    <span className="text-[10px] text-cyber-cyan font-mono flex items-center gap-1">
-                      <span className="w-1.5 h-1.5 rounded-full bg-cyber-cyan animate-pulse" /> New
+                    <span className="text-[10px] text-brand-600 font-medium flex items-center gap-1">
+                      <span className="w-1.5 h-1.5 rounded-full bg-brand-600" /> New
                     </span>
                   )}
                 </div>
@@ -108,18 +108,17 @@ export const NotificationCenter: React.FC<NotificationCenterProps> = ({ isOpen, 
       </div>
 
       {/* Footer */}
-      <div className="p-2.5 bg-agency-950/90 border-t border-slate-800 text-center">
-        <Button
-          variant="ghost"
-          size="sm"
+      <div className="p-2 bg-slate-50 border-t border-slate-100 text-center">
+        <button
           onClick={() => {
             navigate('/alerts');
             onClose();
           }}
-          className="w-full text-xs text-cyber-cyan hover:text-cyber-cyan-bright"
+          className="w-full text-center text-xs font-semibold text-slate-700 hover:text-slate-900 py-1 flex items-center justify-center gap-1"
         >
-          View Full AI Alert Center →
-        </Button>
+          <span>View All Risk Alerts</span>
+          <ArrowRight className="w-3.5 h-3.5" />
+        </button>
       </div>
     </div>
   );

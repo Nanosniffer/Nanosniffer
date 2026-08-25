@@ -5,11 +5,12 @@ import { TrendingUp, TrendingDown, LucideIcon } from 'lucide-react';
 interface StatCardProps {
   title: string;
   value: string | number;
-  trend?: number; // e.g. +4.5%
+  trend?: number;
   trendLabel?: string;
   icon: LucideIcon;
-  color?: 'cyan' | 'purple' | 'crimson' | 'amber' | 'emerald';
+  color?: string;
   badgeText?: string;
+  description?: string;
 }
 
 export const StatCard: React.FC<StatCardProps> = ({
@@ -18,85 +19,57 @@ export const StatCard: React.FC<StatCardProps> = ({
   trend,
   trendLabel = 'vs last 30d',
   icon: Icon,
-  color = 'cyan',
   badgeText,
+  description,
 }) => {
-  const colorStyles = {
-    cyan: {
-      border: 'border-cyber-cyan/30',
-      iconBg: 'bg-cyan-500/15 text-cyan-400 border-cyan-500/40',
-      glow: 'hover:border-cyber-cyan/60 hover:shadow-neon-cyan',
-      text: 'text-cyber-cyan-bright',
-    },
-    purple: {
-      border: 'border-purple-500/30',
-      iconBg: 'bg-purple-500/15 text-purple-400 border-purple-500/40',
-      glow: 'hover:border-purple-500/60 hover:shadow-neon-purple',
-      text: 'text-purple-300',
-    },
-    crimson: {
-      border: 'border-red-500/30',
-      iconBg: 'bg-red-500/15 text-red-400 border-red-500/40',
-      glow: 'hover:border-red-500/60 hover:shadow-neon-crimson',
-      text: 'text-red-400',
-    },
-    amber: {
-      border: 'border-amber-500/30',
-      iconBg: 'bg-amber-500/15 text-amber-400 border-amber-500/40',
-      glow: 'hover:border-amber-500/60 hover:shadow-neon-amber',
-      text: 'text-amber-300',
-    },
-    emerald: {
-      border: 'border-emerald-500/30',
-      iconBg: 'bg-emerald-500/15 text-emerald-400 border-emerald-500/40',
-      glow: 'hover:border-emerald-500/60 hover:shadow-[0_0_15px_rgba(16,185,129,0.35)]',
-      text: 'text-emerald-300',
-    },
-  };
-
-  const style = colorStyles[color];
-
   return (
-    <Card
-      className={`p-4 bg-agency-900/90 ${style.border} ${style.glow} transition-all duration-300 relative overflow-hidden group`}
-    >
-      {/* Background ambient gradient flare */}
-      <div className="absolute -right-8 -top-8 w-24 h-24 rounded-full bg-slate-700/10 blur-xl group-hover:bg-cyan-500/10 transition-colors pointer-events-none" />
-
+    <Card className="p-4 bg-white border border-slate-200 shadow-card hover:border-slate-300 transition-all">
       <div className="flex items-start justify-between">
-        <div>
-          <span className="text-[11px] font-mono uppercase tracking-wider text-slate-400">
+        <div className="space-y-0.5">
+          <p className="text-[11px] font-medium uppercase tracking-wider text-slate-500">
             {title}
-          </span>
-          <div className="mt-1 flex items-baseline gap-2">
-            <span className={`text-2xl sm:text-3xl font-extrabold font-mono ${style.text}`}>
+          </p>
+          <div className="flex items-baseline gap-2 pt-0.5">
+            <span className="text-2xl font-bold tracking-tight text-slate-900 font-sans">
               {value}
             </span>
             {badgeText && (
-              <span className="text-[10px] font-mono font-medium px-1.5 py-0.5 rounded bg-agency-950 text-slate-300 border border-slate-700">
+              <span className="text-[10px] font-medium px-1.5 py-0.5 rounded bg-slate-100 text-slate-600 border border-slate-200">
                 {badgeText}
               </span>
             )}
           </div>
         </div>
 
-        <div className={`p-2.5 rounded-xl border ${style.iconBg} shrink-0`}>
-          <Icon className="w-5 h-5" />
+        <div className="p-2 rounded-md bg-slate-50 border border-slate-200 text-slate-700 shrink-0">
+          <Icon className="w-4 h-4" />
         </div>
       </div>
 
-      {trend !== undefined && (
-        <div className="mt-3 pt-2.5 border-t border-slate-800/80 flex items-center gap-1.5 text-xs font-mono">
-          {trend >= 0 ? (
-            <span className="flex items-center text-emerald-400 font-semibold">
-              <TrendingUp className="w-3.5 h-3.5 mr-0.5" /> +{trend}%
-            </span>
-          ) : (
-            <span className="flex items-center text-red-400 font-semibold">
-              <TrendingDown className="w-3.5 h-3.5 mr-0.5" /> {trend}%
-            </span>
+      {(trend !== undefined || description) && (
+        <div className="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-xs">
+          {trend !== undefined && (
+            <div className="flex items-center gap-1.5">
+              <span
+                className={`inline-flex items-center text-[11px] font-semibold px-1.5 py-0.2 rounded border ${
+                  trend >= 0
+                    ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                    : 'bg-red-50 text-red-700 border-red-200'
+                }`}
+              >
+                {trend >= 0 ? (
+                  <TrendingUp className="w-3 h-3 mr-0.5" />
+                ) : (
+                  <TrendingDown className="w-3 h-3 mr-0.5" />
+                )}
+                {trend >= 0 ? `+${trend}%` : `${trend}%`}
+              </span>
+              <span className="text-[11px] text-slate-500 truncate">{trendLabel}</span>
+            </div>
           )}
-          <span className="text-slate-500 text-[11px] truncate">{trendLabel}</span>
+          {description && (
+            <span className="text-[11px] text-slate-400 truncate">{description}</span>
+          )}
         </div>
       )}
     </Card>
