@@ -1,4 +1,4 @@
-# SNIFFER // Criminal Network Analysis & Intelligence System
+# ACN // AI-Powered Criminal Network Analysis System
 
 An intelligence-grade, command-center web application built for law enforcement, task forces, and intelligence agencies to investigate, visualize, and dissect complex transnational criminal syndicates, suspect relationships, financial flows, intercepted communication logs, and real-time AI risk detection alerts.
 

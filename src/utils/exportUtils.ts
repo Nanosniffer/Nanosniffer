@@ -26,7 +26,7 @@ export const printCriminalDossier = (criminal: Criminal) => {
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>SNIFFER Dossier - ${criminal.name} (${criminal.criminalId})</title>
+  <title>ACN Dossier - ${criminal.name} (${criminal.criminalId})</title>
   <style>
     @page {
       size: A4;
@@ -196,7 +196,7 @@ export const printCriminalDossier = (criminal: Criminal) => {
 </head>
 <body>
   <div class="classification-bar">
-    SNIFFER CRIMINAL INTELLIGENCE DIVISION // CLASSIFIED // LAW ENFORCEMENT SENSITIVE
+    ACN CRIMINAL INTELLIGENCE DIVISION // CLASSIFIED // LAW ENFORCEMENT SENSITIVE
   </div>
 
   <div class="header">
@@ -242,7 +242,7 @@ export const printCriminalDossier = (criminal: Criminal) => {
         </tr>
         <tr>
           <td class="label">Fingerprint Record:</td>
-          <td class="value" style="font-family:monospace">${criminal.personalDetails?.fingerprintId || 'FP-SNIFFER-88219'}</td>
+          <td class="value" style="font-family:monospace">${criminal.personalDetails?.fingerprintId || 'FP-ACN-88219'}</td>
         </tr>
         <tr>
           <td class="label">Last Known Location:</td>
@@ -341,7 +341,7 @@ export const printCriminalDossier = (criminal: Criminal) => {
   ` : ''}
 
   <div class="footer">
-    <div>SNIFFER CLASSIFIED RECORD // VERIFIED AUTHENTICITY CODE: SNIFFER-SEC-${Math.random().toString(36).substring(2, 8).toUpperCase()}</div>
+    <div>ACN CLASSIFIED RECORD // VERIFIED AUTHENTICITY CODE: ACN-SEC-${Math.random().toString(36).substring(2, 8).toUpperCase()}</div>
     <div>PAGE 1 OF 1 • FOR AUTHORIZED LAW ENFORCEMENT OPERATIVES ONLY</div>
   </div>
 
@@ -373,7 +373,7 @@ export const printInvestigationReport = (report: InvestigationReport) => {
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>SNIFFER Report - ${report.reportNumber}</title>
+  <title>ACN Report - ${report.reportNumber}</title>
   <style>
     @page {
       size: A4;
@@ -502,7 +502,7 @@ export const printInvestigationReport = (report: InvestigationReport) => {
 </head>
 <body>
   <div class="classification-bar">
-    ${report.classificationLevel} // SNIFFER EXECUTIVE TASK FORCE
+    ${report.classificationLevel} // ACN EXECUTIVE TASK FORCE
   </div>
 
   <div class="header">
@@ -542,7 +542,7 @@ export const printInvestigationReport = (report: InvestigationReport) => {
   </div>
 
   <div class="footer">
-    <div>SNIFFER SECURE BRIEF // CASE DISPATCH: ${report.reportNumber}</div>
+    <div>ACN SECURE BRIEF // CASE DISPATCH: ${report.reportNumber}</div>
     <div>CLASSIFIED INTELLIGENCE • ALL RIGHTS RESERVED</div>
   </div>
 
