@@ -3,7 +3,7 @@ import { InvestigationReport } from '../../types';
 export const dummyInvestigationReports: InvestigationReport[] = [
   {
     id: 'rep-001',
-    reportNumber: 'AEGIS-RPT-2026-094',
+    reportNumber: 'ACN-RPT-2026-094',
     title: 'Comprehensive Syndicate Network & Asset Topology',
     type: 'Network Summary',
     dateGenerated: '2026-08-24T08:00:00Z',
@@ -27,7 +27,7 @@ export const dummyInvestigationReports: InvestigationReport[] = [
   },
   {
     id: 'rep-002',
-    reportNumber: 'AEGIS-RPT-2026-088',
+    reportNumber: 'ACN-RPT-2026-088',
     title: 'Cross-Border Ingress & Maritime Timeline Dossier',
     type: 'Timeline Report',
     dateGenerated: '2026-08-23T18:30:00Z',
@@ -50,7 +50,7 @@ export const dummyInvestigationReports: InvestigationReport[] = [
   },
   {
     id: 'rep-003',
-    reportNumber: 'AEGIS-RPT-2026-079',
+    reportNumber: 'ACN-RPT-2026-079',
     title: 'Decentralized Wash Cycle & Hawala Dispersal Analysis',
     type: 'Financial Analysis',
     dateGenerated: '2026-08-22T14:15:00Z',
@@ -73,7 +73,7 @@ export const dummyInvestigationReports: InvestigationReport[] = [
   },
   {
     id: 'rep-004',
-    reportNumber: 'AEGIS-RPT-2026-065',
+    reportNumber: 'ACN-RPT-2026-065',
     title: 'Satellite & Cellular Frequency Telemetry Analysis',
     type: 'Communication Analysis',
     dateGenerated: '2026-08-21T11:00:00Z',
@@ -96,7 +96,7 @@ export const dummyInvestigationReports: InvestigationReport[] = [
   },
   {
     id: 'rep-005',
-    reportNumber: 'AEGIS-RPT-2026-052',
+    reportNumber: 'ACN-RPT-2026-052',
     title: 'Global Tactical Safehouse & Surveillance Heatmap',
     type: 'Location Heatmap',
     dateGenerated: '2026-08-20T09:45:00Z',
@@ -119,7 +119,7 @@ export const dummyInvestigationReports: InvestigationReport[] = [
   },
   {
     id: 'rep-006',
-    reportNumber: 'AEGIS-RPT-2026-041',
+    reportNumber: 'ACN-RPT-2026-041',
     title: 'AI Predictive Interdiction & Target Disruption Strategy',
     type: 'AI Recommendation',
     dateGenerated: '2026-08-19T16:00:00Z',
