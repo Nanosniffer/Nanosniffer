@@ -64,9 +64,20 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   const breadcrumbs = getBreadcrumbs();
 
-  const handleLogout = () => {
+  const handleSwitchRoleWithRelogin = (roleKey: 'admin' | 'investigator' | 'analyst') => {
+    setShowRoleMenu(false);
     logout();
-    navigate('/login');
+    const roleTitles = {
+      admin: 'Director Clearance (Admin)',
+      investigator: 'Lead Tactical Investigator',
+      analyst: 'Senior Intelligence Analyst'
+    };
+    navigate('/login', { 
+      state: { 
+        preselectedRole: roleKey,
+        notice: `Clearance transfer requested: Please re-authenticate as ${roleTitles[roleKey]}.`
+      } 
+    });
   };
 
   return (
@@ -203,43 +214,55 @@ export const Navbar: React.FC<NavbarProps> = ({
 
               <div className="space-y-0.5 py-1">
                 <p className="text-[10px] font-semibold text-slate-400 px-2 py-0.5 uppercase tracking-wider">
-                  SWITCH CLEARANCE
+                  SWITCH CLEARANCE (REQUIRES RE-AUTHENTICATION)
                 </p>
                 <button
-                  onClick={() => { switchRole('admin'); setShowRoleMenu(false); }}
+                  onClick={() => handleSwitchRoleWithRelogin('admin')}
                   className={`w-full text-left px-2 py-1.5 rounded-md flex items-center justify-between transition ${
                     user?.role === 'ADMIN' ? 'bg-slate-100 text-slate-900 font-semibold' : 'text-slate-600 hover:bg-slate-50'
                   }`}
                 >
                   <span>👑 Director (Admin)</span>
-                  {user?.role === 'ADMIN' && <span className="text-[10px] text-slate-900 font-bold">ACTIVE</span>}
+                  {user?.role === 'ADMIN' ? (
+                    <span className="text-[10px] text-slate-900 font-bold">ACTIVE</span>
+                  ) : (
+                    <span className="text-[10px] text-slate-400 font-mono">Re-login →</span>
+                  )}
                 </button>
                 <button
-                  onClick={() => { switchRole('investigator'); setShowRoleMenu(false); }}
+                  onClick={() => handleSwitchRoleWithRelogin('investigator')}
                   className={`w-full text-left px-2 py-1.5 rounded-md flex items-center justify-between transition ${
                     user?.role === 'INVESTIGATOR' ? 'bg-slate-100 text-slate-900 font-semibold' : 'text-slate-600 hover:bg-slate-50'
                   }`}
                 >
                   <span>🕵️ Lead Investigator</span>
-                  {user?.role === 'INVESTIGATOR' && <span className="text-[10px] text-slate-900 font-bold">ACTIVE</span>}
+                  {user?.role === 'INVESTIGATOR' ? (
+                    <span className="text-[10px] text-slate-900 font-bold">ACTIVE</span>
+                  ) : (
+                    <span className="text-[10px] text-slate-400 font-mono">Re-login →</span>
+                  )}
                 </button>
                 <button
-                  onClick={() => { switchRole('analyst'); setShowRoleMenu(false); }}
+                  onClick={() => handleSwitchRoleWithRelogin('analyst')}
                   className={`w-full text-left px-2 py-1.5 rounded-md flex items-center justify-between transition ${
                     user?.role === 'ANALYST' ? 'bg-slate-100 text-slate-900 font-semibold' : 'text-slate-600 hover:bg-slate-50'
                   }`}
                 >
                   <span>📊 Senior Analyst</span>
-                  {user?.role === 'ANALYST' && <span className="text-[10px] text-slate-900 font-bold">ACTIVE</span>}
+                  {user?.role === 'ANALYST' ? (
+                    <span className="text-[10px] text-slate-900 font-bold">ACTIVE</span>
+                  ) : (
+                    <span className="text-[10px] text-slate-400 font-mono">Re-login →</span>
+                  )}
                 </button>
               </div>
 
               <div className="pt-1.5 border-t border-slate-100 mt-1">
                 <button
-                  onClick={handleLogout}
+                  onClick={() => handleSwitchRoleWithRelogin(user?.role?.toLowerCase() === 'admin' ? 'investigator' : 'admin')}
                   className="w-full text-left px-2 py-1.5 rounded-md text-red-600 hover:bg-red-50 flex items-center gap-2 transition text-xs"
                 >
-                  <LogOut className="w-3.5 h-3.5" /> End Officer Session
+                  <LogOut className="w-3.5 h-3.5" /> End Session & Re-login
                 </button>
               </div>
             </div>

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { 
   Shield, 
@@ -11,12 +11,17 @@ import {
   Search, 
   LineChart,
   AlertTriangle,
-  ArrowRight
+  ArrowRight,
+  Info
 } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 
 export const Login: React.FC = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { login } = useAuth();
+
   const [selectedRole, setSelectedRole] = useState<'admin' | 'investigator' | 'analyst' | null>(null);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -24,9 +29,16 @@ export const Login: React.FC = () => {
   const [rememberMe, setRememberMe] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [transferNotice, setTransferNotice] = useState<string | null>(null);
 
-  const { login } = useAuth();
-  const navigate = useNavigate();
+  useEffect(() => {
+    if (location.state?.preselectedRole) {
+      handleSelectRole(location.state.preselectedRole);
+    }
+    if (location.state?.notice) {
+      setTransferNotice(location.state.notice);
+    }
+  }, [location.state]);
 
   const handleSelectRole = (roleKey: 'admin' | 'investigator' | 'analyst') => {
     setSelectedRole(roleKey);
@@ -215,6 +227,16 @@ export const Login: React.FC = () => {
               <p className="text-[11px] opacity-90 mt-0.5">
                 {getRoleBadge(selectedRole).desc}
               </p>
+            </div>
+          )}
+
+          {transferNotice && (
+            <div className="p-3 rounded-lg bg-blue-50 border border-blue-200 text-blue-800 text-xs animate-in fade-in flex items-start gap-2">
+              <Info className="w-4 h-4 shrink-0 text-blue-600 mt-0.5" />
+              <div>
+                <strong className="block text-[11px]">Clearance Re-Authentication Required</strong>
+                <span>{transferNotice}</span>
+              </div>
             </div>
           )}
 
