@@ -4,9 +4,9 @@ import { getReports } from '../api';
 import { ReportCard } from '../components/cards/ReportCard';
 import { TableSkeleton } from '../components/common/SkeletonLoaders';
 import { InvestigationReport } from '../types';
-import { FileText, Download, X, Printer, CheckCircle2, RefreshCw } from 'lucide-react';
+import { FileText, X, Printer, CheckCircle2, RefreshCw } from 'lucide-react';
 import { Button } from '../components/ui/button';
-import { downloadJSON, printInvestigationReport } from '../utils/exportUtils';
+import { printInvestigationReport } from '../utils/exportUtils';
 import { formatDate } from '../utils/formatters';
 
 export const InvestigationReports: React.FC = () => {
@@ -152,14 +152,6 @@ export const InvestigationReports: React.FC = () => {
                   className="text-xs h-8 gap-1.5"
                 >
                   <Printer className="w-3.5 h-3.5" /> Print / Save PDF
-                </Button>
-                <Button
-                  variant="secondary"
-                  size="sm"
-                  onClick={() => downloadJSON(previewReport, `${previewReport.reportNumber}.json`)}
-                  className="text-xs h-8 gap-1.5"
-                >
-                  <Download className="w-3.5 h-3.5" /> Export JSON
                 </Button>
               </div>
             </div>

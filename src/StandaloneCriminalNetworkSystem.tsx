@@ -67,7 +67,6 @@ import {
   ShieldCheck,
   CheckCircle2,
   Printer,
-  Download,
   FileCode,
   Eye,
   EyeOff,

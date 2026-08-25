@@ -3,8 +3,8 @@ import { InvestigationReport } from '../../types';
 import { Card } from '../ui/card';
 import { Button } from '../ui/button';
 import { formatDate } from '../../utils/formatters';
-import { FileText, Download, Eye, FileCode, CheckCircle2, Shield } from 'lucide-react';
-import { downloadJSON, printInvestigationReport } from '../../utils/exportUtils';
+import { FileText, Printer, Eye, CheckCircle2, Shield } from 'lucide-react';
+import { printInvestigationReport } from '../../utils/exportUtils';
 
 interface ReportCardProps {
   report: InvestigationReport;
@@ -74,18 +74,9 @@ export const ReportCard: React.FC<ReportCardProps> = ({ report, onPreview }) => 
           variant="default"
           size="sm"
           onClick={() => printInvestigationReport(report)}
-          className="text-xs h-7 gap-1 px-2.5"
+          className="text-xs h-7 gap-1 px-3"
         >
-          <Download className="w-3.5 h-3.5" /> PDF
-        </Button>
-        <Button
-          variant="secondary"
-          size="sm"
-          onClick={() => downloadJSON(report, `${report.reportNumber}.json`)}
-          title="Export JSON"
-          className="text-xs h-7 px-2"
-        >
-          <FileCode className="w-3.5 h-3.5 text-slate-500" />
+          <Printer className="w-3.5 h-3.5" /> Print / Save PDF
         </Button>
       </div>
     </Card>
