@@ -31,7 +31,7 @@ export const EvidenceIntakeModal: React.FC<EvidenceIntakeModalProps> = ({ isOpen
   const { addNotification } = useNotifications();
   const { user } = useAuth();
 
-  const [activeTab, setActiveTab] = useState<IntakeTab>('evidence');
+  const [activeTab, setActiveTab] = useState<IntakeTab>('suspect');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [successReceipt, setSuccessReceipt] = useState<{ id: string; type: string; title: string } | null>(null);
 
@@ -276,11 +276,11 @@ export const EvidenceIntakeModal: React.FC<EvidenceIntakeModalProps> = ({ isOpen
         {/* Tab Navigation */}
         <div className="flex items-center gap-1 px-4 border-b border-slate-200 bg-slate-50 overflow-x-auto text-xs shrink-0 py-1.5">
           {[
-            { id: 'evidence', label: 'Evidence & Incidents', icon: FileCheck },
-            { id: 'suspect', label: 'Suspect Profile', icon: User },
-            { id: 'comms', label: 'Wiretap / Comms', icon: Phone },
-            { id: 'financial', label: 'Financial Anomaly', icon: CreditCard },
-            { id: 'vehicle', label: 'Vehicle Sighting', icon: Car },
+            { id: 'suspect', label: '1. Suspect Profile', icon: User },
+            { id: 'evidence', label: '2. Forensic Evidence', icon: FileCheck },
+            { id: 'comms', label: '3. Wiretap / Comms', icon: Phone },
+            { id: 'financial', label: '4. Financial Anomaly', icon: CreditCard },
+            { id: 'vehicle', label: '5. Vehicle Sighting', icon: Car },
           ].map((tab) => {
             const Icon = tab.icon;
             const isActive = activeTab === tab.id;
