@@ -6,7 +6,7 @@ import { TableSkeleton } from '../components/common/SkeletonLoaders';
 import { InvestigationReport } from '../types';
 import { FileText, Download, X, Printer, CheckCircle2, RefreshCw } from 'lucide-react';
 import { Button } from '../components/ui/button';
-import { downloadJSON, triggerPrintDossier } from '../utils/exportUtils';
+import { downloadJSON, printInvestigationReport } from '../utils/exportUtils';
 import { formatDate } from '../utils/formatters';
 
 export const InvestigationReports: React.FC = () => {
@@ -158,7 +158,7 @@ export const InvestigationReports: React.FC = () => {
                 <Button
                   variant="default"
                   size="sm"
-                  onClick={() => triggerPrintDossier(previewReport.title)}
+                  onClick={() => printInvestigationReport(previewReport)}
                   className="text-xs h-8 gap-1.5"
                 >
                   <Printer className="w-3.5 h-3.5" /> Print / Save PDF

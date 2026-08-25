@@ -3,7 +3,7 @@ import { Criminal } from '../../types';
 import { RiskBadge, StatusBadge } from '../common/StatusBadge';
 import { formatCurrency } from '../../utils/formatters';
 import { Button } from '../ui/button';
-import { downloadJSON, triggerPrintDossier } from '../../utils/exportUtils';
+import { downloadJSON, printCriminalDossier } from '../../utils/exportUtils';
 import {
   X,
   User,
@@ -72,7 +72,7 @@ export const CriminalProfileDrawer: React.FC<CriminalProfileDrawerProps> = ({
             <Button
               variant="secondary"
               size="sm"
-              onClick={() => triggerPrintDossier(criminal.name)}
+              onClick={() => printCriminalDossier(criminal)}
               title="Print Intelligence Dossier"
               className="h-8 px-2"
             >

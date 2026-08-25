@@ -4,7 +4,7 @@ import { Card } from '../ui/card';
 import { Button } from '../ui/button';
 import { formatDate } from '../../utils/formatters';
 import { FileText, Download, Eye, FileCode, CheckCircle2, Shield } from 'lucide-react';
-import { downloadJSON, triggerPrintDossier } from '../../utils/exportUtils';
+import { downloadJSON, printInvestigationReport } from '../../utils/exportUtils';
 
 interface ReportCardProps {
   report: InvestigationReport;
@@ -73,7 +73,7 @@ export const ReportCard: React.FC<ReportCardProps> = ({ report, onPreview }) => 
         <Button
           variant="default"
           size="sm"
-          onClick={() => triggerPrintDossier(report.title)}
+          onClick={() => printInvestigationReport(report)}
           className="text-xs h-7 gap-1 px-2.5"
         >
           <Download className="w-3.5 h-3.5" /> PDF

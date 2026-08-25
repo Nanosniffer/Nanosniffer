@@ -133,3 +133,18 @@
 .leaflet-popup-tip {
   background: #ffffff !important;
 }
+
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #0f172a !important;
+  }
+  header, aside, button, input, .no-print, [role="dialog"] > div:first-child {
+    display: none !important;
+  }
+  @page {
+    size: A4;
+    margin: 15mm;
+  }
+}
+
