@@ -52,6 +52,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     const p = location.pathname;
     if (p.includes('network')) return { section: 'Investigations', page: 'Network Analysis' };
     if (p.includes('criminals')) return { section: 'Investigations', page: 'Criminal Profiles' };
+    if (p.includes('collect-evidence') || p.includes('intake')) return { section: 'Investigations', page: 'Collect Evidence' };
     if (p.includes('feed')) return { section: 'Intelligence', page: 'Intelligence Feed' };
     if (p.includes('alerts')) return { section: 'Intelligence', page: 'Risk & Alerts' };
     if (p.includes('timeline')) return { section: 'Intelligence', page: 'Evidence Timeline' };

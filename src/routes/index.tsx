@@ -9,6 +9,7 @@ import { IntelligenceFeed } from '../pages/IntelligenceFeed';
 import { Alerts } from '../pages/Alerts';
 import { InvestigationReports } from '../pages/InvestigationReports';
 import { EvidenceTimeline } from '../pages/EvidenceTimeline';
+import { EvidenceIntakePage } from '../pages/EvidenceIntakePage';
 import { Settings } from '../pages/Settings';
 import { useAuth } from '../context/AuthContext';
 
@@ -48,6 +49,8 @@ export const AppRoutes: React.FC = () => {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/criminals" element={<CriminalProfiles />} />
         <Route path="/network" element={<NetworkAnalysis />} />
+        <Route path="/collect-evidence" element={<EvidenceIntakePage />} />
+        <Route path="/intake" element={<EvidenceIntakePage />} />
         <Route path="/feed" element={<IntelligenceFeed />} />
         <Route path="/alerts" element={<Alerts />} />
         <Route path="/reports" element={<InvestigationReports />} />

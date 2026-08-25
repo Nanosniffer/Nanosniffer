@@ -15,7 +15,8 @@ import {
   Briefcase,
   BarChart3,
   LogOut,
-  Sparkles
+  Sparkles,
+  PlusCircle
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useNotifications } from '../../context/NotificationContext';
@@ -60,6 +61,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       items: [
         { label: 'Network Analysis', path: '/network', icon: Share2, badge: 'Active', badgeColor: 'bg-blue-50 text-blue-700 border-blue-200' },
         { label: 'Criminal Profiles', path: '/criminals', icon: Users, badge: '20' },
+        { label: 'Collect Evidence', path: '/collect-evidence', icon: PlusCircle, badge: 'Intake', badgeColor: 'bg-emerald-50 text-emerald-700 border-emerald-200' },
       ],
     },
     {
