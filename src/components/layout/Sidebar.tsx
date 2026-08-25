@@ -119,7 +119,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   ACN
                 </span>
                 <span className="text-[10px] text-slate-500 font-medium tracking-tight truncate mt-0.5">
-                  Criminal Intelligence
+                  AI Criminal Network
                 </span>
               </div>
             )}

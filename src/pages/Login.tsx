@@ -88,10 +88,10 @@ export const Login: React.FC = () => {
             <span className="text-[10px] text-slate-400 font-mono">DEFCON 2</span>
           </div>
           <h1 className="text-2xl font-bold tracking-tight text-slate-900">
-            ACN Intelligence System
+            ACN
           </h1>
           <p className="text-xs text-slate-500">
-            Autonomous Criminal Network & Threat Intelligence Platform
+            AI Criminal Network Analysis System
           </p>
         </div>
 
