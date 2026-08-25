@@ -82,8 +82,8 @@ export const SurveillanceMap: React.FC<SurveillanceMapProps> = ({ locations, cri
       {/* Leaflet Canvas */}
       <div className="relative flex-1 w-full h-full">
         <MapContainer
-          center={[35.0, 15.0]}
-          zoom={3}
+          center={[20.5937, 78.9629]}
+          zoom={5}
           scrollWheelZoom={true}
           className="w-full h-full dark-tiles"
         >

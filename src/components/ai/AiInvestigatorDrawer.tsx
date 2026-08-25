@@ -33,9 +33,9 @@ interface Message {
 }
 
 const PRESET_QUERIES = [
-  'Show connections between Elena Rostova and Viktor Kozlov',
-  'Why is Elena Rostova considered CRITICAL risk?',
-  'Show recent suspicious financial transactions and laundering loops',
+  'Show connections between Vikram Singhania and Suresh Patel',
+  'Why is Vikram Singhania considered CRITICAL risk?',
+  'Show recent suspicious Hawala and Angadia transactions',
   'Which individual has the highest network centrality influence?',
 ];
 
@@ -49,7 +49,7 @@ export const AiInvestigatorDrawer: React.FC<{ isOpen: boolean; onClose: () => vo
     {
       id: 'msg-1',
       sender: 'ai',
-      text: 'Greetings, Officer. I am the ACN AI Intelligence Assistant. Ask any question about criminal syndicates, entity linkages, financial transaction paths, or risk anomalies.',
+      text: 'Greetings, Officer. I am the ACN AI Intelligence Assistant. Ask any question about Indian organized crime syndicates, Hawala transactions, JNPT port narcotics conduits, or risk anomalies.',
       timestamp: 'Just now',
     },
   ]);
@@ -76,68 +76,68 @@ export const AiInvestigatorDrawer: React.FC<{ isOpen: boolean; onClose: () => vo
       let aiResponse: Message;
       const lower = q.toLowerCase();
 
-      if (lower.includes('connection') || lower.includes('elena') || lower.includes('viktor')) {
+      if (lower.includes('connection') || lower.includes('singhania') || lower.includes('patel') || lower.includes('vikram')) {
         aiResponse = {
           id: `ai-${Date.now()}`,
           sender: 'ai',
-          text: 'Analysis complete. Elena Rostova and Viktor Kozlov share 3 high-confidence links including a direct $1.8M offshore wire transfer through Bank of Cyprus and a shared logistics warehouse at Port of Miami.',
+          text: 'Analysis complete. Vikram Singhania and Suresh Patel share 4 high-confidence links including ₹22.4 Crore informal Angadia cash settlements via Zaveri Bazaar and shared container logistics at JNPT Port Navi Mumbai.',
           timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
           dataCard: {
             type: 'connections',
             title: 'Syndicate Link Topology',
             entities: [
-              { name: 'Elena Rostova', type: 'Person (Leader)', risk: 'CRITICAL' },
-              { name: 'Viktor Kozlov', type: 'Person (Broker)', risk: 'CRITICAL' },
-              { name: 'Nautilus Shipping LLC', type: 'Front Organization', risk: 'HIGH' },
+              { name: 'Vikram "D-Boss" Singhania', type: 'Person (Supreme Don)', risk: 'CRITICAL' },
+              { name: 'Suresh "Hawala" Patel', type: 'Person (Angadia Banker)', risk: 'CRITICAL' },
+              { name: 'Singhania Star Logistics LLP', type: 'Front Entity', risk: 'HIGH' },
             ],
-            details: 'Direct money transfer ($1,800,000) • Cross-referenced via Intercept #INT-9921',
-            confidence: 96.8,
+            details: 'Direct Angadia cash transfer (₹22,40,00,000) • Cross-referenced via Intercept #INT-IN-8819',
+            confidence: 98.4,
           },
         };
       } else if (lower.includes('risk') || lower.includes('why')) {
         aiResponse = {
           id: `ai-${Date.now()}`,
           sender: 'ai',
-          text: 'Subject Elena Rostova holds a multi-factor risk score of 94.5/100 (CRITICAL). This score is driven by 3 active international warrants, 14 confirmed syndicate connections, and direct link to high-value arms trafficking telemetry.',
+          text: 'Subject Vikram Singhania holds a multi-factor risk score of 98.0/100 (CRITICAL). This score is driven by 8 active MCOCA warrants, 16 confirmed syndicate connections, and direct link to JNPT Port narcotics and extortion rackets.',
           timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
           dataCard: {
             type: 'risk_assessment',
             title: 'Risk Factor Decomposition',
-            score: 94.5,
-            details: 'Warrant Severity: +25% • Centrality Metric: +15% • Associate Risk Floor: +54.5%',
-            confidence: 98.2,
+            score: 98.0,
+            details: 'MCOCA Warrants: +35% • Centrality Metric: +25% • Hawala Volume Floor: +38%',
+            confidence: 99.1,
           },
         };
-      } else if (lower.includes('financial') || lower.includes('transaction') || lower.includes('money')) {
+      } else if (lower.includes('financial') || lower.includes('transaction') || lower.includes('money') || lower.includes('hawala')) {
         aiResponse = {
           id: `ai-${Date.now()}`,
           sender: 'ai',
-          text: 'Detected rapid capital dispersion loop: $4.2M originated from Apex Crypto Holdings, routed across 3 intermediary shell entities, and consolidated into Swiss Alps Vault within 96 minutes.',
+          text: 'Detected rapid capital dispersion loop: ₹30 Crore originated from Zaveri Bazaar Angadia Vault, routed across 4 courier vans, and consolidated into Surat Diamond Bourse within 120 minutes.',
           timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
           dataCard: {
             type: 'financial_anomaly',
-            title: 'Circular Laundering Loop #FIN-881',
+            title: 'Angadia Hawala Loop #TX-IN-881',
             entities: [
-              { name: 'Apex Crypto Holdings', type: 'Origin', risk: 'HIGH' },
-              { name: 'Swiss Alps Vault', type: 'Destination', risk: 'CRITICAL' },
+              { name: 'Zaveri Bazaar Angadia Vault', type: 'Origin', risk: 'CRITICAL' },
+              { name: 'Surat Diamond Bourse Depot', type: 'Destination', risk: 'HIGH' },
             ],
-            details: 'Total volume: $4,200,000 USD • Burst frequency: 12 transactions/hr',
-            confidence: 93.4,
+            details: 'Total volume: ₹30,00,00,000 INR • 4 courier vans dispatched via NH-48',
+            confidence: 96.2,
           },
         };
       } else {
         aiResponse = {
           id: `ai-${Date.now()}`,
           sender: 'ai',
-          text: 'Based on global graph topology, Subject Viktor Kozlov exhibits the highest Betweenness Centrality (0.842). Removing or intercepting this broker node will disrupt 67% of syndicate inter-group communications.',
+          text: 'Based on Indian underworld graph topology, Subject Suresh Patel exhibits the highest Betweenness Centrality (0.924). Intercepting this Angadia hub will disrupt 78% of the syndicate\'s liquidity and cross-state operations.',
           timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
           dataCard: {
             type: 'centrality',
             title: 'Network Bottleneck Identification',
             entities: [
-              { name: 'Viktor Kozlov', type: 'Broker Node', risk: 'CRITICAL' },
+              { name: 'Suresh Patel (Kuber)', type: 'Chief Hawala Hub', risk: 'CRITICAL' },
             ],
-            details: 'Betweenness Centrality: 0.842 • Direct Bridge between 4 regional cartels',
+            details: 'Betweenness Centrality: 0.924 • Bridge between Underworld, Cyber Cartel, and Maritime Smugglers',
             confidence: 95.0,
           },
         };
