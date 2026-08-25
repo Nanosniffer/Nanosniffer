@@ -119,10 +119,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
             {!collapsed && (
               <div className="flex flex-col min-w-0">
                 <span className="font-bold text-sm tracking-tight text-slate-900 leading-none">
-                  ACN
+                  SNIFFER
                 </span>
                 <span className="text-[10px] text-slate-500 font-medium tracking-tight truncate mt-0.5">
-                  AI Criminal Network
+                  Intelligence Network
                 </span>
               </div>
             )}
