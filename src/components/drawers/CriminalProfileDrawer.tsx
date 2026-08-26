@@ -16,19 +16,22 @@ import {
   ExternalLink,
   Download,
   Printer,
-  Sparkles
+  Sparkles,
+  Edit
 } from 'lucide-react';
 
 interface CriminalProfileDrawerProps {
   criminal: Criminal | null;
   onClose: () => void;
   onSelectAssociate?: (id: string) => void;
+  onEdit?: (criminal: Criminal) => void;
 }
 
 export const CriminalProfileDrawer: React.FC<CriminalProfileDrawerProps> = ({
   criminal,
   onClose,
   onSelectAssociate,
+  onEdit,
 }) => {
   const [activeTab, setActiveTab] = useState<'overview' | 'associates' | 'vehicles' | 'phones' | 'finance' | 'orgs'>('overview');
 
@@ -69,6 +72,18 @@ export const CriminalProfileDrawer: React.FC<CriminalProfileDrawerProps> = ({
           </div>
 
           <div className="flex items-center gap-1.5 shrink-0">
+            {onEdit && (
+              <Button
+                variant="default"
+                size="sm"
+                onClick={() => onEdit(criminal)}
+                title="Edit Criminal Profile"
+                className="h-8 px-2.5 gap-1.5 bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs shadow-sm"
+              >
+                <Edit className="w-3.5 h-3.5" />
+                <span>Edit</span>
+              </Button>
+            )}
             <Button
               variant="secondary"
               size="sm"

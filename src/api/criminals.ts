@@ -101,6 +101,20 @@ export const createCriminal = async (criminalData: Criminal): Promise<{ data: Cr
   return { data: criminalData, isFallback: true };
 };
 
+export const updateCriminal = async (criminalData: Criminal): Promise<{ data: Criminal; isFallback: boolean }> => {
+  saveCustomCriminal(criminalData);
+
+  if (typeof window !== 'undefined' && !window.location.hostname.includes('github.io')) {
+    try {
+      await apiClient.put<Criminal>(`/criminals/${criminalData.id}`, criminalData, { timeout: 2000 });
+    } catch (error) {
+      // Ignore background backend error
+    }
+  }
+
+  return { data: criminalData, isFallback: true };
+};
+
 export const getCriminalById = async (id: string): Promise<{ data: Criminal | null; isFallback: boolean }> => {
   const all = getAllMergedCriminals();
   const found = all.find((c) => c.id === id || c.criminalId === id) || null;

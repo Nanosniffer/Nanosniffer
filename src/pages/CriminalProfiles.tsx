@@ -8,10 +8,12 @@ import { Criminal } from '../types';
 import { RefreshCw, UserPlus } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { AddSuspectWizardModal } from '../components/modals/AddSuspectWizardModal';
+import { EditCriminalModal } from '../components/modals/EditCriminalModal';
 
 export const CriminalProfiles: React.FC = () => {
   const [selectedCriminal, setSelectedCriminal] = useState<Criminal | null>(null);
   const [isAddWizardOpen, setIsAddWizardOpen] = useState(false);
+  const [editingCriminal, setEditingCriminal] = useState<Criminal | null>(null);
   const [localAddedCriminals, setLocalAddedCriminals] = useState<Criminal[]>([]);
   const queryClient = useQueryClient();
 
@@ -22,7 +24,7 @@ export const CriminalProfiles: React.FC = () => {
 
   const queryCriminals = res?.data || [];
   
-  // Merge locally added criminals ensuring instant reactive update
+  // Merge locally added/edited criminals ensuring instant reactive update
   const criminals = React.useMemo(() => {
     if (localAddedCriminals.length === 0) return queryCriminals;
     const addedIds = new Set(localAddedCriminals.map(c => c.id));
@@ -36,6 +38,15 @@ export const CriminalProfiles: React.FC = () => {
     queryClient.invalidateQueries({ queryKey: ['criminals'] });
     refetch();
     setSelectedCriminal(newSuspect);
+  };
+
+  const handleCriminalUpdated = (updated: Criminal) => {
+    setLocalAddedCriminals(prev => [updated, ...prev.filter(c => c.id !== updated.id && c.criminalId !== updated.criminalId)]);
+    queryClient.invalidateQueries({ queryKey: ['criminals'] });
+    refetch();
+    if (selectedCriminal && (selectedCriminal.id === updated.id || selectedCriminal.criminalId === updated.criminalId)) {
+      setSelectedCriminal(updated);
+    }
   };
 
   return (
@@ -90,6 +101,7 @@ export const CriminalProfiles: React.FC = () => {
         <CriminalTable
           criminals={criminals}
           onSelectCriminal={(c) => setSelectedCriminal(c)}
+          onEditCriminal={(c) => setEditingCriminal(c)}
         />
       )}
 
@@ -101,6 +113,7 @@ export const CriminalProfiles: React.FC = () => {
           const found = criminals.find((c) => c.id === id);
           if (found) setSelectedCriminal(found);
         }}
+        onEdit={(c) => setEditingCriminal(c)}
       />
 
       {/* 5-Step Guided Suspect Addition Wizard Modal */}
@@ -109,7 +122,14 @@ export const CriminalProfiles: React.FC = () => {
         onClose={() => setIsAddWizardOpen(false)}
         onSuccess={handleSuspectCreated}
       />
+
+      {/* Edit Criminal Profile Modal */}
+      <EditCriminalModal
+        isOpen={!!editingCriminal}
+        criminal={editingCriminal}
+        onClose={() => setEditingCriminal(null)}
+        onSuccess={handleCriminalUpdated}
+      />
     </div>
   );
 };
-
