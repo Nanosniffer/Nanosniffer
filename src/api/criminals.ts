@@ -11,6 +11,23 @@ export interface CriminalFilterParams {
 }
 
 const STORAGE_KEY = 'acn_custom_criminals';
+const DELETED_STORAGE_KEY = 'acn_deleted_criminals';
+
+export const getStoredDeletedCriminalIds = (): string[] => {
+  try {
+    if (typeof window === 'undefined') return [];
+    const raw = localStorage.getItem(DELETED_STORAGE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed)) {
+        return parsed;
+      }
+    }
+  } catch (err) {
+    console.error('Error reading deleted criminals from localStorage:', err);
+  }
+  return [];
+};
 
 export const getStoredCustomCriminals = (): Criminal[] => {
   try {
@@ -34,8 +51,11 @@ export const saveCustomCriminal = (criminal: Criminal) => {
     const filteredExisting = existing.filter(c => c.id !== criminal.id && c.criminalId !== criminal.criminalId);
     const updated = [criminal, ...filteredExisting];
     
+    // Also remove from deleted set if re-added
+    const deletedIds = getStoredDeletedCriminalIds().filter(id => id !== criminal.id && id !== criminal.criminalId);
     if (typeof window !== 'undefined') {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+      localStorage.setItem(DELETED_STORAGE_KEY, JSON.stringify(deletedIds));
     }
     
     // Also prepend to in-memory dummy list ensuring no duplicate
@@ -54,13 +74,60 @@ export const saveCustomCriminal = (criminal: Criminal) => {
   }
 };
 
+export const deleteCriminal = async (id: string): Promise<{ success: boolean }> => {
+  try {
+    // 1. Remove from custom criminals in localStorage
+    const existing = getStoredCustomCriminals();
+    const updatedCustom = existing.filter(c => c.id !== id && c.criminalId !== id);
+    
+    // 2. Add to deleted blacklist in localStorage
+    const deleted = getStoredDeletedCriminalIds();
+    const updatedDeleted = Array.from(new Set([...deleted, id]));
+
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedCustom));
+      localStorage.setItem(DELETED_STORAGE_KEY, JSON.stringify(updatedDeleted));
+    }
+
+    // 3. Remove from in-memory dummy list
+    const inMemIdx = dummyCriminals.findIndex(c => c.id === id || c.criminalId === id);
+    if (inMemIdx >= 0) {
+      dummyCriminals.splice(inMemIdx, 1);
+    }
+
+    // 4. Dispatch update event
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('acn_criminals_updated', { detail: getAllMergedCriminals() }));
+    }
+
+    // 5. If connected to live custom backend, notify in background
+    if (typeof window !== 'undefined' && !window.location.hostname.includes('github.io')) {
+      try {
+        await apiClient.delete(`/criminals/${id}`, { timeout: 2000 });
+      } catch (e) {
+        // Ignore backend background error
+      }
+    }
+
+    return { success: true };
+  } catch (err) {
+    console.error('Error deleting criminal:', err);
+    return { success: false };
+  }
+};
+
 export const getAllMergedCriminals = (): Criminal[] => {
-  const custom = getStoredCustomCriminals();
-  if (custom.length === 0) return dummyCriminals;
+  const deletedIds = new Set(getStoredDeletedCriminalIds());
+  const custom = getStoredCustomCriminals().filter(c => !deletedIds.has(c.id) && !deletedIds.has(c.criminalId));
   
   const customIds = new Set(custom.map(c => c.id));
   const customCriminalIds = new Set(custom.map(c => c.criminalId));
-  const remainingDummies = dummyCriminals.filter(d => !customIds.has(d.id) && !customCriminalIds.has(d.criminalId));
+  const remainingDummies = dummyCriminals.filter(d => 
+    !deletedIds.has(d.id) && 
+    !deletedIds.has(d.criminalId) &&
+    !customIds.has(d.id) && 
+    !customCriminalIds.has(d.criminalId)
+  );
   return [...custom, ...remainingDummies];
 };
 
