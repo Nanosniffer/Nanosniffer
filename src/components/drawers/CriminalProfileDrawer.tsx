@@ -17,7 +17,8 @@ import {
   Download,
   Printer,
   Sparkles,
-  Edit
+  Edit,
+  Trash2
 } from 'lucide-react';
 
 interface CriminalProfileDrawerProps {
@@ -25,6 +26,7 @@ interface CriminalProfileDrawerProps {
   onClose: () => void;
   onSelectAssociate?: (id: string) => void;
   onEdit?: (criminal: Criminal) => void;
+  onDelete?: (criminal: Criminal) => void;
 }
 
 export const CriminalProfileDrawer: React.FC<CriminalProfileDrawerProps> = ({
@@ -32,6 +34,7 @@ export const CriminalProfileDrawer: React.FC<CriminalProfileDrawerProps> = ({
   onClose,
   onSelectAssociate,
   onEdit,
+  onDelete,
 }) => {
   const [activeTab, setActiveTab] = useState<'overview' | 'associates' | 'vehicles' | 'phones' | 'finance' | 'orgs'>('overview');
 
@@ -85,6 +88,17 @@ export const CriminalProfileDrawer: React.FC<CriminalProfileDrawerProps> = ({
               >
                 <Edit className="w-3.5 h-3.5" />
                 <span>Edit</span>
+              </Button>
+            )}
+            {onDelete && (
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={() => onDelete(criminal)}
+                title="Delete Criminal Profile"
+                className="h-8 px-2 text-red-600 hover:text-red-700 hover:bg-red-50 border-red-200"
+              >
+                <Trash2 className="w-3.5 h-3.5" />
               </Button>
             )}
             <Button
