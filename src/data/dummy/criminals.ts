@@ -219,7 +219,7 @@ export const dummyCriminals: Criminal[] = [
     criminalId: 'CR-9005',
     name: 'Raman Raghav',
     alias: 'Psycho Raman / Sindhi Dalwai',
-    photoUrl: `${BASE_IMG_PATH}crm-05.jpg`,
+    photoUrl: `${BASE_IMG_PATH}raman_raghav.jpg`,
     age: 67,
     gender: 'Male',
     nationality: 'Indian',
