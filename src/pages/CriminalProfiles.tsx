@@ -22,6 +22,13 @@ export const CriminalProfiles: React.FC = () => {
   const criminals = res?.data || [];
 
   const handleSuspectCreated = (newSuspect: Criminal) => {
+    queryClient.setQueryData(['criminals'], (old: any) => {
+      const prevData = old?.data || [];
+      return {
+        data: [newSuspect, ...prevData.filter((c: Criminal) => c.id !== newSuspect.id && c.criminalId !== newSuspect.criminalId)],
+        isFallback: old?.isFallback ?? true
+      };
+    });
     queryClient.invalidateQueries({ queryKey: ['criminals'] });
     refetch();
     setSelectedCriminal(newSuspect);

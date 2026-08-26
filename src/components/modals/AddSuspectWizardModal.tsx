@@ -2,13 +2,11 @@ import React, { useState } from 'react';
 import { Criminal, CrimeCategory, RiskLevel, SuspectStatus, TimelineEvent, PhoneRecord, FinancialAccount, Vehicle, TimelineEventType } from '../../types';
 import { createCriminal } from '../../api/criminals';
 import { Button } from '../ui/button';
-import { Input } from '../ui/input';
 import { Card } from '../ui/card';
 import { RiskBadge, StatusBadge } from '../common/StatusBadge';
 import {
   X,
   User,
-  ShieldAlert,
   FileText,
   Phone,
   Landmark,
@@ -17,17 +15,11 @@ import {
   HelpCircle,
   Plus,
   Trash2,
-  Sparkles,
   ArrowRight,
   ArrowLeft,
-  Upload,
-  Clock,
-  MapPin,
-  Camera,
-  CreditCard,
-  Building2,
   Check,
-  AlertTriangle
+  AlertTriangle,
+  ShieldAlert
 } from 'lucide-react';
 
 interface AddSuspectWizardModalProps {
@@ -43,8 +35,9 @@ export const AddSuspectWizardModal: React.FC<AddSuspectWizardModalProps> = ({
 }) => {
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [submitting, setSubmitting] = useState<boolean>(false);
+  const [validationError, setValidationError] = useState<string | null>(null);
 
-  // Question toggles for Steps 2, 3, 4, 5
+  // Question answers for Steps 2, 3, 4, 5 (must be true or false, not null)
   const [hasEvidence, setHasEvidence] = useState<boolean | null>(null);
   const [hasWiretaps, setHasWiretaps] = useState<boolean | null>(null);
   const [hasFinance, setHasFinance] = useState<boolean | null>(null);
@@ -70,7 +63,6 @@ export const AddSuspectWizardModal: React.FC<AddSuspectWizardModalProps> = ({
   const [lat, setLat] = useState<number>(19.0176);
   const [lng, setLng] = useState<number>(72.8150);
   const [biography, setBiography] = useState('');
-  const [aiThreatSummary, setAiThreatSummary] = useState('');
   const [tagsInput, setTagsInput] = useState('Hawala, Extortion, Angadia');
 
   // Step 2: Forensic Evidence Items
@@ -136,6 +128,64 @@ export const AddSuspectWizardModal: React.FC<AddSuspectWizardModalProps> = ({
   ]);
 
   if (!isOpen) return null;
+
+  // Validation Checkers for each step
+  const isStep1Complete = name.trim().length > 0;
+  const isStep2Complete = hasEvidence !== null;
+  const isStep3Complete = hasWiretaps !== null;
+  const isStep4Complete = hasFinance !== null;
+  const isStep5Complete = hasVehicles !== null;
+  const areAllStepsComplete = isStep1Complete && isStep2Complete && isStep3Complete && isStep4Complete && isStep5Complete;
+
+  // Navigation Logic
+  const handleNextStep = () => {
+    setValidationError(null);
+
+    if (currentStep === 1) {
+      if (!isStep1Complete) {
+        setValidationError('Please enter the Suspect Full Name to proceed to Step 2.');
+        return;
+      }
+      setCurrentStep(2);
+      return;
+    }
+
+    if (currentStep === 2) {
+      if (!isStep2Complete) {
+        setValidationError('Please select whether Forensic Evidence is available (Yes or No).');
+        return;
+      }
+      setCurrentStep(3);
+      return;
+    }
+
+    if (currentStep === 3) {
+      if (!isStep3Complete) {
+        setValidationError('Please select whether Wiretaps are active for this subject (Yes or No).');
+        return;
+      }
+      setCurrentStep(4);
+      return;
+    }
+
+    if (currentStep === 4) {
+      if (!isStep4Complete) {
+        setValidationError('Please select whether Financial Accounts are logged (Yes or No).');
+        return;
+      }
+      setCurrentStep(5);
+      return;
+    }
+
+    if (currentStep === 5) {
+      if (!isStep5Complete) {
+        setValidationError('Please select whether Vehicle records exist (Yes or No).');
+        return;
+      }
+      setCurrentStep(6);
+      return;
+    }
+  };
 
   // Add Item Helpers
   const addEvidenceItem = () => {
@@ -225,7 +275,14 @@ export const AddSuspectWizardModal: React.FC<AddSuspectWizardModalProps> = ({
 
   // Submit & Save
   const handleFinalSubmit = async () => {
+    if (!areAllStepsComplete) {
+      setValidationError('All 5 intelligence steps must be completed before creating the dossier.');
+      return;
+    }
+
     setSubmitting(true);
+    setValidationError(null);
+
     const parsedTags = tagsInput.split(',').map(t => t.trim()).filter(Boolean);
     const generatedId = `crm-${Date.now()}`;
     const generatedCriminalId = `CR-${Math.floor(1000 + Math.random() * 9000)}`;
@@ -233,8 +290,8 @@ export const AddSuspectWizardModal: React.FC<AddSuspectWizardModalProps> = ({
     const newCriminal: Criminal = {
       id: generatedId,
       criminalId: generatedCriminalId,
-      name: name || 'Unknown Suspect',
-      alias: alias || 'Target',
+      name: name.trim(),
+      alias: alias.trim() || 'Target',
       photoUrl: photoUrl || 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300',
       age: Number(age) || 35,
       gender: gender || 'Male',
@@ -253,7 +310,7 @@ export const AddSuspectWizardModal: React.FC<AddSuspectWizardModalProps> = ({
       knownAssociatesCount: 2,
       activeWarrants: 3,
       biography: biography || `Key subject flagged for coordinated ${crimeCategory} activities. Monitored under active interdiction directives.`,
-      aiThreatSummary: aiThreatSummary || `A.E.G.I.S. neural evaluation classifies subject threat level as ${riskLevel} (${riskScore}/100). Imminent operational risk detected.`,
+      aiThreatSummary: `ACN Neural Core classified subject threat level as ${riskLevel} (${riskScore}/100). Imminent operational risk detected across ${city} regional nodes.`,
       personalDetails: {
         dob,
         bloodGroup,
@@ -283,7 +340,7 @@ export const AddSuspectWizardModal: React.FC<AddSuspectWizardModalProps> = ({
         setSubmitting(false);
         onSuccess(newCriminal);
         onClose();
-      }, 400);
+      }, 300);
     } catch (err) {
       setSubmitting(false);
       onSuccess(newCriminal);
@@ -292,12 +349,12 @@ export const AddSuspectWizardModal: React.FC<AddSuspectWizardModalProps> = ({
   };
 
   const steps = [
-    { num: 1, label: '1. Suspect Profile' },
-    { num: 2, label: '2. Forensic Evidence' },
-    { num: 3, label: '3. Wiretaps & Phones' },
-    { num: 4, label: '4. Financial Anomaly' },
-    { num: 5, label: '5. Vehicle Details' },
-    { num: 6, label: '6. Review & Save' },
+    { num: 1, label: '1. Suspect Profile', isDone: isStep1Complete },
+    { num: 2, label: '2. Forensic Evidence', isDone: isStep2Complete },
+    { num: 3, label: '3. Wiretaps & Phones', isDone: isStep3Complete },
+    { num: 4, label: '4. Financial Anomaly', isDone: isStep4Complete },
+    { num: 5, label: '5. Vehicle Details', isDone: isStep5Complete },
+    { num: 6, label: '6. Review & Save', isDone: areAllStepsComplete },
   ];
 
   return (
@@ -311,10 +368,10 @@ export const AddSuspectWizardModal: React.FC<AddSuspectWizardModalProps> = ({
             </div>
             <div>
               <h2 className="text-base font-bold text-slate-900 leading-none">
-                Create & Add Suspect Intelligence Dossier
+                Register & Add Suspect Dossier
               </h2>
               <p className="text-[11px] text-slate-500 mt-1">
-                Guided multi-tier onboarding for suspects, forensics, wiretaps, finance, and assets.
+                Step-by-step intake wizard for identity, forensics, wiretaps, finance, and assets.
               </p>
             </div>
           </div>
@@ -328,26 +385,41 @@ export const AddSuspectWizardModal: React.FC<AddSuspectWizardModalProps> = ({
 
         {/* Step Progress Navigation Bar */}
         <div className="px-4 py-2.5 bg-slate-100/70 border-b border-slate-200 flex items-center justify-between gap-1 overflow-x-auto text-[11px] font-medium">
-          {steps.map((step) => (
-            <div
-              key={step.num}
-              onClick={() => {
-                // allow clicking previous steps
-                if (step.num < currentStep) setCurrentStep(step.num);
-              }}
-              className={`flex items-center gap-1.5 py-1 px-2.5 rounded-md transition shrink-0 ${
-                currentStep === step.num
-                  ? 'bg-slate-900 text-white font-bold shadow-subtle'
-                  : currentStep > step.num
-                  ? 'bg-emerald-50 text-emerald-800 border border-emerald-200 cursor-pointer hover:bg-emerald-100'
-                  : 'text-slate-400 bg-transparent'
-              }`}
-            >
-              <span>{step.label}</span>
-              {currentStep > step.num && <Check className="w-3 h-3 text-emerald-600" />}
-            </div>
-          ))}
+          {steps.map((step) => {
+            const canNavigate = step.num <= currentStep || (step.num === currentStep + 1 && steps[currentStep - 1].isDone);
+            return (
+              <button
+                key={step.num}
+                type="button"
+                disabled={!canNavigate}
+                onClick={() => {
+                  if (canNavigate) {
+                    setValidationError(null);
+                    setCurrentStep(step.num);
+                  }
+                }}
+                className={`flex items-center gap-1.5 py-1 px-2.5 rounded-md transition shrink-0 ${
+                  currentStep === step.num
+                    ? 'bg-slate-900 text-white font-bold shadow-subtle'
+                    : step.isDone
+                    ? 'bg-emerald-50 text-emerald-800 border border-emerald-200 cursor-pointer hover:bg-emerald-100'
+                    : 'text-slate-400 bg-transparent cursor-not-allowed opacity-70'
+                }`}
+              >
+                <span>{step.label}</span>
+                {step.isDone && <Check className="w-3 h-3 text-emerald-600 shrink-0" />}
+              </button>
+            );
+          })}
         </div>
+
+        {/* Validation Error Notice Banner */}
+        {validationError && (
+          <div className="mx-5 mt-4 p-2.5 rounded-md bg-red-50 border border-red-200 text-red-700 text-xs flex items-center gap-2 animate-in shake">
+            <AlertTriangle className="w-4 h-4 shrink-0 text-red-600" />
+            <span>{validationError}</span>
+          </div>
+        )}
 
         {/* Modal Body: Wizard Step Contents */}
         <div className="flex-1 overflow-y-auto p-5 space-y-4 text-xs">
@@ -358,7 +430,7 @@ export const AddSuspectWizardModal: React.FC<AddSuspectWizardModalProps> = ({
             <div className="space-y-4 animate-in fade-in duration-150">
               <div className="flex items-center justify-between border-b border-slate-100 pb-2">
                 <span className="text-xs font-bold text-slate-900 flex items-center gap-1.5">
-                  <User className="w-4 h-4 text-slate-700" /> 1. Primary Identity & Biometrics
+                  <User className="w-4 h-4 text-slate-700" /> 1. Suspect Profile (Primary Identity & Biometrics)
                 </span>
                 <span className="text-[10px] text-slate-400 uppercase tracking-wider font-semibold">Step 1 of 5</span>
               </div>
@@ -373,8 +445,13 @@ export const AddSuspectWizardModal: React.FC<AddSuspectWizardModalProps> = ({
                     required
                     placeholder="e.g. Vikram Singhania"
                     value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className="w-full px-3 py-1.5 rounded-md border border-slate-200 text-slate-900 text-xs focus:outline-none focus:border-slate-400 shadow-subtle"
+                    onChange={(e) => {
+                      setName(e.target.value);
+                      if (validationError) setValidationError(null);
+                    }}
+                    className={`w-full px-3 py-1.5 rounded-md border text-slate-900 text-xs focus:outline-none shadow-subtle ${
+                      !name.trim() && validationError ? 'border-red-400 bg-red-50/30' : 'border-slate-200 bg-white focus:border-slate-400'
+                    }`}
                   />
                 </div>
 
@@ -387,7 +464,7 @@ export const AddSuspectWizardModal: React.FC<AddSuspectWizardModalProps> = ({
                     placeholder='e.g. "D-Boss" / "The Don"'
                     value={alias}
                     onChange={(e) => setAlias(e.target.value)}
-                    className="w-full px-3 py-1.5 rounded-md border border-slate-200 text-slate-900 text-xs focus:outline-none focus:border-slate-400 shadow-subtle"
+                    className="w-full px-3 py-1.5 rounded-md border border-slate-200 text-slate-900 text-xs focus:outline-none focus:border-slate-400 shadow-subtle bg-white"
                   />
                 </div>
 
@@ -462,7 +539,7 @@ export const AddSuspectWizardModal: React.FC<AddSuspectWizardModalProps> = ({
                     placeholder="https://..."
                     value={photoUrl}
                     onChange={(e) => setPhotoUrl(e.target.value)}
-                    className="w-full px-3 py-1.5 rounded-md border border-slate-200 text-slate-900 text-xs focus:outline-none focus:border-slate-400 shadow-subtle"
+                    className="w-full px-3 py-1.5 rounded-md border border-slate-200 text-slate-900 text-xs focus:outline-none focus:border-slate-400 shadow-subtle bg-white"
                   />
                 </div>
 
@@ -474,7 +551,7 @@ export const AddSuspectWizardModal: React.FC<AddSuspectWizardModalProps> = ({
                       placeholder="Age"
                       value={age}
                       onChange={(e) => setAge(Number(e.target.value))}
-                      className="w-full px-3 py-1.5 rounded-md border border-slate-200 text-slate-900 text-xs shadow-subtle"
+                      className="w-full px-3 py-1.5 rounded-md border border-slate-200 text-slate-900 text-xs shadow-subtle bg-white"
                     />
                     <select
                       value={gender}
@@ -489,40 +566,40 @@ export const AddSuspectWizardModal: React.FC<AddSuspectWizardModalProps> = ({
                 </div>
 
                 <div>
-                  <label className="text-slate-700 font-semibold block mb-1">Nationality & DOB</label>
+                  <label className="text-slate-700 font-semibold block mb-1">Nationality & Date of Birth</label>
                   <div className="grid grid-cols-2 gap-2">
                     <input
                       type="text"
                       placeholder="Nationality"
                       value={nationality}
                       onChange={(e) => setNationality(e.target.value)}
-                      className="w-full px-3 py-1.5 rounded-md border border-slate-200 text-slate-900 text-xs shadow-subtle"
+                      className="w-full px-3 py-1.5 rounded-md border border-slate-200 text-slate-900 text-xs shadow-subtle bg-white"
                     />
                     <input
                       type="date"
                       value={dob}
                       onChange={(e) => setDob(e.target.value)}
-                      className="w-full px-2 py-1 rounded-md border border-slate-200 text-slate-900 text-xs shadow-subtle"
+                      className="w-full px-2 py-1 rounded-md border border-slate-200 text-slate-900 text-xs shadow-subtle bg-white"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="text-slate-700 font-semibold block mb-1">Last Known Location (City / Address)</label>
+                  <label className="text-slate-700 font-semibold block mb-1">Last Known Location (City / Area)</label>
                   <div className="grid grid-cols-2 gap-2">
                     <input
                       type="text"
                       placeholder="City (e.g. Mumbai)"
                       value={city}
                       onChange={(e) => setCity(e.target.value)}
-                      className="w-full px-3 py-1.5 rounded-md border border-slate-200 text-slate-900 text-xs shadow-subtle"
+                      className="w-full px-3 py-1.5 rounded-md border border-slate-200 text-slate-900 text-xs shadow-subtle bg-white"
                     />
                     <input
                       type="text"
                       placeholder="Area (e.g. Worli)"
                       value={address}
                       onChange={(e) => setAddress(e.target.value)}
-                      className="w-full px-3 py-1.5 rounded-md border border-slate-200 text-slate-900 text-xs shadow-subtle"
+                      className="w-full px-3 py-1.5 rounded-md border border-slate-200 text-slate-900 text-xs shadow-subtle bg-white"
                     />
                   </div>
                 </div>
@@ -534,7 +611,7 @@ export const AddSuspectWizardModal: React.FC<AddSuspectWizardModalProps> = ({
                     placeholder="Hawala, Extortion, Angadia"
                     value={tagsInput}
                     onChange={(e) => setTagsInput(e.target.value)}
-                    className="w-full px-3 py-1.5 rounded-md border border-slate-200 text-slate-900 text-xs shadow-subtle"
+                    className="w-full px-3 py-1.5 rounded-md border border-slate-200 text-slate-900 text-xs shadow-subtle bg-white"
                   />
                 </div>
               </div>
@@ -546,7 +623,7 @@ export const AddSuspectWizardModal: React.FC<AddSuspectWizardModalProps> = ({
                   placeholder="Key background history, syndicate associations, criminal network operations..."
                   value={biography}
                   onChange={(e) => setBiography(e.target.value)}
-                  className="w-full px-3 py-2 rounded-md border border-slate-200 text-slate-900 text-xs focus:outline-none focus:border-slate-400 shadow-subtle"
+                  className="w-full px-3 py-2 rounded-md border border-slate-200 text-slate-900 text-xs focus:outline-none focus:border-slate-400 shadow-subtle bg-white"
                 />
               </div>
             </div>
@@ -580,8 +657,11 @@ export const AddSuspectWizardModal: React.FC<AddSuspectWizardModalProps> = ({
                     <Button
                       variant="default"
                       size="sm"
-                      onClick={() => setHasEvidence(true)}
-                      className="px-5 font-semibold"
+                      onClick={() => {
+                        setHasEvidence(true);
+                        setValidationError(null);
+                      }}
+                      className="px-5 font-semibold bg-slate-900 hover:bg-slate-800 text-white"
                     >
                       Yes, Add Forensic Evidence
                     </Button>
@@ -590,9 +670,10 @@ export const AddSuspectWizardModal: React.FC<AddSuspectWizardModalProps> = ({
                       size="sm"
                       onClick={() => {
                         setHasEvidence(false);
-                        setCurrentStep(3); // skip directly to step 3
+                        setValidationError(null);
+                        setCurrentStep(3); // Jump smoothly to Step 3
                       }}
-                      className="px-5"
+                      className="px-5 border-slate-300"
                     >
                       No, Skip to Wiretaps
                     </Button>
@@ -601,7 +682,8 @@ export const AddSuspectWizardModal: React.FC<AddSuspectWizardModalProps> = ({
               ) : (
                 <div className="space-y-3.5">
                   <div className="flex items-center justify-between bg-blue-50/70 p-2.5 px-3 rounded-lg border border-blue-200 text-xs">
-                    <span className="text-blue-900 font-medium">
+                    <span className="text-blue-900 font-medium flex items-center gap-1.5">
+                      <Check className="w-3.5 h-3.5 text-blue-700" />
                       Forensic Evidence Enabled ({evidenceList.length} Items Logged)
                     </span>
                     <button
@@ -662,7 +744,7 @@ export const AddSuspectWizardModal: React.FC<AddSuspectWizardModalProps> = ({
                         </div>
 
                         <div>
-                          <label className="text-[11px] font-semibold text-slate-600 block mb-1">Location of Occurrence</label>
+                          <label className="text-[11px] font-semibold text-slate-600 block mb-1">Location</label>
                           <input
                             type="text"
                             value={item.location}
@@ -746,8 +828,11 @@ export const AddSuspectWizardModal: React.FC<AddSuspectWizardModalProps> = ({
                     <Button
                       variant="default"
                       size="sm"
-                      onClick={() => setHasWiretaps(true)}
-                      className="px-5 font-semibold"
+                      onClick={() => {
+                        setHasWiretaps(true);
+                        setValidationError(null);
+                      }}
+                      className="px-5 font-semibold bg-slate-900 hover:bg-slate-800 text-white"
                     >
                       Yes, Add Wiretaps
                     </Button>
@@ -756,9 +841,10 @@ export const AddSuspectWizardModal: React.FC<AddSuspectWizardModalProps> = ({
                       size="sm"
                       onClick={() => {
                         setHasWiretaps(false);
-                        setCurrentStep(4); // skip directly to step 4
+                        setValidationError(null);
+                        setCurrentStep(4); // Jump smoothly to Step 4
                       }}
-                      className="px-5"
+                      className="px-5 border-slate-300"
                     >
                       No, Skip to Financials
                     </Button>
@@ -767,7 +853,8 @@ export const AddSuspectWizardModal: React.FC<AddSuspectWizardModalProps> = ({
               ) : (
                 <div className="space-y-3.5">
                   <div className="flex items-center justify-between bg-emerald-50/70 p-2.5 px-3 rounded-lg border border-emerald-200 text-xs">
-                    <span className="text-emerald-900 font-medium">
+                    <span className="text-emerald-900 font-medium flex items-center gap-1.5">
+                      <Check className="w-3.5 h-3.5 text-emerald-700" />
                       Wiretap Telemetry Active ({wiretapList.length} Lines Monitored)
                     </span>
                     <button
@@ -896,8 +983,11 @@ export const AddSuspectWizardModal: React.FC<AddSuspectWizardModalProps> = ({
                     <Button
                       variant="default"
                       size="sm"
-                      onClick={() => setHasFinance(true)}
-                      className="px-5 font-semibold"
+                      onClick={() => {
+                        setHasFinance(true);
+                        setValidationError(null);
+                      }}
+                      className="px-5 font-semibold bg-slate-900 hover:bg-slate-800 text-white"
                     >
                       Yes, Add Financial Accounts
                     </Button>
@@ -906,9 +996,10 @@ export const AddSuspectWizardModal: React.FC<AddSuspectWizardModalProps> = ({
                       size="sm"
                       onClick={() => {
                         setHasFinance(false);
-                        setCurrentStep(5); // skip directly to step 5
+                        setValidationError(null);
+                        setCurrentStep(5); // Jump smoothly to Step 5
                       }}
-                      className="px-5"
+                      className="px-5 border-slate-300"
                     >
                       No, Skip to Vehicles
                     </Button>
@@ -917,7 +1008,8 @@ export const AddSuspectWizardModal: React.FC<AddSuspectWizardModalProps> = ({
               ) : (
                 <div className="space-y-3.5">
                   <div className="flex items-center justify-between bg-blue-50/70 p-2.5 px-3 rounded-lg border border-blue-200 text-xs">
-                    <span className="text-blue-900 font-medium">
+                    <span className="text-blue-900 font-medium flex items-center gap-1.5">
+                      <Check className="w-3.5 h-3.5 text-blue-700" />
                       Financial Tracking Active ({financialList.length} Accounts Monitored)
                     </span>
                     <button
@@ -1061,8 +1153,11 @@ export const AddSuspectWizardModal: React.FC<AddSuspectWizardModalProps> = ({
                     <Button
                       variant="default"
                       size="sm"
-                      onClick={() => setHasVehicles(true)}
-                      className="px-5 font-semibold"
+                      onClick={() => {
+                        setHasVehicles(true);
+                        setValidationError(null);
+                      }}
+                      className="px-5 font-semibold bg-slate-900 hover:bg-slate-800 text-white"
                     >
                       Yes, Add Vehicle Details
                     </Button>
@@ -1071,9 +1166,10 @@ export const AddSuspectWizardModal: React.FC<AddSuspectWizardModalProps> = ({
                       size="sm"
                       onClick={() => {
                         setHasVehicles(false);
-                        setCurrentStep(6); // skip directly to review
+                        setValidationError(null);
+                        setCurrentStep(6); // Jump smoothly to Review
                       }}
-                      className="px-5"
+                      className="px-5 border-slate-300"
                     >
                       No, Skip to Final Review
                     </Button>
@@ -1082,7 +1178,8 @@ export const AddSuspectWizardModal: React.FC<AddSuspectWizardModalProps> = ({
               ) : (
                 <div className="space-y-3.5">
                   <div className="flex items-center justify-between bg-purple-50/70 p-2.5 px-3 rounded-lg border border-purple-200 text-xs">
-                    <span className="text-purple-900 font-medium">
+                    <span className="text-purple-900 font-medium flex items-center gap-1.5">
+                      <Check className="w-3.5 h-3.5 text-purple-700" />
                       Vehicle Tracking Active ({vehicleList.length} Vehicles Logged)
                     </span>
                     <button
@@ -1189,10 +1286,12 @@ export const AddSuspectWizardModal: React.FC<AddSuspectWizardModalProps> = ({
             <div className="space-y-4 animate-in fade-in duration-150">
               <div className="flex items-center justify-between border-b border-slate-100 pb-2">
                 <span className="text-xs font-bold text-slate-900 flex items-center gap-1.5">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600" /> 6. Consolidated Dossier Review
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600" /> 6. Consolidated Dossier Review & Final Dispatch
                 </span>
-                <span className="text-[10px] text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 font-semibold">
-                  Ready to Dispatch
+                <span className={`text-[10px] font-semibold px-2 py-0.5 rounded border ${
+                  areAllStepsComplete ? 'text-emerald-700 bg-emerald-50 border-emerald-200' : 'text-red-700 bg-red-50 border-red-200'
+                }`}>
+                  {areAllStepsComplete ? 'All 5 Steps Verified' : 'Incomplete Steps Detected'}
                 </span>
               </div>
 
@@ -1218,35 +1317,46 @@ export const AddSuspectWizardModal: React.FC<AddSuspectWizardModalProps> = ({
 
               {/* Module Summary Chips */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
-                <div className="p-2.5 rounded-md bg-white border border-slate-200">
-                  <span className="text-[10px] text-slate-400 uppercase block font-semibold">Forensics</span>
+                <div className={`p-2.5 rounded-md border ${hasEvidence ? 'bg-emerald-50/50 border-emerald-200' : 'bg-slate-50 border-slate-200'}`}>
+                  <span className="text-[10px] text-slate-400 uppercase block font-semibold">1. Forensics</span>
                   <span className="font-bold text-slate-900">
-                    {hasEvidence ? `${evidenceList.length} Events` : 'None / Skipped'}
+                    {hasEvidence ? `${evidenceList.length} Events Logged` : 'None / Skipped (No)'}
                   </span>
                 </div>
-                <div className="p-2.5 rounded-md bg-white border border-slate-200">
-                  <span className="text-[10px] text-slate-400 uppercase block font-semibold">Wiretaps</span>
+                <div className={`p-2.5 rounded-md border ${hasWiretaps ? 'bg-emerald-50/50 border-emerald-200' : 'bg-slate-50 border-slate-200'}`}>
+                  <span className="text-[10px] text-slate-400 uppercase block font-semibold">2. Wiretaps</span>
                   <span className="font-bold text-slate-900">
-                    {hasWiretaps ? `${wiretapList.length} Lines` : 'None / Skipped'}
+                    {hasWiretaps ? `${wiretapList.length} Lines Monitored` : 'None / Skipped (No)'}
                   </span>
                 </div>
-                <div className="p-2.5 rounded-md bg-white border border-slate-200">
-                  <span className="text-[10px] text-slate-400 uppercase block font-semibold">Finance</span>
+                <div className={`p-2.5 rounded-md border ${hasFinance ? 'bg-emerald-50/50 border-emerald-200' : 'bg-slate-50 border-slate-200'}`}>
+                  <span className="text-[10px] text-slate-400 uppercase block font-semibold">3. Finance</span>
                   <span className="font-bold text-slate-900">
-                    {hasFinance ? `${financialList.length} Accounts` : 'None / Skipped'}
+                    {hasFinance ? `${financialList.length} Accounts Monitored` : 'None / Skipped (No)'}
                   </span>
                 </div>
-                <div className="p-2.5 rounded-md bg-white border border-slate-200">
-                  <span className="text-[10px] text-slate-400 uppercase block font-semibold">Vehicles</span>
+                <div className={`p-2.5 rounded-md border ${hasVehicles ? 'bg-emerald-50/50 border-emerald-200' : 'bg-slate-50 border-slate-200'}`}>
+                  <span className="text-[10px] text-slate-400 uppercase block font-semibold">4. Vehicles</span>
                   <span className="font-bold text-slate-900">
-                    {hasVehicles ? `${vehicleList.length} Assets` : 'None / Skipped'}
+                    {hasVehicles ? `${vehicleList.length} Vehicles Tracked` : 'None / Skipped (No)'}
                   </span>
                 </div>
               </div>
 
-              <div className="p-3 bg-amber-50/70 border border-amber-200 rounded-lg text-xs text-amber-900">
-                <strong>Intelligence Dispatch Notice:</strong> Submitting will register this suspect dossier in the central ACN Task Force Roster, update graph centrality nodes, and stream telemetry alerts.
-              </div>
+              {!areAllStepsComplete ? (
+                <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-xs text-red-800 flex items-start gap-2">
+                  <ShieldAlert className="w-4 h-4 text-red-600 shrink-0 mt-0.5" />
+                  <div>
+                    <strong className="block font-semibold">Dossier Cannot Be Submitted:</strong>
+                    <span>One or more preceding steps have not been completed. Please navigate to each step and provide the required information or answers.</span>
+                  </div>
+                </div>
+              ) : (
+                <div className="p-3 bg-emerald-50/70 border border-emerald-200 rounded-lg text-xs text-emerald-900 flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                  <span><strong>Dossier Verified:</strong> All 5 intelligence modules are validated. Ready for real-time task force dispatch.</span>
+                </div>
+              )}
             </div>
           )}
         </div>
@@ -1257,7 +1367,10 @@ export const AddSuspectWizardModal: React.FC<AddSuspectWizardModalProps> = ({
             variant="secondary"
             size="sm"
             disabled={currentStep === 1}
-            onClick={() => setCurrentStep(prev => Math.max(1, prev - 1))}
+            onClick={() => {
+              setValidationError(null);
+              setCurrentStep(prev => Math.max(1, prev - 1));
+            }}
             className="gap-1.5 h-8 text-xs"
           >
             <ArrowLeft className="w-3.5 h-3.5" /> Previous Step
@@ -1277,8 +1390,8 @@ export const AddSuspectWizardModal: React.FC<AddSuspectWizardModalProps> = ({
               <Button
                 variant="default"
                 size="sm"
-                onClick={() => setCurrentStep(prev => Math.min(6, prev + 1))}
-                className="gap-1.5 h-8 text-xs font-semibold"
+                onClick={handleNextStep}
+                className="gap-1.5 h-8 text-xs font-semibold bg-slate-900 hover:bg-slate-800 text-white"
               >
                 Next Step <ArrowRight className="w-3.5 h-3.5" />
               </Button>
@@ -1286,9 +1399,9 @@ export const AddSuspectWizardModal: React.FC<AddSuspectWizardModalProps> = ({
               <Button
                 variant="default"
                 size="sm"
-                disabled={submitting}
+                disabled={submitting || !areAllStepsComplete}
                 onClick={handleFinalSubmit}
-                className="gap-1.5 h-8 text-xs font-bold bg-emerald-700 hover:bg-emerald-800 text-white shadow-sm"
+                className="gap-1.5 h-8 text-xs font-bold bg-emerald-700 hover:bg-emerald-800 text-white shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {submitting ? (
                   <span className="flex items-center gap-1.5">
