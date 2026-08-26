@@ -14,6 +14,7 @@ const STORAGE_KEY = 'acn_custom_criminals';
 
 export const getStoredCustomCriminals = (): Criminal[] => {
   try {
+    if (typeof window === 'undefined') return [];
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) {
       const parsed = JSON.parse(raw);
@@ -30,14 +31,23 @@ export const getStoredCustomCriminals = (): Criminal[] => {
 export const saveCustomCriminal = (criminal: Criminal) => {
   try {
     const existing = getStoredCustomCriminals();
-    const updated = [criminal, ...existing.filter(c => c.id !== criminal.id && c.criminalId !== criminal.criminalId)];
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
-    // Also prepend to in-memory dummy list
+    const filteredExisting = existing.filter(c => c.id !== criminal.id && c.criminalId !== criminal.criminalId);
+    const updated = [criminal, ...filteredExisting];
+    
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+    }
+    
+    // Also prepend to in-memory dummy list ensuring no duplicate
     const foundIdx = dummyCriminals.findIndex(c => c.id === criminal.id || c.criminalId === criminal.criminalId);
     if (foundIdx >= 0) {
       dummyCriminals[foundIdx] = criminal;
     } else {
       dummyCriminals.unshift(criminal);
+    }
+
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('acn_criminals_updated', { detail: updated }));
     }
   } catch (err) {
     console.error('Error saving custom criminal to localStorage:', err);
@@ -55,32 +65,39 @@ export const getAllMergedCriminals = (): Criminal[] => {
 };
 
 export const getCriminals = async (filters?: CriminalFilterParams): Promise<{ data: Criminal[]; isFallback: boolean }> => {
+  // On GitHub Pages or static host, serve instantly from merged local database
+  if (typeof window !== 'undefined' && window.location.hostname.includes('github.io')) {
+    const all = getAllMergedCriminals();
+    return { data: all, isFallback: true };
+  }
+
   try {
-    const res = await apiClient.get<Criminal[]>('/criminals', { params: filters });
+    const res = await apiClient.get<Criminal[]>('/criminals', { params: filters, timeout: 2000 });
     if (res.data && res.data.length > 0) {
-      // Merge with custom locally registered profiles
       const custom = getStoredCustomCriminals();
       const customIds = new Set(custom.map(c => c.id));
       const backendFiltered = res.data.filter(c => !customIds.has(c.id));
       return { data: [...custom, ...backendFiltered], isFallback: false };
     }
-    return { data: getAllMergedCriminals(), isFallback: true };
   } catch (error) {
-    return { data: getAllMergedCriminals(), isFallback: true };
+    // Fallback instantly
   }
+  return { data: getAllMergedCriminals(), isFallback: true };
 };
 
 export const createCriminal = async (criminalData: Criminal): Promise<{ data: Criminal; isFallback: boolean }> => {
-  try {
-    const res = await apiClient.post<Criminal>('/criminals', criminalData);
-    if (res.data) {
-      saveCustomCriminal(res.data);
-      return { data: res.data, isFallback: false };
-    }
-  } catch (error) {
-    // Standalone / GitHub Pages Fallback
-  }
+  // 1. Immediately persist synchronously to localStorage and memory
   saveCustomCriminal(criminalData);
+
+  // 2. If connected to a live custom backend, notify backend in background
+  if (typeof window !== 'undefined' && !window.location.hostname.includes('github.io')) {
+    try {
+      await apiClient.post<Criminal>('/criminals', criminalData, { timeout: 2000 });
+    } catch (error) {
+      // Ignore background backend error
+    }
+  }
+
   return { data: criminalData, isFallback: true };
 };
 
