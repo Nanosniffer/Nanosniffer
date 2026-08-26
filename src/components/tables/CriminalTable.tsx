@@ -2,21 +2,19 @@ import React, { useState, useMemo } from 'react';
 import { Criminal } from '../../types';
 import { RiskBadge, StatusBadge } from '../common/StatusBadge';
 import { formatRelativeTime } from '../../utils/formatters';
-import { Search, ChevronRight, ArrowUpDown, Eye, Filter, Edit, Trash2 } from 'lucide-react';
+import { Search, ChevronRight, ArrowUpDown, Eye, Filter, Edit } from 'lucide-react';
 import { Button } from '../ui/button';
 
 interface CriminalTableProps {
   criminals: Criminal[];
   onSelectCriminal: (criminal: Criminal) => void;
   onEditCriminal?: (criminal: Criminal) => void;
-  onDeleteCriminal?: (criminal: Criminal) => void;
 }
 
 export const CriminalTable: React.FC<CriminalTableProps> = ({ 
   criminals, 
   onSelectCriminal, 
   onEditCriminal,
-  onDeleteCriminal,
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCrimeType, setSelectedCrimeType] = useState<string>('ALL');
@@ -339,20 +337,6 @@ export const CriminalTable: React.FC<CriminalTableProps> = ({
                         >
                           <Eye className="w-3 h-3" /> Dossier
                         </Button>
-                        {onDeleteCriminal && (
-                          <Button
-                            variant="secondary"
-                            size="sm"
-                            className="h-6 px-2 text-[11px] gap-1 text-red-600 hover:bg-red-50 hover:text-red-700 hover:border-red-200"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              onDeleteCriminal(criminal);
-                            }}
-                            title="Expunge / Delete Criminal Profile"
-                          >
-                            <Trash2 className="w-3 h-3" /> Delete
-                          </Button>
-                        )}
                       </div>
                     </td>
                   </tr>

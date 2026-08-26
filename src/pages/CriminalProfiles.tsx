@@ -1,23 +1,20 @@
 import React, { useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { getCriminals, deleteCriminal } from '../api';
+import { getCriminals } from '../api';
 import { CriminalTable } from '../components/tables/CriminalTable';
 import { CriminalProfileDrawer } from '../components/drawers/CriminalProfileDrawer';
 import { TableSkeleton } from '../components/common/SkeletonLoaders';
 import { Criminal } from '../types';
-import { RefreshCw, UserPlus, CheckCircle2 } from 'lucide-react';
+import { RefreshCw, UserPlus } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { AddSuspectWizardModal } from '../components/modals/AddSuspectWizardModal';
 import { EditCriminalModal } from '../components/modals/EditCriminalModal';
-import { DeleteCriminalConfirmModal } from '../components/modals/DeleteCriminalConfirmModal';
 
 export const CriminalProfiles: React.FC = () => {
   const [selectedCriminal, setSelectedCriminal] = useState<Criminal | null>(null);
   const [isAddWizardOpen, setIsAddWizardOpen] = useState(false);
   const [editingCriminal, setEditingCriminal] = useState<Criminal | null>(null);
-  const [deletingCriminal, setDeletingCriminal] = useState<Criminal | null>(null);
   const [localAddedCriminals, setLocalAddedCriminals] = useState<Criminal[]>([]);
-  const [deleteSuccessNotice, setDeleteSuccessNotice] = useState<string | null>(null);
   const queryClient = useQueryClient();
 
   const { data: res, isLoading, refetch, isFetching } = useQuery({
@@ -50,22 +47,6 @@ export const CriminalProfiles: React.FC = () => {
     if (selectedCriminal && (selectedCriminal.id === updated.id || selectedCriminal.criminalId === updated.criminalId)) {
       setSelectedCriminal(updated);
     }
-  };
-
-  const handleConfirmDelete = async (criminalToDelete: Criminal) => {
-    await deleteCriminal(criminalToDelete.id);
-    setLocalAddedCriminals(prev => prev.filter(c => c.id !== criminalToDelete.id && c.criminalId !== criminalToDelete.criminalId));
-    queryClient.invalidateQueries({ queryKey: ['criminals'] });
-    await refetch();
-    
-    if (selectedCriminal && (selectedCriminal.id === criminalToDelete.id || selectedCriminal.criminalId === criminalToDelete.criminalId)) {
-      setSelectedCriminal(null);
-    }
-    
-    setDeleteSuccessNotice(`Subject Profile ${criminalToDelete.criminalId} (${criminalToDelete.name}) was successfully expunged from the intelligence database.`);
-    setTimeout(() => {
-      setDeleteSuccessNotice(null);
-    }, 5000);
   };
 
   return (
@@ -113,22 +94,6 @@ export const CriminalProfiles: React.FC = () => {
         </div>
       </div>
 
-      {/* Success Notification Banner */}
-      {deleteSuccessNotice && (
-        <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-lg flex items-center justify-between gap-2 text-emerald-800 text-xs animate-in slide-in-from-top duration-200 shadow-subtle">
-          <div className="flex items-center gap-2">
-            <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-            <span>{deleteSuccessNotice}</span>
-          </div>
-          <button 
-            onClick={() => setDeleteSuccessNotice(null)} 
-            className="text-emerald-500 hover:text-emerald-800 font-bold px-1.5 py-0.5 rounded text-xs"
-          >
-            ✕
-          </button>
-        </div>
-      )}
-
       {/* Main Criminals Table */}
       {isLoading ? (
         <TableSkeleton rows={8} />
@@ -137,7 +102,6 @@ export const CriminalProfiles: React.FC = () => {
           criminals={criminals}
           onSelectCriminal={(c) => setSelectedCriminal(c)}
           onEditCriminal={(c) => setEditingCriminal(c)}
-          onDeleteCriminal={(c) => setDeletingCriminal(c)}
         />
       )}
 
@@ -150,7 +114,6 @@ export const CriminalProfiles: React.FC = () => {
           if (found) setSelectedCriminal(found);
         }}
         onEdit={(c) => setEditingCriminal(c)}
-        onDelete={(c) => setDeletingCriminal(c)}
       />
 
       {/* 5-Step Guided Suspect Addition Wizard Modal */}
@@ -166,14 +129,6 @@ export const CriminalProfiles: React.FC = () => {
         criminal={editingCriminal}
         onClose={() => setEditingCriminal(null)}
         onSuccess={handleCriminalUpdated}
-      />
-
-      {/* Subject Expungement / Delete Confirmation Modal */}
-      <DeleteCriminalConfirmModal
-        isOpen={!!deletingCriminal}
-        criminal={deletingCriminal}
-        onClose={() => setDeletingCriminal(null)}
-        onConfirmDelete={handleConfirmDelete}
       />
     </div>
   );
