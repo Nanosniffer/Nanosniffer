@@ -85,7 +85,7 @@ export const dummyNetworkGraph: NetworkGraphData = {
         riskScore: 97,
         riskLevel: 'CRITICAL',
         entityId: 'crm-14',
-        avatarUrl: `${BASE_IMG_PATH}crm-14.jpg`,
+        avatarUrl: `${BASE_IMG_PATH}sukesh_chandrashekhar.jpg`,
         status: 'IN_CUSTODY',
         connectionsCount: 18,
         centralityScore: 0.94,

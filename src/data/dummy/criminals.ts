@@ -655,7 +655,7 @@ export const dummyCriminals: Criminal[] = [
     criminalId: 'CR-9014',
     name: 'Sukesh Chandrashekhar',
     alias: 'Balaji / Tihar Conman',
-    photoUrl: `${BASE_IMG_PATH}crm-14.jpg`,
+    photoUrl: `${BASE_IMG_PATH}sukesh_chandrashekhar.jpg`,
     age: 36,
     gender: 'Male',
     nationality: 'Indian',
