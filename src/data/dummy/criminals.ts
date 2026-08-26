@@ -1,5 +1,7 @@
 import { Criminal } from '../../types';
 
+const BASE_IMG_PATH = `${import.meta.env.BASE_URL || '/'}images/criminals/`;
+
 export const dummyCriminals: Criminal[] = [
   // =========================================================================
   // 1. TERRORISM & TERRORISM FINANCING (3 Subjects)
@@ -9,7 +11,7 @@ export const dummyCriminals: Criminal[] = [
     criminalId: 'CR-9001',
     name: 'Dawood Ibrahim Kaskar',
     alias: 'D-Company Chief / Bhai',
-    photoUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&auto=format&fit=crop&q=80',
+    photoUrl: `${BASE_IMG_PATH}crm-01.jpg`,
     age: 69,
     gender: 'Male',
     nationality: 'Indian',
@@ -37,9 +39,9 @@ export const dummyCriminals: Criminal[] = [
       distinguishingMarks: ['Prominent mustache mark', 'Surgical scar on right collarbone'],
     },
     knownAssociates: [
-      { id: 'crm-02', name: 'Tiger Memon (Ibrahim Memon)', alias: 'Tiger', role: 'Operational Field Commander', relationship: '1993 Blasts Logistics', riskScore: 98, avatarUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80' },
-      { id: 'crm-21', name: 'Chhota Shakeel', alias: 'Shakeel', role: 'Enforcer & Arms Chief', relationship: 'Syndicate Lieutenant', riskScore: 98, avatarUrl: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&auto=format&fit=crop&q=80' },
-      { id: 'crm-03', name: 'Yakub Abdul Razak Memon', alias: 'The Accountant', role: 'Chartered Accountant', relationship: 'Financial Custodian', riskScore: 95, avatarUrl: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&auto=format&fit=crop&q=80' }
+      { id: 'crm-02', name: 'Tiger Memon (Ibrahim Memon)', alias: 'Tiger', role: 'Operational Field Commander', relationship: '1993 Blasts Logistics', riskScore: 98, avatarUrl: `${BASE_IMG_PATH}crm-02.jpg` },
+      { id: 'crm-21', name: 'Chhota Shakeel', alias: 'Shakeel', role: 'Enforcer & Arms Chief', relationship: 'Syndicate Lieutenant', riskScore: 98, avatarUrl: `${BASE_IMG_PATH}crm-21.jpg` },
+      { id: 'crm-03', name: 'Yakub Abdul Razak Memon', alias: 'The Accountant', role: 'Chartered Accountant', relationship: 'Financial Custodian', riskScore: 95, avatarUrl: `${BASE_IMG_PATH}crm-03.jpg` }
     ],
     vehicles: [
       { id: 'veh-01', licensePlate: 'MH-01-BK-9999', make: 'Toyota', model: 'Land Cruiser V8 Armored', year: 2024, color: 'Obsidian Black', registeredOwner: 'D-Logistics Offshore Corp', status: 'ACTIVE', lastSeenLocation: 'South Mumbai Coastal Corridor', lastSeenTime: '2026-08-25 03:20' },
@@ -65,7 +67,7 @@ export const dummyCriminals: Criminal[] = [
     criminalId: 'CR-9002',
     name: 'Ibrahim Mushtaq Memon',
     alias: 'Tiger Memon',
-    photoUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&auto=format&fit=crop&q=80',
+    photoUrl: `${BASE_IMG_PATH}crm-02.jpg`,
     age: 65,
     gender: 'Male',
     nationality: 'Indian',
@@ -93,8 +95,8 @@ export const dummyCriminals: Criminal[] = [
       distinguishingMarks: ['Scar on chin', 'Birthmark on neck'],
     },
     knownAssociates: [
-      { id: 'crm-01', name: 'Dawood Ibrahim Kaskar', alias: 'D-Company Chief', role: 'Supreme Commander', relationship: 'Conspiracy Co-Mastermind', riskScore: 99, avatarUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80' },
-      { id: 'crm-03', name: 'Yakub Abdul Razak Memon', alias: 'The Accountant', role: 'Financial Manager', relationship: 'Brother', riskScore: 95, avatarUrl: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&auto=format&fit=crop&q=80' }
+      { id: 'crm-01', name: 'Dawood Ibrahim Kaskar', alias: 'D-Company Chief', role: 'Supreme Commander', relationship: 'Conspiracy Co-Mastermind', riskScore: 99, avatarUrl: `${BASE_IMG_PATH}crm-01.jpg` },
+      { id: 'crm-03', name: 'Yakub Abdul Razak Memon', alias: 'The Accountant', role: 'Financial Manager', relationship: 'Brother', riskScore: 95, avatarUrl: `${BASE_IMG_PATH}crm-03.jpg` }
     ],
     vehicles: [
       { id: 'veh-03', licensePlate: 'MH-02-TM-1993', make: 'Toyota', model: 'Fortuner GR-S Bulletproof', year: 2023, color: 'Silver Metallic', registeredOwner: 'Mahim Freight Forwarders', status: 'ACTIVE', lastSeenLocation: 'Mahim Causeway Bridge', lastSeenTime: '2026-08-24 14:10' }
@@ -116,7 +118,7 @@ export const dummyCriminals: Criminal[] = [
     criminalId: 'CR-9003',
     name: 'Yakub Abdul Razak Memon',
     alias: 'The Chartered Accountant',
-    photoUrl: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=300&auto=format&fit=crop&q=80',
+    photoUrl: `${BASE_IMG_PATH}crm-03.jpg`,
     age: 53,
     gender: 'Male',
     nationality: 'Indian',
@@ -144,8 +146,8 @@ export const dummyCriminals: Criminal[] = [
       distinguishingMarks: ['Mole on left cheek'],
     },
     knownAssociates: [
-      { id: 'crm-01', name: 'Dawood Ibrahim Kaskar', alias: 'D-Company Chief', role: 'Syndicate Leader', relationship: 'Conspiracy Benefactor', riskScore: 99, avatarUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80' },
-      { id: 'crm-02', name: 'Tiger Memon', alias: 'Tiger', role: 'Operations Leader', relationship: 'Brother', riskScore: 98, avatarUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80' }
+      { id: 'crm-01', name: 'Dawood Ibrahim Kaskar', alias: 'D-Company Chief', role: 'Syndicate Leader', relationship: 'Conspiracy Benefactor', riskScore: 99, avatarUrl: `${BASE_IMG_PATH}crm-01.jpg` },
+      { id: 'crm-02', name: 'Tiger Memon', alias: 'Tiger', role: 'Operations Leader', relationship: 'Brother', riskScore: 98, avatarUrl: `${BASE_IMG_PATH}crm-02.jpg` }
     ],
     vehicles: [],
     phoneNumbers: [],
@@ -167,7 +169,7 @@ export const dummyCriminals: Criminal[] = [
     criminalId: 'CR-9004',
     name: 'Charles Gurmukh Sobhraj',
     alias: 'The Serpent / Bikini Killer',
-    photoUrl: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=300&auto=format&fit=crop&q=80',
+    photoUrl: `${BASE_IMG_PATH}crm-04.jpg`,
     age: 80,
     gender: 'Male',
     nationality: 'French-Vietnamese-Indian',
@@ -195,7 +197,7 @@ export const dummyCriminals: Criminal[] = [
       distinguishingMarks: ['Sharp facial features', 'Slight scar near left jaw'],
     },
     knownAssociates: [
-      { id: 'crm-14', name: 'Sukesh Chandrashekhar', alias: 'Tihar Conman', role: 'Prison Network Contact', relationship: 'Tihar Cell Inmate Network', riskScore: 97, avatarUrl: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=150&auto=format&fit=crop&q=80' }
+      { id: 'crm-14', name: 'Sukesh Chandrashekhar', alias: 'Tihar Conman', role: 'Prison Network Contact', relationship: 'Tihar Cell Inmate Network', riskScore: 97, avatarUrl: `${BASE_IMG_PATH}crm-14.jpg` }
     ],
     vehicles: [
       { id: 'veh-04', licensePlate: 'DL-01-CS-7777', make: 'Mercedes-Benz', model: 'Vintage W123 280E', year: 1982, color: 'Ivory White', registeredOwner: 'Gemstone Export Agency', status: 'SEARCHED', lastSeenLocation: 'Connaught Place Outer Circle', lastSeenTime: 'Historical Archive' }
@@ -217,7 +219,7 @@ export const dummyCriminals: Criminal[] = [
     criminalId: 'CR-9005',
     name: 'Raman Raghav',
     alias: 'Psycho Raman / Sindhi Dalwai',
-    photoUrl: 'https://images.unsplash.com/photo-1544717305-2782549b5136?w=300&auto=format&fit=crop&q=80',
+    photoUrl: `${BASE_IMG_PATH}crm-05.jpg`,
     age: 67,
     gender: 'Male',
     nationality: 'Indian',
@@ -259,7 +261,7 @@ export const dummyCriminals: Criminal[] = [
     criminalId: 'CR-9006',
     name: 'Thug Behram',
     alias: 'King of Thugs / Bujharat',
-    photoUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80',
+    photoUrl: `${BASE_IMG_PATH}crm-06.jpg`,
     age: 75,
     gender: 'Male',
     nationality: 'Indian',
@@ -305,7 +307,7 @@ export const dummyCriminals: Criminal[] = [
     criminalId: 'CR-9007',
     name: 'Srikrishna Ramesh',
     alias: 'Sriki / Crypto Phantom',
-    photoUrl: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=300&auto=format&fit=crop&q=80',
+    photoUrl: `${BASE_IMG_PATH}crm-07.jpg`,
     age: 31,
     gender: 'Male',
     nationality: 'Indian',
@@ -333,8 +335,8 @@ export const dummyCriminals: Criminal[] = [
       distinguishingMarks: ['Small mole on right temple', 'Slight spectacles impression'],
     },
     knownAssociates: [
-      { id: 'crm-08', name: 'Amit Bhardwaj', alias: 'GainBitcoin Kingpin', role: 'Crypto Ponzi Orchestrator', relationship: 'Darknet Liquidity Partner', riskScore: 91, avatarUrl: 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=150&auto=format&fit=crop&q=80' },
-      { id: 'crm-14', name: 'Sukesh Chandrashekhar', alias: 'Tihar Conman', role: 'Digital Spoofer Collaborator', relationship: 'VoIP Spoofing Consultant', riskScore: 97, avatarUrl: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=150&auto=format&fit=crop&q=80' }
+      { id: 'crm-08', name: 'Amit Bhardwaj', alias: 'GainBitcoin Kingpin', role: 'Crypto Ponzi Orchestrator', relationship: 'Darknet Liquidity Partner', riskScore: 91, avatarUrl: `${BASE_IMG_PATH}crm-08.jpg` },
+      { id: 'crm-14', name: 'Sukesh Chandrashekhar', alias: 'Tihar Conman', role: 'Digital Spoofer Collaborator', relationship: 'VoIP Spoofing Consultant', riskScore: 97, avatarUrl: `${BASE_IMG_PATH}crm-14.jpg` }
     ],
     vehicles: [
       { id: 'veh-05', licensePlate: 'KA-01-MJ-4004', make: 'Audi', model: 'RS5 Sportback Turbo', year: 2024, color: 'Nardo Grey', registeredOwner: 'Bengaluru Tech Innovations LLP', status: 'ACTIVE', lastSeenLocation: 'Koramangala 4th Block Signal', lastSeenTime: '2026-08-25 19:40' }
@@ -358,7 +360,7 @@ export const dummyCriminals: Criminal[] = [
     criminalId: 'CR-9008',
     name: 'Amit Bhardwaj',
     alias: 'GainBitcoin Kingpin',
-    photoUrl: 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=300&auto=format&fit=crop&q=80',
+    photoUrl: `${BASE_IMG_PATH}crm-08.jpg`,
     age: 46,
     gender: 'Male',
     nationality: 'Indian',
@@ -386,7 +388,7 @@ export const dummyCriminals: Criminal[] = [
       distinguishingMarks: ['Gold rim spectacles', 'Fair complexion'],
     },
     knownAssociates: [
-      { id: 'crm-07', name: 'Srikrishna Ramesh', alias: 'Sriki', role: 'Cryptographic Hacker', relationship: 'Crypto Tumbler Consultant', riskScore: 94, avatarUrl: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop&q=80' }
+      { id: 'crm-07', name: 'Srikrishna Ramesh', alias: 'Sriki', role: 'Cryptographic Hacker', relationship: 'Crypto Tumbler Consultant', riskScore: 94, avatarUrl: `${BASE_IMG_PATH}crm-07.jpg` }
     ],
     vehicles: [
       { id: 'veh-06', licensePlate: 'MH-12-AB-0001', make: 'Rolls-Royce', model: 'Ghost Extended Wheelbase', year: 2021, color: 'Diamond Black', registeredOwner: 'Variabletech Solutions India', status: 'IMPOUNDED', lastSeenLocation: 'ED Zonal Office Pune', lastSeenTime: 'Seized' }
@@ -408,7 +410,7 @@ export const dummyCriminals: Criminal[] = [
     criminalId: 'CR-9009',
     name: 'Ketan Parekh',
     alias: 'KP / Circular Trade Architect',
-    photoUrl: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=300&auto=format&fit=crop&q=80',
+    photoUrl: `${BASE_IMG_PATH}crm-09.jpg`,
     age: 61,
     gender: 'Male',
     nationality: 'Indian',
@@ -436,7 +438,7 @@ export const dummyCriminals: Criminal[] = [
       distinguishingMarks: ['Receding hairline', 'Specs with black frames'],
     },
     knownAssociates: [
-      { id: 'crm-13', name: 'Hasan Ali Khan', alias: 'Swiss Vault King', role: 'Offshore Wealth Conduit', relationship: 'Overseas Funds Facilitation', riskScore: 93, avatarUrl: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=150&auto=format&fit=crop&q=80' }
+      { id: 'crm-13', name: 'Hasan Ali Khan', alias: 'Swiss Vault King', role: 'Offshore Wealth Conduit', relationship: 'Overseas Funds Facilitation', riskScore: 93, avatarUrl: `${BASE_IMG_PATH}crm-13.jpg` }
     ],
     vehicles: [
       { id: 'veh-07', licensePlate: 'MH-01-KP-2001', make: 'BMW', model: '740Li M-Sport', year: 2024, color: 'Carbon Black', registeredOwner: 'Triumph Securities Pvt Ltd', status: 'ACTIVE', lastSeenLocation: 'Marine Drive Promenade', lastSeenTime: '2026-08-25 11:30' }
@@ -462,7 +464,7 @@ export const dummyCriminals: Criminal[] = [
     criminalId: 'CR-9010',
     name: 'Bharat Yadav (Akku Yadav)',
     alias: 'Nagpur Terror / Akku',
-    photoUrl: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=300&auto=format&fit=crop&q=80',
+    photoUrl: `${BASE_IMG_PATH}crm-10.jpg`,
     age: 32,
     gender: 'Male',
     nationality: 'Indian',
@@ -504,7 +506,7 @@ export const dummyCriminals: Criminal[] = [
     criminalId: 'CR-9011',
     name: 'Gurmeet Ram Rahim Singh',
     alias: 'MSG Chief / Dera Head',
-    photoUrl: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&auto=format&fit=crop&q=80',
+    photoUrl: `${BASE_IMG_PATH}crm-11.jpg`,
     age: 57,
     gender: 'Male',
     nationality: 'Indian',
@@ -532,7 +534,7 @@ export const dummyCriminals: Criminal[] = [
       distinguishingMarks: ['Dense beard and hair', 'Wrist injury mark'],
     },
     knownAssociates: [
-      { id: 'crm-12', name: 'Kuldeep Singh Sengar', alias: 'Unnao Nexus', role: 'High-Profile Inmate', relationship: 'Prison Security Coordination', riskScore: 88, avatarUrl: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&auto=format&fit=crop&q=80' }
+      { id: 'crm-12', name: 'Kuldeep Singh Sengar', alias: 'Unnao Nexus', role: 'High-Profile Inmate', relationship: 'Prison Security Coordination', riskScore: 88, avatarUrl: `${BASE_IMG_PATH}crm-12.jpg` }
     ],
     vehicles: [
       { id: 'veh-08', licensePlate: 'HR-24-MSG-0001', make: 'Lexus', model: 'LX570 Armored Custom', year: 2017, color: 'Custom Chameleon Purple', registeredOwner: 'Dera Sacha Sauda Trust', status: 'IMPOUNDED', lastSeenLocation: 'Sirsa Ashram Complex', lastSeenTime: 'Impounded' }
@@ -552,7 +554,7 @@ export const dummyCriminals: Criminal[] = [
     criminalId: 'CR-9012',
     name: 'Kuldeep Singh Sengar',
     alias: 'Unnao Syndicate Leader',
-    photoUrl: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=300&auto=format&fit=crop&q=80',
+    photoUrl: `${BASE_IMG_PATH}crm-12.jpg`,
     age: 58,
     gender: 'Male',
     nationality: 'Indian',
@@ -580,7 +582,7 @@ export const dummyCriminals: Criminal[] = [
       distinguishingMarks: ['Scar on left shoulder'],
     },
     knownAssociates: [
-      { id: 'crm-14', name: 'Sukesh Chandrashekhar', alias: 'Tihar Conman', role: 'Tihar Inmate', relationship: 'Tihar Jail Network', riskScore: 97, avatarUrl: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=150&auto=format&fit=crop&q=80' }
+      { id: 'crm-14', name: 'Sukesh Chandrashekhar', alias: 'Tihar Conman', role: 'Tihar Inmate', relationship: 'Tihar Jail Network', riskScore: 97, avatarUrl: `${BASE_IMG_PATH}crm-14.jpg` }
     ],
     vehicles: [
       { id: 'veh-09', licensePlate: 'UP-35-KS-0001', make: 'Toyota', model: 'Fortuner 4x4 Bulletproof', year: 2018, color: 'White', registeredOwner: 'Makhi Mining Logistics', status: 'IMPOUNDED', lastSeenLocation: 'Unnao Town Center', lastSeenTime: 'Impounded' }
@@ -604,7 +606,7 @@ export const dummyCriminals: Criminal[] = [
     criminalId: 'CR-9013',
     name: 'Hasan Ali Khan',
     alias: 'Swiss Vault King / Horse Baron',
-    photoUrl: 'https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?w=300&auto=format&fit=crop&q=80',
+    photoUrl: `${BASE_IMG_PATH}crm-13.jpg`,
     age: 71,
     gender: 'Male',
     nationality: 'Indian',
@@ -632,8 +634,8 @@ export const dummyCriminals: Criminal[] = [
       distinguishingMarks: ['Gold tooth on upper jaw', 'Prominent mustache'],
     },
     knownAssociates: [
-      { id: 'crm-09', name: 'Ketan Parekh', alias: 'KP', role: 'Stock Market Manipulator', relationship: 'Financial Routing Associate', riskScore: 89, avatarUrl: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=150&auto=format&fit=crop&q=80' },
-      { id: 'crm-15', name: 'Nirav Deepak Modi', alias: 'Firestar Diamond', role: 'Offshore Diamond Trader', relationship: 'Swiss Vault Co-Consultant', riskScore: 96, avatarUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80' }
+      { id: 'crm-09', name: 'Ketan Parekh', alias: 'KP', role: 'Stock Market Manipulator', relationship: 'Financial Routing Associate', riskScore: 89, avatarUrl: `${BASE_IMG_PATH}crm-09.jpg` },
+      { id: 'crm-15', name: 'Nirav Deepak Modi', alias: 'Firestar Diamond', role: 'Offshore Diamond Trader', relationship: 'Swiss Vault Co-Consultant', riskScore: 96, avatarUrl: `${BASE_IMG_PATH}crm-15.jpg` }
     ],
     vehicles: [
       { id: 'veh-10', licensePlate: 'MH-12-HK-0007', make: 'Bentley', model: 'Continental Flying Spur', year: 2008, color: 'Metallic Silver', registeredOwner: 'Hasan Ali Stud Farms', status: 'IMPOUNDED', lastSeenLocation: 'Pune Race Course', lastSeenTime: 'Impounded' }
@@ -653,7 +655,7 @@ export const dummyCriminals: Criminal[] = [
     criminalId: 'CR-9014',
     name: 'Sukesh Chandrashekhar',
     alias: 'Balaji / Tihar Conman',
-    photoUrl: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=300&auto=format&fit=crop&q=80',
+    photoUrl: `${BASE_IMG_PATH}crm-14.jpg`,
     age: 36,
     gender: 'Male',
     nationality: 'Indian',
@@ -681,8 +683,8 @@ export const dummyCriminals: Criminal[] = [
       distinguishingMarks: ['Arm tattoo with initials', 'Slight beard line'],
     },
     knownAssociates: [
-      { id: 'crm-07', name: 'Srikrishna Ramesh', alias: 'Sriki', role: 'Cyber Exploiter', relationship: 'VoIP Spoofing Support', riskScore: 94, avatarUrl: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop&q=80' },
-      { id: 'crm-15', name: 'Nirav Deepak Modi', alias: 'Firestar Diamond', role: 'Offshore Banker', relationship: 'Hawala Channel Associate', riskScore: 96, avatarUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80' }
+      { id: 'crm-07', name: 'Srikrishna Ramesh', alias: 'Sriki', role: 'Cyber Exploiter', relationship: 'VoIP Spoofing Support', riskScore: 94, avatarUrl: `${BASE_IMG_PATH}crm-07.jpg` },
+      { id: 'crm-15', name: 'Nirav Deepak Modi', alias: 'Firestar Diamond', role: 'Offshore Banker', relationship: 'Hawala Channel Associate', riskScore: 96, avatarUrl: `${BASE_IMG_PATH}crm-15.jpg` }
     ],
     vehicles: [
       { id: 'veh-11', licensePlate: 'DL-01-SC-0001', make: 'Lamborghini', model: 'Urus Pearl Capsule', year: 2021, color: 'Giallo Inti Yellow', registeredOwner: 'Leena Paulose Holdings', status: 'IMPOUNDED', lastSeenLocation: 'South Delhi Farmhouse', lastSeenTime: 'ED Seized' },
@@ -705,7 +707,7 @@ export const dummyCriminals: Criminal[] = [
     criminalId: 'CR-9015',
     name: 'Nirav Deepak Modi',
     alias: 'Firestar Diamond / Diamantaire',
-    photoUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&auto=format&fit=crop&q=80',
+    photoUrl: `${BASE_IMG_PATH}crm-15.jpg`,
     age: 55,
     gender: 'Male',
     nationality: 'Indian',
@@ -733,8 +735,8 @@ export const dummyCriminals: Criminal[] = [
       distinguishingMarks: ['Specs', 'Clean shaven', 'Receding hairline'],
     },
     knownAssociates: [
-      { id: 'crm-13', name: 'Hasan Ali Khan', alias: 'Swiss Vault King', role: 'Offshore Wealth Partner', relationship: 'Offshore Structuring', riskScore: 93, avatarUrl: 'https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?w=150&auto=format&fit=crop&q=80' },
-      { id: 'crm-14', name: 'Sukesh Chandrashekhar', alias: 'Tihar Conman', role: 'Hawala Collaborator', relationship: 'Offshore Liquidity Conduit', riskScore: 97, avatarUrl: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=150&auto=format&fit=crop&q=80' }
+      { id: 'crm-13', name: 'Hasan Ali Khan', alias: 'Swiss Vault King', role: 'Offshore Wealth Partner', relationship: 'Offshore Structuring', riskScore: 93, avatarUrl: `${BASE_IMG_PATH}crm-13.jpg` },
+      { id: 'crm-14', name: 'Sukesh Chandrashekhar', alias: 'Tihar Conman', role: 'Hawala Collaborator', relationship: 'Offshore Liquidity Conduit', riskScore: 97, avatarUrl: `${BASE_IMG_PATH}crm-14.jpg` }
     ],
     vehicles: [
       { id: 'veh-13', licensePlate: 'MH-01-NM-1001', make: 'Rolls-Royce', model: 'Phantom VII Drophead', year: 2017, color: 'Arctic White', registeredOwner: 'Firestar International Pvt Ltd', status: 'IMPOUNDED', lastSeenLocation: 'Bandra Kurla Complex (BKC)', lastSeenTime: 'Auctioned' }
@@ -760,7 +762,7 @@ export const dummyCriminals: Criminal[] = [
     criminalId: 'CR-9016',
     name: 'Joseph Babu (Jaison)',
     alias: 'Chelembra Tunnel Master / Babu',
-    photoUrl: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=300&auto=format&fit=crop&q=80',
+    photoUrl: `${BASE_IMG_PATH}crm-16.jpg`,
     age: 52,
     gender: 'Male',
     nationality: 'Indian',
@@ -788,7 +790,7 @@ export const dummyCriminals: Criminal[] = [
       distinguishingMarks: ['Scar on right forearm from drill blast'],
     },
     knownAssociates: [
-      { id: 'crm-17', name: 'Dhananjay Chhatrapati', alias: 'Dhanu', role: 'Heist Strategist', relationship: 'Vault Breach Co-conspirator', riskScore: 89, avatarUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80' }
+      { id: 'crm-17', name: 'Dhananjay Chhatrapati', alias: 'Dhanu', role: 'Heist Strategist', relationship: 'Vault Breach Co-conspirator', riskScore: 89, avatarUrl: `${BASE_IMG_PATH}crm-17.jpg` }
     ],
     vehicles: [
       { id: 'veh-14', licensePlate: 'KL-10-JB-2007', make: 'Mahindra', model: 'Bolero Camper 4WD', year: 2007, color: 'Desert Tan', registeredOwner: 'Chelembra Hotel Renovations', status: 'IMPOUNDED', lastSeenLocation: 'Kozhikode Hideout', lastSeenTime: 'Impounded' }
@@ -810,7 +812,7 @@ export const dummyCriminals: Criminal[] = [
     criminalId: 'CR-9017',
     name: 'Dhananjay Chhatrapati',
     alias: 'Dhanu / Opera House Mastermind',
-    photoUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&auto=format&fit=crop&q=80',
+    photoUrl: `${BASE_IMG_PATH}crm-17.jpg`,
     age: 63,
     gender: 'Male',
     nationality: 'Indian',
@@ -838,7 +840,7 @@ export const dummyCriminals: Criminal[] = [
       distinguishingMarks: ['Refined speaking accent', 'Immaculate safari suit demeanor'],
     },
     knownAssociates: [
-      { id: 'crm-18', name: 'Mithlesh Kumar Srivastava', alias: 'Natwarlal', role: 'Impersonation Advisor', relationship: 'Master Con Ideology', riskScore: 88, avatarUrl: 'https://images.unsplash.com/photo-1544717305-2782549b5136?w=150&auto=format&fit=crop&q=80' }
+      { id: 'crm-18', name: 'Mithlesh Kumar Srivastava', alias: 'Natwarlal', role: 'Impersonation Advisor', relationship: 'Master Con Ideology', riskScore: 88, avatarUrl: `${BASE_IMG_PATH}crm-18.jpg` }
     ],
     vehicles: [
       { id: 'veh-15', licensePlate: 'MH-01-TB-1987', make: 'Premier', model: 'Padmini Deluxe (Fake Gov Plate)', year: 1987, color: 'Ambassador White', registeredOwner: 'Government Inspection Unit (Fake)', status: 'SEARCHED', lastSeenLocation: 'Taj Intercontinental Mumbai', lastSeenTime: 'Historical Archive' }
@@ -856,7 +858,7 @@ export const dummyCriminals: Criminal[] = [
     criminalId: 'CR-9018',
     name: 'Mithlesh Kumar Srivastava',
     alias: 'Natwarlal / Master Forger',
-    photoUrl: 'https://images.unsplash.com/photo-1544717305-2782549b5136?w=300&auto=format&fit=crop&q=80',
+    photoUrl: `${BASE_IMG_PATH}crm-18.jpg`,
     age: 97,
     gender: 'Male',
     nationality: 'Indian',
@@ -902,7 +904,7 @@ export const dummyCriminals: Criminal[] = [
     criminalId: 'CR-9019',
     name: 'Niels Holck',
     alias: 'Kim Davy / Purulia Drop Mastermind',
-    photoUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&auto=format&fit=crop&q=80',
+    photoUrl: `${BASE_IMG_PATH}crm-19.jpg`,
     age: 63,
     gender: 'Male',
     nationality: 'Danish',
@@ -930,8 +932,8 @@ export const dummyCriminals: Criminal[] = [
       distinguishingMarks: ['Nordic features', 'High forehead'],
     },
     knownAssociates: [
-      { id: 'crm-20', name: 'Peter Bleach', alias: 'Border Operative', role: 'AN-26 Flight Weapons Broker', relationship: 'Purulia Arms Co-conspirator', riskScore: 91, avatarUrl: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&auto=format&fit=crop&q=80' },
-      { id: 'crm-21', name: 'Chhota Shakeel', alias: 'Shakeel', role: 'Underworld Weapons Procurement', relationship: 'Black Market Arms Conduit', riskScore: 98, avatarUrl: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&auto=format&fit=crop&q=80' }
+      { id: 'crm-20', name: 'Peter Bleach', alias: 'Border Operative', role: 'AN-26 Flight Weapons Broker', relationship: 'Purulia Arms Co-conspirator', riskScore: 91, avatarUrl: `${BASE_IMG_PATH}crm-20.jpg` },
+      { id: 'crm-21', name: 'Chhota Shakeel', alias: 'Shakeel', role: 'Underworld Weapons Procurement', relationship: 'Black Market Arms Conduit', riskScore: 98, avatarUrl: `${BASE_IMG_PATH}crm-21.jpg` }
     ],
     vehicles: [
       { id: 'veh-16', licensePlate: 'WB-02-KD-1995', make: 'Antonov', model: 'An-26 Cargo Aircraft (Reg: UN-26496)', year: 1995, color: 'Aviation Silver / Blue Stripe', registeredOwner: 'Carol Air Logistics Bulgaria', status: 'IMPOUNDED', lastSeenLocation: 'Kolkata International Airport', lastSeenTime: 'Impounded' }
@@ -953,7 +955,7 @@ export const dummyCriminals: Criminal[] = [
     criminalId: 'CR-9020',
     name: 'Peter Bleach',
     alias: 'Border Operative / Arms Broker',
-    photoUrl: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=300&auto=format&fit=crop&q=80',
+    photoUrl: `${BASE_IMG_PATH}crm-20.jpg`,
     age: 74,
     gender: 'Male',
     nationality: 'British',
@@ -981,7 +983,7 @@ export const dummyCriminals: Criminal[] = [
       distinguishingMarks: ['Military posture', 'Scar on right hand'],
     },
     knownAssociates: [
-      { id: 'crm-19', name: 'Niels Holck', alias: 'Kim Davy', role: 'Air-drop Pilot & Mastermind', relationship: 'Arms Consignment Partner', riskScore: 96, avatarUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80' }
+      { id: 'crm-19', name: 'Niels Holck', alias: 'Kim Davy', role: 'Air-drop Pilot & Mastermind', relationship: 'Arms Consignment Partner', riskScore: 96, avatarUrl: `${BASE_IMG_PATH}crm-19.jpg` }
     ],
     vehicles: [],
     phoneNumbers: [],
@@ -997,7 +999,7 @@ export const dummyCriminals: Criminal[] = [
     criminalId: 'CR-9021',
     name: 'Shakeel Babumiya Shaikh',
     alias: 'Chhota Shakeel / D-Company Enforcer',
-    photoUrl: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&auto=format&fit=crop&q=80',
+    photoUrl: `${BASE_IMG_PATH}crm-21.jpg`,
     age: 68,
     gender: 'Male',
     nationality: 'Indian',
@@ -1025,8 +1027,8 @@ export const dummyCriminals: Criminal[] = [
       distinguishingMarks: ['Scar on left side of neck', 'Prominent mustache'],
     },
     knownAssociates: [
-      { id: 'crm-01', name: 'Dawood Ibrahim Kaskar', alias: 'D-Company Chief', role: 'Syndicate Leader', relationship: 'Right-Hand Enforcer', riskScore: 99, avatarUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80' },
-      { id: 'crm-02', name: 'Tiger Memon', alias: 'Tiger', role: 'Operations Chief', relationship: 'D-Company Tactical Ally', riskScore: 98, avatarUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80' }
+      { id: 'crm-01', name: 'Dawood Ibrahim Kaskar', alias: 'D-Company Chief', role: 'Syndicate Leader', relationship: 'Right-Hand Enforcer', riskScore: 99, avatarUrl: `${BASE_IMG_PATH}crm-01.jpg` },
+      { id: 'crm-02', name: 'Tiger Memon', alias: 'Tiger', role: 'Operations Chief', relationship: 'D-Company Tactical Ally', riskScore: 98, avatarUrl: `${BASE_IMG_PATH}crm-02.jpg` }
     ],
     vehicles: [
       { id: 'veh-17', licensePlate: 'MH-04-CS-9999', make: 'Toyota', model: 'Hilux Armored Interceptor', year: 2024, color: 'Gunmetal Grey', registeredOwner: 'Western Freight Transit Corp', status: 'ACTIVE', lastSeenLocation: 'Navi Mumbai JNPT Corridor', lastSeenTime: '2026-08-25 04:30' }
@@ -1052,7 +1054,7 @@ export const dummyCriminals: Criminal[] = [
     criminalId: 'CR-9022',
     name: 'Vijaygiri Anandgiri Goswami',
     alias: 'Vicky Goswami / Meth Kingpin',
-    photoUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&auto=format&fit=crop&q=80',
+    photoUrl: `${BASE_IMG_PATH}crm-22.jpg`,
     age: 64,
     gender: 'Male',
     nationality: 'Indian',
@@ -1080,8 +1082,8 @@ export const dummyCriminals: Criminal[] = [
       distinguishingMarks: ['Scar on left temple', 'Heavy gold jewelry wearer in past'],
     },
     knownAssociates: [
-      { id: 'crm-23', name: 'Shashikala Patankar', alias: 'Baby Patankar', role: 'Western India Narcotics Distributor', relationship: 'Mephedrone Distribution Nexus', riskScore: 94, avatarUrl: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&auto=format&fit=crop&q=80' },
-      { id: 'crm-24', name: 'Dharmesh Patel', alias: 'Chemical Don', role: 'Precursor Chemical Supplier', relationship: 'Gujarat Industrial Lab Supplier', riskScore: 92, avatarUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80' }
+      { id: 'crm-23', name: 'Shashikala Patankar', alias: 'Baby Patankar', role: 'Western India Narcotics Distributor', relationship: 'Mephedrone Distribution Nexus', riskScore: 94, avatarUrl: `${BASE_IMG_PATH}crm-23.jpg` },
+      { id: 'crm-24', name: 'Dharmesh Patel', alias: 'Chemical Don', role: 'Precursor Chemical Supplier', relationship: 'Gujarat Industrial Lab Supplier', riskScore: 92, avatarUrl: `${BASE_IMG_PATH}crm-24.jpg` }
     ],
     vehicles: [
       { id: 'veh-18', licensePlate: 'GJ-01-VG-9000', make: 'Mercedes-Benz', model: 'Maybach S580 Guard', year: 2022, color: 'Obsidian Black', registeredOwner: 'Goswami Petrochem Exports', status: 'IMPOUNDED', lastSeenLocation: 'Ahmedabad SG Highway', lastSeenTime: 'NCB Seized' }
@@ -1103,7 +1105,7 @@ export const dummyCriminals: Criminal[] = [
     criminalId: 'CR-9023',
     name: 'Shashikala Patankar',
     alias: 'Baby Patankar / Meow Meow Queen',
-    photoUrl: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=300&auto=format&fit=crop&q=80',
+    photoUrl: `${BASE_IMG_PATH}crm-23.jpg`,
     age: 59,
     gender: 'Female',
     nationality: 'Indian',
@@ -1131,8 +1133,8 @@ export const dummyCriminals: Criminal[] = [
       distinguishingMarks: ['Gold earrings and necklace signature', 'Mole on left cheek'],
     },
     knownAssociates: [
-      { id: 'crm-22', name: 'Vijaygiri Goswami', alias: 'Vicky Goswami', role: 'Global Synthetic Drug Kingpin', relationship: 'Precursor Chemical Syndicate', riskScore: 97, avatarUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80' },
-      { id: 'crm-24', name: 'Dharmesh Patel', alias: 'Chemical Don', role: 'Industrial Lab Chemist', relationship: 'Mephedrone Precursor Source', riskScore: 92, avatarUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80' }
+      { id: 'crm-22', name: 'Vijaygiri Goswami', alias: 'Vicky Goswami', role: 'Global Synthetic Drug Kingpin', relationship: 'Precursor Chemical Syndicate', riskScore: 97, avatarUrl: `${BASE_IMG_PATH}crm-22.jpg` },
+      { id: 'crm-24', name: 'Dharmesh Patel', alias: 'Chemical Don', role: 'Industrial Lab Chemist', relationship: 'Mephedrone Precursor Source', riskScore: 92, avatarUrl: `${BASE_IMG_PATH}crm-24.jpg` }
     ],
     vehicles: [
       { id: 'veh-19', licensePlate: 'MH-01-BP-5555', make: 'Toyota', model: 'Innova Crysta ZX Luxury', year: 2023, color: 'Pearl White', registeredOwner: 'Patankar Dairy & Properties', status: 'ACTIVE', lastSeenLocation: 'Worli Naka Junction', lastSeenTime: '2026-08-26 04:15' }
@@ -1154,7 +1156,7 @@ export const dummyCriminals: Criminal[] = [
     criminalId: 'CR-9024',
     name: 'Dharmesh Patel',
     alias: 'Chemical Don / Precursor King',
-    photoUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&auto=format&fit=crop&q=80',
+    photoUrl: `${BASE_IMG_PATH}crm-24.jpg`,
     age: 49,
     gender: 'Male',
     nationality: 'Indian',
@@ -1182,8 +1184,8 @@ export const dummyCriminals: Criminal[] = [
       distinguishingMarks: ['Chemical burn mark on left palm', 'Spectacles'],
     },
     knownAssociates: [
-      { id: 'crm-22', name: 'Vijaygiri Goswami', alias: 'Vicky Goswami', role: 'International Narcotics Kingpin', relationship: 'Bulk Chemical Consignee', riskScore: 97, avatarUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80' },
-      { id: 'crm-23', name: 'Shashikala Patankar', alias: 'Baby Patankar', role: 'Mumbai Narcotics Queen', relationship: 'Direct MD Product Supplier', riskScore: 94, avatarUrl: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&auto=format&fit=crop&q=80' }
+      { id: 'crm-22', name: 'Vijaygiri Goswami', alias: 'Vicky Goswami', role: 'International Narcotics Kingpin', relationship: 'Bulk Chemical Consignee', riskScore: 97, avatarUrl: `${BASE_IMG_PATH}crm-22.jpg` },
+      { id: 'crm-23', name: 'Shashikala Patankar', alias: 'Baby Patankar', role: 'Mumbai Narcotics Queen', relationship: 'Direct MD Product Supplier', riskScore: 94, avatarUrl: `${BASE_IMG_PATH}crm-23.jpg` }
     ],
     vehicles: [
       { id: 'veh-20', licensePlate: 'GJ-16-DP-4400', make: 'Mahindra', model: 'Scorpio-N Z8 4WD', year: 2024, color: 'Napoli Black', registeredOwner: 'Ankleshwar Specialty Chemical Corp', status: 'ACTIVE', lastSeenLocation: 'Surat-Navsari Toll Plaza', lastSeenTime: '2026-08-26 00:55' }

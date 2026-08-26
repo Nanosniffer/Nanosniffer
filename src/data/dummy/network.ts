@@ -1,5 +1,7 @@
 import { NetworkGraphData } from '../../types';
 
+const BASE_IMG_PATH = `${import.meta.env.BASE_URL || '/'}images/criminals/`;
+
 export const dummyNetworkGraph: NetworkGraphData = {
   nodes: [
     // 1. Person Nodes
@@ -14,7 +16,7 @@ export const dummyNetworkGraph: NetworkGraphData = {
         riskScore: 99,
         riskLevel: 'CRITICAL',
         entityId: 'crm-01',
-        avatarUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80',
+        avatarUrl: `${BASE_IMG_PATH}crm-01.jpg`,
         status: 'WANTED',
         connectionsCount: 28,
         centralityScore: 0.99,
@@ -37,7 +39,7 @@ export const dummyNetworkGraph: NetworkGraphData = {
         riskScore: 98,
         riskLevel: 'CRITICAL',
         entityId: 'crm-02',
-        avatarUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80',
+        avatarUrl: `${BASE_IMG_PATH}crm-02.jpg`,
         status: 'WANTED',
         connectionsCount: 22,
         centralityScore: 0.96,
@@ -60,7 +62,7 @@ export const dummyNetworkGraph: NetworkGraphData = {
         riskScore: 98,
         riskLevel: 'CRITICAL',
         entityId: 'crm-21',
-        avatarUrl: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&auto=format&fit=crop&q=80',
+        avatarUrl: `${BASE_IMG_PATH}crm-21.jpg`,
         status: 'WANTED',
         connectionsCount: 24,
         centralityScore: 0.95,
@@ -83,7 +85,7 @@ export const dummyNetworkGraph: NetworkGraphData = {
         riskScore: 97,
         riskLevel: 'CRITICAL',
         entityId: 'crm-14',
-        avatarUrl: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=150&auto=format&fit=crop&q=80',
+        avatarUrl: `${BASE_IMG_PATH}crm-14.jpg`,
         status: 'IN_CUSTODY',
         connectionsCount: 18,
         centralityScore: 0.94,
@@ -106,7 +108,7 @@ export const dummyNetworkGraph: NetworkGraphData = {
         riskScore: 96,
         riskLevel: 'CRITICAL',
         entityId: 'crm-15',
-        avatarUrl: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&auto=format&fit=crop&q=80',
+        avatarUrl: `${BASE_IMG_PATH}crm-15.jpg`,
         status: 'WANTED',
         connectionsCount: 16,
         centralityScore: 0.92,
@@ -129,7 +131,7 @@ export const dummyNetworkGraph: NetworkGraphData = {
         riskScore: 94,
         riskLevel: 'CRITICAL',
         entityId: 'crm-07',
-        avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
+        avatarUrl: `${BASE_IMG_PATH}crm-07.jpg`,
         status: 'BAIL',
         connectionsCount: 12,
         centralityScore: 0.88,
@@ -152,7 +154,7 @@ export const dummyNetworkGraph: NetworkGraphData = {
         riskScore: 94,
         riskLevel: 'CRITICAL',
         entityId: 'crm-23',
-        avatarUrl: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&auto=format&fit=crop&q=80',
+        avatarUrl: `${BASE_IMG_PATH}crm-23.jpg`,
         status: 'BAIL',
         connectionsCount: 14,
         centralityScore: 0.90,
@@ -175,7 +177,7 @@ export const dummyNetworkGraph: NetworkGraphData = {
         riskScore: 97,
         riskLevel: 'CRITICAL',
         entityId: 'crm-22',
-        avatarUrl: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&auto=format&fit=crop&q=80',
+        avatarUrl: `${BASE_IMG_PATH}crm-22.jpg`,
         status: 'WANTED',
         connectionsCount: 15,
         centralityScore: 0.91,

@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "cp template.html index.html && tsc && vite build && cp dist/index.html dist/404.html && cp dist/index.html 404.html && mkdir -p docs && cp -r dist/* docs/ && cp dist/index.html index.html && cp -r dist/assets/* assets/",
+    "build": "cp template.html index.html && tsc && vite build && cp dist/index.html dist/404.html && cp dist/index.html 404.html && mkdir -p docs && cp -r dist/* docs/ && cp dist/index.html index.html && cp -r dist/assets/* assets/ && mkdir -p images/criminals && cp -r public/images/criminals/* images/criminals/ && mkdir -p docs/images/criminals && cp -r public/images/criminals/* docs/images/criminals/",
     "preview": "vite preview"
   },
   "dependencies": {

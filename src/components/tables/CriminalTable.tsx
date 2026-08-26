@@ -238,6 +238,9 @@ export const CriminalTable: React.FC<CriminalTableProps> = ({ criminals, onSelec
                         <img
                           src={criminal.photoUrl}
                           alt={criminal.name}
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop&q=80';
+                          }}
                           className="w-8 h-8 rounded-full object-cover border border-slate-200 bg-slate-100 shrink-0"
                         />
                         <div>

@@ -54,6 +54,9 @@ export const CriminalProfileDrawer: React.FC<CriminalProfileDrawerProps> = ({
             <img
               src={criminal.photoUrl || 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300'}
               alt={criminal.name}
+              onError={(e) => {
+                (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=300&auto=format&fit=crop&q=80';
+              }}
               className="w-14 h-14 rounded-lg object-cover border border-slate-200 bg-white shrink-0 shadow-subtle"
             />
             <div>
@@ -245,6 +248,9 @@ export const CriminalProfileDrawer: React.FC<CriminalProfileDrawerProps> = ({
                       <img
                         src={assoc.avatarUrl || 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100'}
                         alt={assoc.name}
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=80';
+                        }}
                         className="w-9 h-9 rounded-full object-cover border border-slate-200 bg-slate-100"
                       />
                       <div>
