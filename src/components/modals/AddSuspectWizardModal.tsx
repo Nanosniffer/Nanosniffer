@@ -465,7 +465,7 @@ export const AddSuspectWizardModal: React.FC<AddSuspectWizardModalProps> = ({
                   <input
                     type="text"
                     required
-                    placeholder="e.g. Vikram Singhania"
+                    placeholder="e.g. Dawood Ibrahim Kaskar"
                     value={name}
                     onChange={(e) => {
                       setName(e.target.value);

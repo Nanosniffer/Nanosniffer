@@ -146,17 +146,19 @@ export const GlobalSearchModal: React.FC<{ isOpen: boolean; onClose: () => void 
 
   // Add cases
   allItems.push(
-    { id: 'case-1', name: 'CASE-2026-014: Operation Viper Strike', subtitle: 'Organized Drug & Arms Trafficking Cartel', category: 'Cases', riskLevel: 'CRITICAL', route: '/dashboard' },
-    { id: 'case-2', name: 'CASE-2026-018: Phantom Ledger', subtitle: 'Cross-Border Shell Banking Laundering', category: 'Cases', riskLevel: 'HIGH', route: '/dashboard' },
-    { id: 'case-3', name: 'CASE-2026-022: Dark Geofence', subtitle: 'Port of Miami Maritime Smuggling', category: 'Cases', riskLevel: 'CRITICAL', route: '/dashboard' }
+    { id: 'case-1', name: 'CASE-2026-001: Operation Black Friday', subtitle: 'D-Company Transnational Hawala & Arms Network', category: 'Cases', riskLevel: 'CRITICAL', route: '/dashboard' },
+    { id: 'case-2', name: 'CASE-2026-002: Project Firestar Vault', subtitle: 'PNB ₹13,500 Cr Diamond LoU Money Laundering', category: 'Cases', riskLevel: 'CRITICAL', route: '/dashboard' },
+    { id: 'case-3', name: 'CASE-2026-003: Operation Purulia Sky-Drop', subtitle: 'Antonov An-26 Aerial Arms Smuggling Grid', category: 'Cases', riskLevel: 'CRITICAL', route: '/dashboard' },
+    { id: 'case-4', name: 'CASE-2026-004: Project Dark Ledger', subtitle: 'GainBitcoin & Indiranagar Crypto Drain Ring', category: 'Cases', riskLevel: 'HIGH', route: '/dashboard' }
   );
 
   // Add locations & orgs
   allItems.push(
-    { id: 'loc-1', name: 'Port of Miami Terminal 4', subtitle: 'Restricted Maritime Smuggling Corridor', category: 'Locations', riskLevel: 'CRITICAL', route: '/network' },
-    { id: 'loc-2', name: 'Panama City Free Trade Zone', subtitle: 'Offshore Freight Staging Area', category: 'Locations', riskLevel: 'HIGH', route: '/network' },
-    { id: 'org-1', name: 'Nautilus Maritime Logistics', subtitle: 'Front shell company • Panama / Miami', category: 'Organizations', riskLevel: 'HIGH', route: '/network' },
-    { id: 'org-2', name: 'Apex Crypto Exchange Ltd', subtitle: 'Unregistered tumbler entity • St. Kitts', category: 'Organizations', riskLevel: 'CRITICAL', route: '/network' }
+    { id: 'loc-1', name: 'Dongri & Nagpada Syndicate Headquarters', subtitle: 'Pakmodia Street & Temkar Mohalla • Mumbai', category: 'Locations', riskLevel: 'CRITICAL', route: '/network' },
+    { id: 'loc-2', name: 'Tihar High-Security Prison Ward No. 4', subtitle: 'VoIP Spoofing Extortion Nexus • New Delhi', category: 'Locations', riskLevel: 'CRITICAL', route: '/network' },
+    { id: 'loc-3', name: 'Bharat Diamond Bourse BKC', subtitle: 'Circular Export Invoicing Front • Mumbai', category: 'Locations', riskLevel: 'HIGH', route: '/network' },
+    { id: 'org-1', name: 'D-Company Global Syndicate', subtitle: 'Transnational Underworld Network • Mumbai / Dubai / Karachi', category: 'Organizations', riskLevel: 'CRITICAL', route: '/network' },
+    { id: 'org-2', name: 'Worli Mephedrone Cartel', subtitle: 'Synthetic Narcotics Distribution • Mumbai / Gujarat', category: 'Organizations', riskLevel: 'CRITICAL', route: '/network' }
   );
 
   const filtered = query.trim()

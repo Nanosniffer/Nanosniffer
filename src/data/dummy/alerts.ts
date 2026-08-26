@@ -4,85 +4,105 @@ export const dummyAlerts: Alert[] = [
   {
     id: 'alt-01',
     alertCode: 'ALT-MUM-8819',
-    title: 'High-Priority Extortion Threat: Worli Sea Face Developers',
+    title: 'High-Priority Hawala Transfer: D-Company Mumbai-Dubai Link',
     alertLevel: 'CRITICAL',
-    aiConfidence: 98,
-    description: 'Intercepted satellite telemetry confirms Vikram Singhania gang issued ₹25 Crore extortion demand to Worli sea-facing tower developers with 48h deadline.',
+    aiConfidence: 99,
+    description: 'Intercepted satellite telemetry confirms ₹45 Crore illegal hawala transit routed from Dongri / Nagpada Angadia couriers to Karachi command accounts via Dubai.',
     relatedCriminals: [
-      { id: 'crm-01', name: 'Vikram "D-Boss" Singhania', alias: 'Don', riskScore: 98 },
-      { id: 'crm-03', name: 'Kabir "Shooter" Deshmukh', alias: 'K-47', riskScore: 95 }
+      { id: 'crm-01', name: 'Dawood Ibrahim Kaskar', alias: 'D-Company Chief / Bhai', riskScore: 99 },
+      { id: 'crm-21', name: 'Chhota Shakeel', alias: 'Enforcer & Arms Chief', riskScore: 98 }
     ],
     location: {
-      name: 'Worli Sea Face',
+      name: 'Dongri Angadia Corridor',
       city: 'Mumbai',
-      coordinates: [19.0176, 72.8150]
+      coordinates: [18.9560, 72.8360]
     },
-    timestamp: '2026-08-25T04:15:00Z',
-    category: 'High-Risk Meeting',
+    timestamp: '2026-08-26T04:15:00Z',
+    category: 'Financial Anomaly',
     status: 'NEW',
-    suggestedAction: 'Deploy Crime Branch Unit 9 armed tactical perimeter and initiate FIR under MCOCA.'
+    suggestedAction: 'Deploy Crime Branch Unit 9 & NIA tactical units to seize Angadia ledgers and freeze linked offshore nodes.'
   },
   {
     id: 'alt-02',
-    alertCode: 'ALT-ZAV-4410',
-    title: 'Massive Angadia Hawala Cash Dispatch Detected: Zaveri Bazaar',
-    alertLevel: 'HIGH',
-    aiConfidence: 94,
-    description: 'Surveillance cameras at Kalbadevi logged 4 courier vans loading ₹35 Crore in untraceable cash destined for Surat Diamond Bourse transit depot.',
+    alertCode: 'ALT-DEL-2201',
+    title: 'Tihar High-Security Ward: VoIP Spoofing Extortion Call Intercepted',
+    alertLevel: 'CRITICAL',
+    aiConfidence: 97,
+    description: 'Special Cell intercepted a virtual spoofed international call originating from Mandoli / Tihar Jail Ward demanding ₹50 Crore from a prominent corporate industrialist.',
     relatedCriminals: [
-      { id: 'crm-02', name: 'Suresh "Hawala" Patel', alias: 'Kuber', riskScore: 92 },
-      { id: 'crm-08', name: 'Ashok "Broker" Gupta', alias: 'Dalal', riskScore: 82 }
+      { id: 'crm-14', name: 'Sukesh Chandrashekhar', alias: 'Balaji / Tihar Conman', riskScore: 97 }
     ],
     location: {
-      name: 'Zaveri Bazaar',
-      city: 'Mumbai',
-      coordinates: [18.9515, 72.8317]
+      name: 'Tihar & Mandoli Jail Complex',
+      city: 'New Delhi',
+      coordinates: [28.6250, 77.0980]
     },
-    timestamp: '2026-08-25T03:40:00Z',
-    category: 'Financial Anomaly',
+    timestamp: '2026-08-26T03:40:00Z',
+    category: 'High-Risk Meeting',
     status: 'NEW',
-    suggestedAction: 'Notify Enforcement Directorate (ED) & Income Tax Quick Response Team for highway interdiction.'
+    suggestedAction: 'Notify Delhi Police Special Cell and Enforcement Directorate for immediate cellular jammer sweeps.'
   },
   {
     id: 'alt-03',
-    alertCode: 'ALT-NCR-3390',
-    title: 'Assault Weapon Cache Moving Towards NCR Toll Plazas',
+    alertCode: 'ALT-BLR-4019',
+    title: 'Bengaluru Crypto Drain: 120 BTC Tumbler Cascade Flagged',
     alertLevel: 'CRITICAL',
     aiConfidence: 96,
-    description: 'Telemetry indicates Mahindra Scorpio (UP-16-BX-1122) carrying automated weapons and Deepak Yadav hitmen moving towards DND Flyway.',
+    description: 'Cyber Crime Unit detected 120 Bitcoin ($7.8M) being washed through decentralized smart contract mixers linked to the GainBitcoin & Darknet exploit pools.',
     relatedCriminals: [
-      { id: 'crm-05', name: 'Devendra "Don" Rawat', alias: 'NCR Bahubali', riskScore: 93 },
-      { id: 'crm-06', name: 'Deepak "Shooter" Yadav', alias: 'Fauji', riskScore: 88 }
+      { id: 'crm-07', name: 'Srikrishna Ramesh', alias: 'Sriki / Crypto Phantom', riskScore: 94 },
+      { id: 'crm-08', name: 'Amit Bhardwaj', alias: 'GainBitcoin Kingpin', riskScore: 91 }
     ],
     location: {
-      name: 'Cyber City Toll Corridor',
-      city: 'Gurugram',
-      coordinates: [28.4905, 77.0894]
+      name: 'Indiranagar Tech Hub',
+      city: 'Bengaluru',
+      coordinates: [12.9784, 77.6408]
     },
-    timestamp: '2026-08-25T02:10:00Z',
-    category: 'Weapon Sighting',
+    timestamp: '2026-08-26T02:30:00Z',
+    category: 'Financial Anomaly',
     status: 'ACKNOWLEDGED',
-    suggestedAction: 'Alert Delhi Special Cell and UP STF for high-speed barricade deployment.'
+    suggestedAction: 'Issue emergency on-chain blacklisting requests to international centralized crypto exchanges.'
   },
   {
     id: 'alt-04',
-    alertCode: 'ALT-KOL-9901',
-    title: 'Decentralized Mahadev Betting App Token Laundering Surge',
-    alertLevel: 'HIGH',
-    aiConfidence: 91,
-    description: 'FIU-IND alert: Over ₹18 Crore in illicit betting deposits routed through smart contract mixers in Salt Lake Sector V server cluster.',
+    alertCode: 'ALT-WOR-9920',
+    title: 'Worli-Gujarat Synthetic Mephedrone (MD) Chemical Pipeline',
+    alertLevel: 'CRITICAL',
+    aiConfidence: 95,
+    description: 'NCB Gujarat & Mumbai ANC intercepted a 300kg Ephedrine precursor tanker dispatched from Ankleshwar GIDC en route to Worli sea-face processing safehouse.',
     relatedCriminals: [
-      { id: 'crm-04', name: 'Ananya "Crypto" Roy', alias: 'ZeroByte', riskScore: 91 },
-      { id: 'crm-09', name: 'Gaurav "Cyber" Sharma', alias: 'ByteLord', riskScore: 84 }
+      { id: 'crm-23', name: 'Shashikala Patankar', alias: 'Baby Patankar', riskScore: 94 },
+      { id: 'crm-24', name: 'Dharmesh Patel', alias: 'Chemical Don', riskScore: 92 },
+      { id: 'crm-22', name: 'Vijaygiri Goswami', alias: 'Vicky Goswami', riskScore: 97 }
     ],
     location: {
-      name: 'Sector V, Salt Lake',
-      city: 'Kolkata',
-      coordinates: [22.5804, 88.4378]
+      name: 'Worli Dairy Slum Distribution Hub',
+      city: 'Mumbai',
+      coordinates: [19.0060, 72.8180]
     },
-    timestamp: '2026-08-25T01:30:00Z',
-    category: 'Financial Anomaly',
+    timestamp: '2026-08-26T01:10:00Z',
+    category: 'Weapon Sighting',
     status: 'ESCALATED',
-    suggestedAction: 'Execute emergency bank account freezes under PMLA Section 17.'
+    suggestedAction: 'Execute joint highway interdiction on NH-48 and seal Ankleshwar chemical warehouse.'
+  },
+  {
+    id: 'alt-05',
+    alertCode: 'ALT-PNB-5510',
+    title: 'Offshore Diamond Round-Tripping & Shell Transfer Alert',
+    alertLevel: 'HIGH',
+    aiConfidence: 93,
+    description: 'Financial Intelligence Unit (FIU-IND) logged circular diamond export invoices of ₹140 Crore between BKC Diamond Bourse and Mayfair London shell entities.',
+    relatedCriminals: [
+      { id: 'crm-15', name: 'Nirav Deepak Modi', alias: 'Firestar Diamond', riskScore: 96 }
+    ],
+    location: {
+      name: 'Bharat Diamond Bourse BKC',
+      city: 'Mumbai',
+      coordinates: [19.0674, 72.8687]
+    },
+    timestamp: '2026-08-25T22:45:00Z',
+    category: 'Financial Anomaly',
+    status: 'ACKNOWLEDGED',
+    suggestedAction: 'Notify Serious Fraud Investigation Office (SFIO) and attach bank guarantee collateral.'
   }
 ];

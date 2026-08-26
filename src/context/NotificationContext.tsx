@@ -21,13 +21,13 @@ interface NotificationContextType {
   clearNotifications: () => void;
 }
 
-const STORAGE_KEY = 'acn_notifications_cache';
+const STORAGE_KEY = 'acn_notifications_cache_v2';
 
 const INITIAL_NOTIFICATIONS: TacticalNotification[] = [
   {
     id: 'notif-01',
-    title: 'High Risk Spike Detected',
-    message: 'Port of Rotterdam Terminal threat probability updated to 98% (CRITICAL)',
+    title: 'High-Priority Hawala Spike Detected',
+    message: 'Mumbai-Dubai Angadia corridor flagged ₹45 Cr illegal transfer linked to Dawood Ibrahim & Chhota Shakeel',
     time: '2m ago',
     type: 'risk',
     severity: 'CRITICAL',
@@ -36,8 +36,8 @@ const INITIAL_NOTIFICATIONS: TacticalNotification[] = [
   },
   {
     id: 'notif-02',
-    title: 'New Suspect Associate Linked',
-    message: 'Biometric hit linked Gabriel Mendoza to Cali-Medellin Maritime Coalition',
+    title: 'Tihar VoIP Spoof Intercepted',
+    message: 'Delhi Special Cell tagged active extortion call originating from Sukesh Chandrashekhar cell',
     time: '14m ago',
     type: 'suspect',
     severity: 'HIGH',
@@ -46,8 +46,8 @@ const INITIAL_NOTIFICATIONS: TacticalNotification[] = [
   },
   {
     id: 'notif-03',
-    title: 'AI Neural Insight Generated',
-    message: 'Disruption simulation predicts 78% network collapse upon Vance-Mansoor interdiction',
+    title: 'AI Neural Crypto Insight Generated',
+    message: 'Cascade analyzer intercepted 120 BTC tumbler hops linked to Sriki (Srikrishna Ramesh) Darknet core',
     time: '42m ago',
     type: 'ai_insight',
     severity: 'HIGH',
@@ -56,8 +56,8 @@ const INITIAL_NOTIFICATIONS: TacticalNotification[] = [
   },
   {
     id: 'notif-04',
-    title: 'Investigation Phase Completed',
-    message: 'Financial audit completed for Operation Ghost Vault ($18.4M traced)',
+    title: 'Worli Narcotics Raid Completed',
+    message: 'Anti-Narcotics Cell seized 120kg MD from Shashikala Patankar & Dharmesh Patel syndicate',
     time: '1h ago',
     type: 'investigation',
     severity: 'MEDIUM',

@@ -33,8 +33,8 @@ interface Message {
 }
 
 const PRESET_QUERIES = [
-  'Show connections between Vikram Singhania and Suresh Patel',
-  'Why is Vikram Singhania considered CRITICAL risk?',
+  'Show connections between Dawood Ibrahim and Chhota Shakeel',
+  'Why is Dawood Ibrahim considered CRITICAL risk?',
   'Show recent suspicious Hawala and Angadia transactions',
   'Which individual has the highest network centrality influence?',
 ];
@@ -49,7 +49,7 @@ export const AiInvestigatorDrawer: React.FC<{ isOpen: boolean; onClose: () => vo
     {
       id: 'msg-1',
       sender: 'ai',
-      text: 'Greetings, Officer. I am the ACN AI Intelligence Assistant. Ask any question about Indian organized crime syndicates, Hawala transactions, JNPT port narcotics conduits, or risk anomalies.',
+      text: 'Greetings, Officer. I am the ACN AI Intelligence Assistant. Ask any question about Indian organized crime syndicates, Hawala transactions, D-Company conduits, or risk anomalies.',
       timestamp: 'Just now',
     },
   ]);
@@ -76,69 +76,69 @@ export const AiInvestigatorDrawer: React.FC<{ isOpen: boolean; onClose: () => vo
       let aiResponse: Message;
       const lower = q.toLowerCase();
 
-      if (lower.includes('connection') || lower.includes('singhania') || lower.includes('patel') || lower.includes('vikram')) {
+      if (lower.includes('connection') || lower.includes('dawood') || lower.includes('shakeel') || lower.includes('tiger') || lower.includes('memon')) {
         aiResponse = {
           id: `ai-${Date.now()}`,
           sender: 'ai',
-          text: 'Analysis complete. Vikram Singhania and Suresh Patel share 4 high-confidence links including ₹22.4 Crore informal Angadia cash settlements via Zaveri Bazaar and shared container logistics at JNPT Port Navi Mumbai.',
+          text: 'Analysis complete. Dawood Ibrahim Kaskar, Tiger Memon, and Chhota Shakeel share 8 high-confidence command links including ₹45 Crore transnational Hawala transfers, maritime arms landing logistics at Shekhadi coast, and D-Company global syndicate treasury nodes.',
           timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
           dataCard: {
             type: 'connections',
-            title: 'Syndicate Link Topology',
+            title: 'D-Company Syndicate Link Topology',
             entities: [
-              { name: 'Vikram "D-Boss" Singhania', type: 'Person (Supreme Don)', risk: 'CRITICAL' },
-              { name: 'Suresh "Hawala" Patel', type: 'Person (Angadia Banker)', risk: 'CRITICAL' },
-              { name: 'Singhania Star Logistics LLP', type: 'Front Entity', risk: 'HIGH' },
+              { name: 'Dawood Ibrahim Kaskar', type: 'Person (Supreme Don)', risk: 'CRITICAL' },
+              { name: 'Chhota Shakeel', type: 'Person (Arms Chief)', risk: 'CRITICAL' },
+              { name: 'D-Company Global Syndicate', type: 'Command Entity', risk: 'CRITICAL' },
             ],
-            details: 'Direct Angadia cash transfer (₹22,40,00,000) • Cross-referenced via Intercept #INT-IN-8819',
-            confidence: 98.4,
+            details: 'Direct Hawala transfer (₹45,00,00,00) • Cross-referenced via Intercept #INT-MUM-8819',
+            confidence: 99.4,
           },
         };
       } else if (lower.includes('risk') || lower.includes('why')) {
         aiResponse = {
           id: `ai-${Date.now()}`,
           sender: 'ai',
-          text: 'Subject Vikram Singhania holds a multi-factor risk score of 98.0/100 (CRITICAL). This score is driven by 8 active MCOCA warrants, 16 confirmed syndicate connections, and direct link to JNPT Port narcotics and extortion rackets.',
+          text: 'Subject Dawood Ibrahim Kaskar holds a multi-factor risk score of 99.0/100 (CRITICAL). This score is driven by 14 active TADA & Interpol Red Corner warrants, 28 confirmed syndicate connections, and direct link to transnational terrorism financing.',
           timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
           dataCard: {
             type: 'risk_assessment',
             title: 'Risk Factor Decomposition',
-            score: 98.0,
-            details: 'MCOCA Warrants: +35% • Centrality Metric: +25% • Hawala Volume Floor: +38%',
-            confidence: 99.1,
+            score: 99.0,
+            details: 'Interpol Red Corner: +40% • Centrality Metric: +25% • Hawala Volume Floor: +35%',
+            confidence: 99.8,
           },
         };
       } else if (lower.includes('financial') || lower.includes('transaction') || lower.includes('money') || lower.includes('hawala')) {
         aiResponse = {
           id: `ai-${Date.now()}`,
           sender: 'ai',
-          text: 'Detected rapid capital dispersion loop: ₹30 Crore originated from Zaveri Bazaar Angadia Vault, routed across 4 courier vans, and consolidated into Surat Diamond Bourse within 120 minutes.',
+          text: 'Detected rapid capital dispersion loop: ₹45 Crore originated from Dongri & Nagpada Angadia couriers, converted into Tether USDT cold wallets, and transferred to Karachi-Dubai command accounts within 90 minutes.',
           timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
           dataCard: {
             type: 'financial_anomaly',
-            title: 'Angadia Hawala Loop #TX-IN-881',
+            title: 'D-Company Hawala Loop #TX-IN-8819',
             entities: [
-              { name: 'Zaveri Bazaar Angadia Vault', type: 'Origin', risk: 'CRITICAL' },
-              { name: 'Surat Diamond Bourse Depot', type: 'Destination', risk: 'HIGH' },
+              { name: 'Dongri Angadia Vault', type: 'Origin', risk: 'CRITICAL' },
+              { name: 'Habib Bank Dubai Node', type: 'Destination', risk: 'CRITICAL' },
             ],
-            details: 'Total volume: ₹30,00,00,000 INR • 4 courier vans dispatched via NH-48',
-            confidence: 96.2,
+            details: 'Total volume: ₹45,00,00,000 INR • Layered through encrypted crypto mixers',
+            confidence: 98.2,
           },
         };
       } else {
         aiResponse = {
           id: `ai-${Date.now()}`,
           sender: 'ai',
-          text: 'Based on Indian underworld graph topology, Subject Suresh Patel exhibits the highest Betweenness Centrality (0.924). Intercepting this Angadia hub will disrupt 78% of the syndicate\'s liquidity and cross-state operations.',
+          text: 'Based on Indian underworld graph topology, Subject Dawood Ibrahim Kaskar exhibits the highest Betweenness Centrality (0.992). Intercepting this command node disrupts 88% of the syndicate\'s liquidity and cross-border operational capability.',
           timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
           dataCard: {
             type: 'centrality',
             title: 'Network Bottleneck Identification',
             entities: [
-              { name: 'Suresh Patel (Kuber)', type: 'Chief Hawala Hub', risk: 'CRITICAL' },
+              { name: 'Dawood Ibrahim Kaskar (Bhai)', type: 'Supreme Leader', risk: 'CRITICAL' },
             ],
-            details: 'Betweenness Centrality: 0.924 • Bridge between Underworld, Cyber Cartel, and Maritime Smugglers',
-            confidence: 95.0,
+            details: 'Betweenness Centrality: 0.992 • Bridge between Underworld, Arms Smugglers, and Hawala Networks',
+            confidence: 98.0,
           },
         };
       }

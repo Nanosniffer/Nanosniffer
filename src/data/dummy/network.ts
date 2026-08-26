@@ -8,20 +8,20 @@ export const dummyNetworkGraph: NetworkGraphData = {
       type: 'personNode',
       position: { x: 380, y: 150 },
       data: {
-        label: 'Vikram Singhania',
+        label: 'Dawood Ibrahim Kaskar',
         type: 'person',
-        subType: 'Syndicate Don (D-Boss)',
-        riskScore: 98,
+        subType: 'D-Company Chief / Bhai',
+        riskScore: 99,
         riskLevel: 'CRITICAL',
         entityId: 'crm-01',
         avatarUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80',
         status: 'WANTED',
-        connectionsCount: 10,
-        centralityScore: 0.98,
+        connectionsCount: 28,
+        centralityScore: 0.99,
         metadata: {
-          alias: 'D-Boss / Don',
-          crimeCategory: 'Extortion',
-          warrants: 8,
+          alias: 'D-Company Chief / Bhai',
+          crimeCategory: 'Terrorism Financing',
+          warrants: 14,
           activePhones: 2,
         }
       }
@@ -29,91 +29,91 @@ export const dummyNetworkGraph: NetworkGraphData = {
     {
       id: 'node-crm-02',
       type: 'personNode',
-      position: { x: 80, y: 380 },
+      position: { x: 120, y: 320 },
       data: {
-        label: 'Suresh Patel',
+        label: 'Tiger Memon',
         type: 'person',
-        subType: 'Chief Hawala Banker',
-        riskScore: 92,
+        subType: 'Operational Commander',
+        riskScore: 98,
         riskLevel: 'CRITICAL',
         entityId: 'crm-02',
         avatarUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80',
-        status: 'UNDER_SURVEILLANCE',
-        connectionsCount: 9,
-        centralityScore: 0.92,
-        metadata: {
-          alias: 'Kuber / S-Bhai',
-          crimeCategory: 'Money Laundering',
-          warrants: 4,
-          activePhones: 1,
-        }
-      }
-    },
-    {
-      id: 'node-crm-03',
-      type: 'personNode',
-      position: { x: 420, y: 460 },
-      data: {
-        label: 'Kabir Deshmukh',
-        type: 'person',
-        subType: 'Weapons & Hit-squad Chief',
-        riskScore: 95,
-        riskLevel: 'CRITICAL',
-        entityId: 'crm-03',
-        avatarUrl: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&auto=format&fit=crop&q=80',
         status: 'WANTED',
-        connectionsCount: 7,
-        centralityScore: 0.88,
+        connectionsCount: 22,
+        centralityScore: 0.96,
         metadata: {
-          alias: 'K-47 / Bhai',
-          crimeCategory: 'Arms Smuggling',
+          alias: 'Tiger Memon',
+          crimeCategory: 'Terrorism Financing',
           warrants: 9,
           activePhones: 1,
         }
       }
     },
     {
-      id: 'node-crm-04',
+      id: 'node-crm-21',
       type: 'personNode',
-      position: { x: 680, y: 180 },
+      position: { x: 480, y: 380 },
       data: {
-        label: 'Ananya Roy',
+        label: 'Chhota Shakeel',
         type: 'person',
-        subType: 'Mahadev Betting & Crypto Lead',
-        riskScore: 91,
+        subType: 'Enforcer & Arms Chief',
+        riskScore: 98,
         riskLevel: 'CRITICAL',
-        entityId: 'crm-04',
-        avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
+        entityId: 'crm-21',
+        avatarUrl: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&auto=format&fit=crop&q=80',
         status: 'WANTED',
-        connectionsCount: 8,
-        centralityScore: 0.85,
+        connectionsCount: 24,
+        centralityScore: 0.95,
         metadata: {
-          alias: 'ZeroByte / Queenpin',
-          crimeCategory: 'Cybercrime',
-          warrants: 6,
+          alias: 'Chhota Shakeel',
+          crimeCategory: 'Arms Smuggling',
+          warrants: 12,
           activePhones: 1,
         }
       }
     },
     {
-      id: 'node-crm-05',
+      id: 'node-crm-14',
       type: 'personNode',
-      position: { x: 120, y: 120 },
+      position: { x: 740, y: 140 },
       data: {
-        label: 'Devendra Rawat',
+        label: 'Sukesh Chandrashekhar',
         type: 'person',
-        subType: 'NCR Extortion Bahubali',
-        riskScore: 93,
+        subType: 'Tihar Conman / Master Extortionist',
+        riskScore: 97,
         riskLevel: 'CRITICAL',
-        entityId: 'crm-05',
+        entityId: 'crm-14',
+        avatarUrl: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=150&auto=format&fit=crop&q=80',
+        status: 'IN_CUSTODY',
+        connectionsCount: 18,
+        centralityScore: 0.94,
+        metadata: {
+          alias: 'Balaji / Tihar Conman',
+          crimeCategory: 'Money Laundering',
+          warrants: 16,
+          activePhones: 1,
+        }
+      }
+    },
+    {
+      id: 'node-crm-15',
+      type: 'personNode',
+      position: { x: 620, y: 440 },
+      data: {
+        label: 'Nirav Deepak Modi',
+        type: 'person',
+        subType: 'Firestar Diamond Magnate',
+        riskScore: 96,
+        riskLevel: 'CRITICAL',
+        entityId: 'crm-15',
         avatarUrl: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&auto=format&fit=crop&q=80',
         status: 'WANTED',
-        connectionsCount: 8,
-        centralityScore: 0.89,
+        connectionsCount: 16,
+        centralityScore: 0.92,
         metadata: {
-          alias: 'NCR Bahubali / Lala',
-          crimeCategory: 'Extortion',
-          warrants: 11,
+          alias: 'Firestar Diamond',
+          crimeCategory: 'Money Laundering',
+          warrants: 8,
           activePhones: 1,
         }
       }
@@ -121,68 +121,68 @@ export const dummyNetworkGraph: NetworkGraphData = {
     {
       id: 'node-crm-07',
       type: 'personNode',
-      position: { x: 280, y: 320 },
+      position: { x: 880, y: 320 },
       data: {
-        label: 'Farooq Ansari',
+        label: 'Srikrishna Ramesh (Sriki)',
         type: 'person',
-        subType: 'JNPT Port Maritime Smuggler',
-        riskScore: 89,
-        riskLevel: 'HIGH',
+        subType: 'Darknet Crypto Hacker',
+        riskScore: 94,
+        riskLevel: 'CRITICAL',
         entityId: 'crm-07',
-        avatarUrl: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=150&auto=format&fit=crop&q=80',
-        status: 'UNDER_SURVEILLANCE',
-        connectionsCount: 7,
-        centralityScore: 0.82,
+        avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
+        status: 'BAIL',
+        connectionsCount: 12,
+        centralityScore: 0.88,
         metadata: {
-          alias: 'The Port Shadow',
-          crimeCategory: 'Drug Trafficking',
-          warrants: 4,
-          activePhones: 1,
-        }
-      }
-    },
-    {
-      id: 'node-crm-08',
-      type: 'personNode',
-      position: { x: 220, y: 520 },
-      data: {
-        label: 'Ashok Gupta',
-        type: 'person',
-        subType: 'Customs CHA & Shell Architect',
-        riskScore: 82,
-        riskLevel: 'HIGH',
-        entityId: 'crm-08',
-        avatarUrl: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&auto=format&fit=crop&q=80',
-        status: 'UNDER_SURVEILLANCE',
-        connectionsCount: 5,
-        centralityScore: 0.74,
-        metadata: {
-          alias: 'Dalal / CA Sahab',
-          crimeCategory: 'Money Laundering',
-          warrants: 2,
-          activePhones: 1,
-        }
-      }
-    },
-    {
-      id: 'node-crm-09',
-      type: 'personNode',
-      position: { x: 860, y: 260 },
-      data: {
-        label: 'Gaurav Sharma',
-        type: 'person',
-        subType: 'OTP & APK Phishing Dev',
-        riskScore: 84,
-        riskLevel: 'HIGH',
-        entityId: 'crm-09',
-        avatarUrl: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=150&auto=format&fit=crop&q=80',
-        status: 'UNDER_SURVEILLANCE',
-        connectionsCount: 4,
-        centralityScore: 0.70,
-        metadata: {
-          alias: 'ByteLord',
+          alias: 'Sriki / Crypto Phantom',
           crimeCategory: 'Cybercrime',
-          warrants: 3,
+          warrants: 7,
+          activePhones: 1,
+        }
+      }
+    },
+    {
+      id: 'node-crm-23',
+      type: 'personNode',
+      position: { x: 260, y: 460 },
+      data: {
+        label: 'Shashikala Patankar',
+        type: 'person',
+        subType: 'Worli Mephedrone Queen',
+        riskScore: 94,
+        riskLevel: 'CRITICAL',
+        entityId: 'crm-23',
+        avatarUrl: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&auto=format&fit=crop&q=80',
+        status: 'BAIL',
+        connectionsCount: 14,
+        centralityScore: 0.90,
+        metadata: {
+          alias: 'Baby Patankar',
+          crimeCategory: 'Drug Trafficking',
+          warrants: 5,
+          activePhones: 1,
+        }
+      }
+    },
+    {
+      id: 'node-crm-22',
+      type: 'personNode',
+      position: { x: 180, y: 600 },
+      data: {
+        label: 'Vijaygiri Goswami (Vicky)',
+        type: 'person',
+        subType: 'Transnational Meth King',
+        riskScore: 97,
+        riskLevel: 'CRITICAL',
+        entityId: 'crm-22',
+        avatarUrl: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&auto=format&fit=crop&q=80',
+        status: 'WANTED',
+        connectionsCount: 15,
+        centralityScore: 0.91,
+        metadata: {
+          alias: 'Vicky Goswami',
+          crimeCategory: 'Drug Trafficking',
+          warrants: 10,
           activePhones: 1,
         }
       }
@@ -192,51 +192,51 @@ export const dummyNetworkGraph: NetworkGraphData = {
     {
       id: 'node-org-01',
       type: 'organizationNode',
-      position: { x: 240, y: 200 },
+      position: { x: 280, y: 220 },
       data: {
-        label: 'Western Underworld Syndicate',
+        label: 'D-Company Global Syndicate',
         type: 'organization',
         riskLevel: 'CRITICAL',
-        riskScore: 98,
+        riskScore: 99,
         entityId: 'org-01',
-        connectionsCount: 140,
+        connectionsCount: 450,
         metadata: {
-          territory: 'Mumbai, Thane, Pune',
-          revenue: '₹450 Cr/yr'
+          territory: 'Mumbai, Karachi, Dubai',
+          revenue: '₹45,000 Cr/yr'
         }
       }
     },
     {
-      id: 'node-org-03',
+      id: 'node-org-05',
       type: 'organizationNode',
-      position: { x: 150, y: 440 },
+      position: { x: 540, y: 560 },
       data: {
-        label: 'Surat-Mumbai Angadia Network',
+        label: 'Firestar Diamond Global Syndicate',
         type: 'organization',
         riskLevel: 'CRITICAL',
-        riskScore: 92,
-        entityId: 'org-03',
-        connectionsCount: 220,
+        riskScore: 96,
+        entityId: 'org-05',
+        connectionsCount: 75,
         metadata: {
-          territory: 'Zaveri Bazaar, Surat Bourse',
-          revenue: '₹1,200 Cr/yr'
+          territory: 'BKC Mumbai, Mayfair London',
+          revenue: '₹13,500 Cr PNB Fraud'
         }
       }
     },
     {
       id: 'node-org-04',
       type: 'organizationNode',
-      position: { x: 740, y: 100 },
+      position: { x: 220, y: 380 },
       data: {
-        label: 'Eastern Cyber & Mahadev Cartel',
+        label: 'Worli Mephedrone Cartel',
         type: 'organization',
-        riskLevel: 'HIGH',
-        riskScore: 91,
+        riskLevel: 'CRITICAL',
+        riskScore: 94,
         entityId: 'org-04',
-        connectionsCount: 110,
+        connectionsCount: 160,
         metadata: {
-          territory: 'Kolkata, Cyberabad, Dubai',
-          revenue: '₹320 Cr/yr'
+          territory: 'Worli Dairy Slums, Mumbai',
+          revenue: '₹450 Cr/yr'
         }
       }
     },
@@ -245,48 +245,48 @@ export const dummyNetworkGraph: NetworkGraphData = {
     {
       id: 'node-loc-01',
       type: 'locationNode',
-      position: { x: 420, y: 320 },
+      position: { x: 420, y: 20 },
       data: {
-        label: 'JNPT Port Terminal 2',
+        label: 'Dongri & Nagpada HQ',
         type: 'location',
         riskLevel: 'CRITICAL',
-        riskScore: 95,
+        riskScore: 99,
         entityId: 'loc-01',
         metadata: {
-          city: 'Navi Mumbai',
-          facility: 'Container Terminal'
+          city: 'Mumbai',
+          facility: 'D-Company Core'
         }
       }
     },
     {
       id: 'node-loc-02',
       type: 'locationNode',
-      position: { x: 40, y: 260 },
+      position: { x: 800, y: 40 },
       data: {
-        label: 'Zaveri Bazaar Angadia Vault',
+        label: 'Tihar Jail Special Ward',
         type: 'location',
         riskLevel: 'CRITICAL',
-        riskScore: 94,
+        riskScore: 97,
         entityId: 'loc-02',
         metadata: {
-          city: 'Mumbai',
-          facility: 'Cash Vault Hub'
+          city: 'New Delhi',
+          facility: 'High Security Complex'
         }
       }
     },
     {
-      id: 'node-loc-04',
+      id: 'node-loc-03',
       type: 'locationNode',
-      position: { x: 30, y: 40 },
+      position: { x: 680, y: 520 },
       data: {
-        label: 'Cyber City Gurugram Complex',
+        label: 'Bharat Diamond Bourse BKC',
         type: 'location',
-        riskLevel: 'CRITICAL',
-        riskScore: 93,
-        entityId: 'loc-04',
+        riskLevel: 'HIGH',
+        riskScore: 94,
+        entityId: 'loc-03',
         metadata: {
-          city: 'Gurugram',
-          facility: 'Extortion Office'
+          city: 'Mumbai',
+          facility: 'Diamond Hub'
         }
       }
     },
@@ -295,66 +295,32 @@ export const dummyNetworkGraph: NetworkGraphData = {
     {
       id: 'node-fin-01',
       type: 'financialNode',
-      position: { x: 320, y: 80 },
+      position: { x: 180, y: 80 },
       data: {
-        label: 'Singhania Star Logistics (HDFC)',
+        label: 'D-Syndicate Tether USDT Vault',
         type: 'bank',
         riskLevel: 'CRITICAL',
-        riskScore: 96,
+        riskScore: 98,
         entityId: 'fin-01',
         metadata: {
-          balance: '₹28.5 Cr',
-          status: 'MONITORED'
+          balance: '₹145.0 Cr',
+          status: 'ACTIVE'
         }
       }
     },
     {
       id: 'node-fin-02',
       type: 'financialNode',
-      position: { x: 600, y: 300 },
+      position: { x: 920, y: 460 },
       data: {
-        label: 'ZeroByte USDT Liquidity Pool',
+        label: 'Darknet Tumbler Cold Core',
         type: 'bank',
         riskLevel: 'CRITICAL',
-        riskScore: 94,
+        riskScore: 95,
         entityId: 'fin-02',
         metadata: {
-          balance: '₹34.0 Cr',
+          balance: '₹38.0 Cr',
           status: 'ACTIVE'
-        }
-      }
-    },
-
-    // 5. Phone Nodes
-    {
-      id: 'node-ph-01',
-      type: 'phoneNode',
-      position: { x: 500, y: 110 },
-      data: {
-        label: '+91 98201 54910 (Singhania)',
-        type: 'phone',
-        riskLevel: 'CRITICAL',
-        riskScore: 97,
-        entityId: 'ph-01',
-        metadata: {
-          status: 'TAPPED',
-          carrier: 'Jio 5G Encrypted'
-        }
-      }
-    },
-    {
-      id: 'node-ph-02',
-      type: 'phoneNode',
-      position: { x: -40, y: 380 },
-      data: {
-        label: '+91 98220 11988 (Patel Hawala)',
-        type: 'phone',
-        riskLevel: 'HIGH',
-        riskScore: 91,
-        entityId: 'ph-02',
-        metadata: {
-          status: 'TAPPED',
-          carrier: 'Airtel Enterprise'
         }
       }
     }
@@ -364,114 +330,84 @@ export const dummyNetworkGraph: NetworkGraphData = {
       id: 'edge-01',
       source: 'node-crm-01',
       target: 'node-org-01',
-      data: { relationshipType: 'Owns', details: 'Supreme Don', riskLevel: 'CRITICAL' }
+      data: { relationshipType: 'Owns', details: 'Supreme Commander', riskLevel: 'CRITICAL' }
     },
     {
       id: 'edge-02',
       source: 'node-crm-01',
       target: 'node-crm-02',
-      data: { relationshipType: 'Money Transfer', details: 'Hawala Transfers (₹22 Cr)', amount: 224000000, riskLevel: 'CRITICAL' }
+      data: { relationshipType: 'Associate', details: '1993 Blasts Logistics', riskLevel: 'CRITICAL' }
     },
     {
       id: 'edge-03',
       source: 'node-crm-01',
-      target: 'node-crm-03',
-      data: { relationshipType: 'Associate', details: 'Armed Wing Chief', riskLevel: 'CRITICAL' }
+      target: 'node-crm-21',
+      data: { relationshipType: 'Associate', details: 'Arms & Enforcement Chief', riskLevel: 'CRITICAL' }
     },
     {
       id: 'edge-04',
       source: 'node-crm-01',
-      target: 'node-crm-07',
-      data: { relationshipType: 'Associate', details: 'JNPT Port Clearing', riskLevel: 'CRITICAL' }
+      target: 'node-loc-01',
+      data: { relationshipType: 'Operates In', details: 'Command Ground Zero', riskLevel: 'CRITICAL' }
     },
     {
       id: 'edge-05',
-      source: 'node-crm-02',
-      target: 'node-org-03',
-      data: { relationshipType: 'Owns', details: 'Angadia Master', riskLevel: 'CRITICAL' }
+      source: 'node-crm-01',
+      target: 'node-fin-01',
+      data: { relationshipType: 'Owns', details: 'USDT Crypto Treasury', riskLevel: 'CRITICAL' }
     },
     {
       id: 'edge-06',
-      source: 'node-crm-02',
+      source: 'node-crm-14',
       target: 'node-loc-02',
-      data: { relationshipType: 'Operates In', details: 'Cash Bunker', riskLevel: 'CRITICAL' }
+      data: { relationshipType: 'Operates In', details: 'Extortion Call Operations', riskLevel: 'CRITICAL' }
     },
     {
       id: 'edge-07',
-      source: 'node-crm-07',
-      target: 'node-loc-01',
-      data: { relationshipType: 'Operates In', details: 'Cargo Terminal 2', riskLevel: 'CRITICAL' }
+      source: 'node-crm-15',
+      target: 'node-org-05',
+      data: { relationshipType: 'Owns', details: 'PNB LoU Beneficiary', riskLevel: 'CRITICAL' }
     },
     {
       id: 'edge-08',
-      source: 'node-crm-04',
-      target: 'node-org-04',
-      data: { relationshipType: 'Owns', details: 'Managing Director', riskLevel: 'HIGH' }
+      source: 'node-crm-15',
+      target: 'node-loc-03',
+      data: { relationshipType: 'Operates In', details: 'Diamond Trading Front', riskLevel: 'HIGH' }
     },
     {
       id: 'edge-09',
-      source: 'node-crm-04',
-      target: 'node-crm-09',
-      data: { relationshipType: 'Associate', details: 'Phishing Team Lead', riskLevel: 'HIGH' }
+      source: 'node-crm-07',
+      target: 'node-fin-02',
+      data: { relationshipType: 'Owns', details: 'Crypto Mixer Pool', riskLevel: 'CRITICAL' }
     },
     {
       id: 'edge-10',
-      source: 'node-crm-04',
-      target: 'node-crm-02',
-      data: { relationshipType: 'Money Transfer', details: 'Crypto-Hawala Bridge', amount: 180000000, riskLevel: 'HIGH' }
+      source: 'node-crm-23',
+      target: 'node-org-04',
+      data: { relationshipType: 'Owns', details: 'Worli MD Cartel Queen', riskLevel: 'CRITICAL' }
     },
     {
       id: 'edge-11',
-      source: 'node-crm-05',
-      target: 'node-crm-03',
-      data: { relationshipType: 'Supplies', details: 'Arms Intermediary', riskLevel: 'HIGH' }
-    },
-    {
-      id: 'edge-12',
-      source: 'node-crm-05',
-      target: 'node-loc-04',
-      data: { relationshipType: 'Operates In', details: 'Extortion HQ', riskLevel: 'CRITICAL' }
-    },
-    {
-      id: 'edge-13',
-      source: 'node-crm-01',
-      target: 'node-fin-01',
-      data: { relationshipType: 'Owns', details: 'Shell Account', riskLevel: 'CRITICAL' }
-    },
-    {
-      id: 'edge-14',
-      source: 'node-crm-04',
-      target: 'node-fin-02',
-      data: { relationshipType: 'Owns', details: 'USDT Mixer', riskLevel: 'CRITICAL' }
-    },
-    {
-      id: 'edge-15',
-      source: 'node-crm-01',
-      target: 'node-ph-01',
-      data: { relationshipType: 'Calls', details: 'Tapped Jio Line', riskLevel: 'CRITICAL' }
-    },
-    {
-      id: 'edge-16',
-      source: 'node-crm-02',
-      target: 'node-ph-02',
-      data: { relationshipType: 'Calls', details: 'Tapped Airtel Line', riskLevel: 'HIGH' }
+      source: 'node-crm-23',
+      target: 'node-crm-22',
+      data: { relationshipType: 'Associate', details: 'Transnational Narcotics Ingress', riskLevel: 'CRITICAL' }
     }
   ],
   metrics: {
     degreeCentralityTopNodes: [
-      { id: 'node-crm-01', name: 'Vikram Singhania', score: 0.98 },
-      { id: 'node-crm-02', name: 'Suresh Patel', score: 0.92 },
-      { id: 'node-crm-04', name: 'Ananya Roy', score: 0.85 },
-      { id: 'node-crm-05', name: 'Devendra Rawat', score: 0.89 }
+      { id: 'node-crm-01', name: 'Dawood Ibrahim Kaskar', score: 0.99 },
+      { id: 'node-crm-02', name: 'Tiger Memon', score: 0.96 },
+      { id: 'node-crm-21', name: 'Chhota Shakeel', score: 0.95 },
+      { id: 'node-crm-14', name: 'Sukesh Chandrashekhar', score: 0.94 }
     ],
     betweennessCentralityTopNodes: [
-      { id: 'node-crm-02', name: 'Suresh Patel (Hawala)', score: 0.924 },
-      { id: 'node-crm-01', name: 'Vikram Singhania', score: 0.880 },
-      { id: 'node-crm-07', name: 'Farooq Ansari (JNPT)', score: 0.742 }
+      { id: 'node-crm-01', name: 'Dawood Ibrahim Kaskar', score: 0.992 },
+      { id: 'node-crm-21', name: 'Chhota Shakeel', score: 0.945 },
+      { id: 'node-crm-15', name: 'Nirav Deepak Modi', score: 0.912 }
     ],
-    communityClustersCount: 4,
-    highestInfluenceLeader: { id: 'node-crm-01', name: 'Vikram Singhania', score: 0.98 },
-    totalConnections: 36,
-    averageConnectionsPerNode: 4.2
+    communityClustersCount: 5,
+    highestInfluenceLeader: { id: 'node-crm-01', name: 'Dawood Ibrahim Kaskar', score: 0.99 },
+    totalConnections: 48,
+    averageConnectionsPerNode: 5.2
   }
 };

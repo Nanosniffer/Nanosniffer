@@ -3,77 +3,75 @@ import { IntelligenceFeedItem } from '../../types';
 export const dummyIntelligenceFeed: IntelligenceFeedItem[] = [
   {
     id: 'int-01',
-    timestamp: '2026-08-25T06:15:00Z',
+    timestamp: '2026-08-26T06:15:00Z',
     source: 'MUMBAI CRIME BRANCH UNIT 9',
     type: 'surveillance',
     priority: 'CRITICAL',
-    title: 'Bandra-Worli Sea Link Toll: Convoy Tagged by ANPR Cameras',
-    summary: 'High-speed convoy with bulletproof Land Cruiser (MH-01-EA-7711) logged traversing towards South Mumbai with active RF jammers.',
-    coordinates: [19.0176, 72.8150],
-    confidenceScore: 98,
+    title: 'Dongri Angadia Corridor: D-Company Hawala Courier Sighted',
+    summary: 'High-frequency telemetry confirmed cash couriers transferring encrypted ledger envelopes linked to Tiger Memon and Chhota Shakeel command nodes.',
+    coordinates: [18.9560, 72.8360],
+    confidenceScore: 99,
     suspectsInvolved: [
-      { id: 'crm-01', name: 'Vikram Singhania', alias: 'D-Boss' },
-      { id: 'crm-03', name: 'Kabir Deshmukh', alias: 'Shooter' }
+      { id: 'crm-01', name: 'Dawood Ibrahim Kaskar', alias: 'D-Company Chief / Bhai' },
+      { id: 'crm-21', name: 'Chhota Shakeel', alias: 'Enforcer & Arms Chief' }
     ]
   },
   {
     id: 'int-02',
-    timestamp: '2026-08-25T05:40:00Z',
-    source: 'ENFORCEMENT DIRECTORATE (ED)',
-    type: 'financial_anomaly',
+    timestamp: '2026-08-26T05:40:00Z',
+    source: 'DELHI POLICE SPECIAL CELL',
+    type: 'social_media',
     priority: 'CRITICAL',
-    title: 'Zaveri Bazaar Angadia Vault: ₹30 Crore Cash Movement Flagged',
-    summary: 'Informal couriers dispatched 4 armoured tempo vans loaded with unaccounted cash and bullion toward Gujarat highway corridor.',
-    coordinates: [18.9515, 72.8317],
-    confidenceScore: 94,
+    title: 'Tihar Central Jail: Virtual Spoofing Cellular Intercept Active',
+    summary: 'Mandoli / Tihar high security perimeter logged virtual SIM routing spoofing Union Ministry landlines for corporate extortion compliance.',
+    coordinates: [28.6250, 77.0980],
+    confidenceScore: 98,
     suspectsInvolved: [
-      { id: 'crm-02', name: 'Suresh Patel', alias: 'Kuber' },
-      { id: 'crm-08', name: 'Ashok Gupta', alias: 'Broker' }
+      { id: 'crm-14', name: 'Sukesh Chandrashekhar', alias: 'Balaji / Tihar Conman' }
     ]
   },
   {
     id: 'int-03',
-    timestamp: '2026-08-25T04:20:00Z',
-    source: 'DELHI POLICE SPECIAL CELL',
-    type: 'social_media',
-    priority: 'HIGH',
-    title: 'Cyber City Gurugram: Encrypted Satellite Call Intercepted',
-    summary: 'Devendra Rawat syndicate issued ₹15 Crore extortion demand to corporate builder with 24-hour compliance deadline.',
-    coordinates: [28.4905, 77.0894],
-    confidenceScore: 95,
+    timestamp: '2026-08-26T04:20:00Z',
+    source: 'KARNATAKA CID CYBER CRIME WING',
+    type: 'financial_anomaly',
+    priority: 'CRITICAL',
+    title: 'Bengaluru Indiranagar: 120 BTC Darknet Liquidity Drain Flagged',
+    summary: 'Automated on-chain forensics detected sudden unhosted wallet transfers hopping through decentralized tumbler protocols orchestrated by Sriki.',
+    coordinates: [12.9784, 77.6408],
+    confidenceScore: 96,
     suspectsInvolved: [
-      { id: 'crm-05', name: 'Devendra Rawat', alias: 'NCR Bahubali' },
-      { id: 'crm-06', name: 'Deepak Yadav', alias: 'Fauji' }
+      { id: 'crm-07', name: 'Srikrishna Ramesh', alias: 'Sriki / Crypto Phantom' },
+      { id: 'crm-08', name: 'Amit Bhardwaj', alias: 'GainBitcoin Kingpin' }
     ]
   },
   {
     id: 'int-04',
-    timestamp: '2026-08-25T03:00:00Z',
-    source: 'NARCOTICS CONTROL BUREAU (NCB)',
+    timestamp: '2026-08-26T03:00:00Z',
+    source: 'ANTI-NARCOTICS CELL (ANC) MUMBAI',
     type: 'weapon_purchase',
-    priority: 'CRITICAL',
-    title: 'JNPT Port Terminal 2: 250 kg Heroin Consignment Seized',
-    summary: 'DRI & NCB joint tactical squad successfully intercepted container #MEDU-8819 hidden in marble slabs from Bandar Abbas.',
-    coordinates: [18.9499, 72.9511],
-    confidenceScore: 99,
+    priority: 'HIGH',
+    title: 'Worli Sea Face Slums: Synthetic Mephedrone Supply Cache Raid',
+    summary: 'Joint tactical raid intercepted chemical tanker dispatch arriving from Ankleshwar GIDC and seized 120 kg high-purity Mephedrone.',
+    coordinates: [19.0060, 72.8180],
+    confidenceScore: 97,
     suspectsInvolved: [
-      { id: 'crm-07', name: 'Farooq Ansari', alias: 'Port Shadow' },
-      { id: 'crm-01', name: 'Vikram Singhania', alias: 'D-Boss' }
+      { id: 'crm-23', name: 'Shashikala Patankar', alias: 'Baby Patankar' },
+      { id: 'crm-24', name: 'Dharmesh Patel', alias: 'Chemical Don' }
     ]
   },
   {
     id: 'int-05',
-    timestamp: '2026-08-25T01:30:00Z',
-    source: 'CBI CYBER CRIME CELL',
+    timestamp: '2026-08-26T01:30:00Z',
+    source: 'ENFORCEMENT DIRECTORATE (ED)',
     type: 'unknown_meeting',
     priority: 'HIGH',
-    title: 'Salt Lake Sector V: Mahadev Betting C2 Server Clustered',
-    summary: 'Forensic telemetry pinpointed 40 offshore betting mirrors hosted on AWS Mumbai and Singapore routing illicit P2P stakes.',
-    coordinates: [22.5804, 88.4378],
-    confidenceScore: 91,
+    title: 'BKC Diamond Bourse: Circular Export Invoicing Cluster Traced',
+    summary: 'Forensic financial intelligence identified overseas shell entities issuing inflated invoices for synthetic gemstone parcels linked to Firestar Diamond network.',
+    coordinates: [19.0674, 72.8687],
+    confidenceScore: 94,
     suspectsInvolved: [
-      { id: 'crm-04', name: 'Ananya Roy', alias: 'ZeroByte' },
-      { id: 'crm-09', name: 'Gaurav Sharma', alias: 'ByteLord' }
+      { id: 'crm-15', name: 'Nirav Deepak Modi', alias: 'Firestar Diamond' }
     ]
   }
 ];
