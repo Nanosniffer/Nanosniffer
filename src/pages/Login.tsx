@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { 
-  Shield, 
   Lock, 
   Mail, 
   Eye, 
@@ -12,6 +11,7 @@ import {
 } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
+import nanoSnifferLogo from '../assets/nanosniffer_logo.png';
 
 export const Login: React.FC = () => {
   const location = useLocation();
@@ -54,8 +54,12 @@ export const Login: React.FC = () => {
       <div className="w-full max-w-md space-y-5">
         {/* Branding Header */}
         <div className="text-center space-y-2">
-          <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-slate-900 text-white shadow-card mb-1">
-            <Shield className="w-6 h-6 text-brand-300" />
+          <div className="inline-flex items-center justify-center p-1.5 rounded-2xl bg-white border border-slate-200 shadow-md mb-1 hover:scale-105 transition-transform">
+            <img 
+              src={nanoSnifferLogo} 
+              alt="NanoSniffer Logo" 
+              className="w-20 h-20 sm:w-24 sm:h-24 object-contain drop-shadow-sm" 
+            />
           </div>
           <div className="flex items-center justify-center gap-2">
             <span className="text-[10px] font-semibold text-slate-700 px-2 py-0.5 rounded bg-slate-100 border border-slate-200 uppercase tracking-wider">
@@ -63,11 +67,11 @@ export const Login: React.FC = () => {
             </span>
             <span className="text-[10px] text-slate-400 font-mono">DEFCON 2</span>
           </div>
-          <h1 className="text-2xl font-bold tracking-tight text-slate-900">
-            ACN
+          <h1 className="text-2xl font-extrabold tracking-tight text-slate-900">
+            Nano<span className="text-blue-600">Sniffer</span>
           </h1>
-          <p className="text-xs text-slate-500">
-            AI Criminal Network Analysis System
+          <p className="text-xs text-slate-500 font-medium">
+            AI Criminal Network Analysis & Intelligence Grid
           </p>
         </div>
 
