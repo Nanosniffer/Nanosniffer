@@ -21,6 +21,8 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useNotifications } from '../../context/NotificationContext';
+import { useQuery } from '@tanstack/react-query';
+import { getCriminals } from '../../api';
 
 interface SidebarProps {
   collapsed: boolean;
@@ -50,6 +52,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
   const { unreadCount } = useNotifications();
   const navigate = useNavigate();
 
+  const { data: criminalsRes } = useQuery({
+    queryKey: ['criminals'],
+    queryFn: () => getCriminals(),
+  });
+
+  const totalCriminals = criminalsRes?.data?.length ?? 20;
+
   const sections: NavSection[] = [
     {
       title: 'OVERVIEW',
@@ -61,7 +70,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       title: 'INVESTIGATIONS',
       items: [
         { label: 'Network Analysis', path: '/network', icon: Share2, badge: 'Active', badgeColor: 'bg-blue-50 text-blue-700 border-blue-200' },
-        { label: 'Criminal Profiles', path: '/criminals', icon: Users, badge: '20' },
+        { label: 'Criminal Profiles', path: '/criminals', icon: Users, badge: `${totalCriminals}` },
         { label: 'Add Suspect Profile', path: '/collect-evidence', icon: UserPlus, badge: 'Intake', badgeColor: 'bg-emerald-50 text-emerald-700 border-emerald-200' },
       ],
     },

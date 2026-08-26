@@ -198,21 +198,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           </button>
 
           {showNotifications && (
-            <>
-              {/* Full-screen invisible backdrop to close notification when clicking anywhere */}
-              <div 
-                className="fixed inset-0 z-40 bg-transparent cursor-pointer"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setShowNotifications(false);
-                }}
-                onTouchStart={(e) => {
-                  e.stopPropagation();
-                  setShowNotifications(false);
-                }}
-              />
-              <NotificationCenter isOpen={showNotifications} onClose={() => setShowNotifications(false)} />
-            </>
+            <NotificationCenter isOpen={showNotifications} onClose={() => setShowNotifications(false)} />
           )}
         </div>
 

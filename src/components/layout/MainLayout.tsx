@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
 import { Sidebar } from './Sidebar';
 import { Navbar } from './Navbar';
 import { GlobalSearchModal } from '../common/GlobalSearchModal';
 import { AiInvestigatorDrawer } from '../ai/AiInvestigatorDrawer';
-import { EvidenceIntakeModal } from '../modals/EvidenceIntakeModal';
+import { AddSuspectWizardModal } from '../modals/AddSuspectWizardModal';
+import { Criminal } from '../../types';
 
 export const MainLayout: React.FC = () => {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
@@ -12,6 +14,13 @@ export const MainLayout: React.FC = () => {
   const [searchOpen, setSearchOpen] = useState(false);
   const [aiAssistantOpen, setAiAssistantOpen] = useState(false);
   const [intakeOpen, setIntakeOpen] = useState(false);
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
+  const handleSuspectCreated = (newSuspect: Criminal) => {
+    queryClient.invalidateQueries({ queryKey: ['criminals'] });
+    navigate('/criminals');
+  };
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 flex">
@@ -53,10 +62,11 @@ export const MainLayout: React.FC = () => {
         onClose={() => setAiAssistantOpen(false)}
       />
 
-      {/* Police Field Data & Evidence Intake Portal */}
-      <EvidenceIntakeModal
+      {/* 5-Step Guided Suspect Addition Wizard Modal */}
+      <AddSuspectWizardModal
         isOpen={intakeOpen}
         onClose={() => setIntakeOpen(false)}
+        onSuccess={handleSuspectCreated}
       />
     </div>
   );

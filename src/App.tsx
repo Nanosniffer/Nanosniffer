@@ -9,9 +9,9 @@ import { AppRoutes } from './routes';
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      refetchOnWindowFocus: false,
+      refetchOnWindowFocus: true,
       retry: 1,
-      staleTime: 1000 * 60 * 5, // 5 mins cache
+      staleTime: 0, // Always fetch fresh data instantly
     },
   },
 });
