@@ -1,6 +1,6 @@
 import { NetworkGraphData } from '../../types';
 
-const BASE_IMG_PATH = `${import.meta.env.BASE_URL || '/'}images/criminals/`;
+const BASE_IMG_PATH = './images/criminals/';
 
 export const dummyNetworkGraph: NetworkGraphData = {
   nodes: [
