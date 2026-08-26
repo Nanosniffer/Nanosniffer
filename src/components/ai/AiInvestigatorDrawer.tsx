@@ -61,11 +61,20 @@ export const AiInvestigatorDrawer: React.FC<{ isOpen: boolean; onClose: () => vo
     const q = queryText.trim();
     if (!q) return;
 
+    const getISTTimeStr = () => {
+      return new Intl.DateTimeFormat('en-IN', {
+        timeZone: 'Asia/Kolkata',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: true,
+      }).format(new Date()) + ' IST';
+    };
+
     const userMsg: Message = {
       id: `user-${Date.now()}`,
       sender: 'user',
       text: q,
-      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      timestamp: getISTTimeStr(),
     };
 
     setMessages(prev => [...prev, userMsg]);
@@ -81,7 +90,7 @@ export const AiInvestigatorDrawer: React.FC<{ isOpen: boolean; onClose: () => vo
           id: `ai-${Date.now()}`,
           sender: 'ai',
           text: 'Analysis complete. Dawood Ibrahim Kaskar, Tiger Memon, and Chhota Shakeel share 8 high-confidence command links including ₹45 Crore transnational Hawala transfers, maritime arms landing logistics at Shekhadi coast, and D-Company global syndicate treasury nodes.',
-          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          timestamp: getISTTimeStr(),
           dataCard: {
             type: 'connections',
             title: 'D-Company Syndicate Link Topology',
@@ -99,7 +108,7 @@ export const AiInvestigatorDrawer: React.FC<{ isOpen: boolean; onClose: () => vo
           id: `ai-${Date.now()}`,
           sender: 'ai',
           text: 'Subject Dawood Ibrahim Kaskar holds a multi-factor risk score of 99.0/100 (CRITICAL). This score is driven by 14 active TADA & Interpol Red Corner warrants, 28 confirmed syndicate connections, and direct link to transnational terrorism financing.',
-          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          timestamp: getISTTimeStr(),
           dataCard: {
             type: 'risk_assessment',
             title: 'Risk Factor Decomposition',
@@ -113,7 +122,7 @@ export const AiInvestigatorDrawer: React.FC<{ isOpen: boolean; onClose: () => vo
           id: `ai-${Date.now()}`,
           sender: 'ai',
           text: 'Detected rapid capital dispersion loop: ₹45 Crore originated from Dongri & Nagpada Angadia couriers, converted into Tether USDT cold wallets, and transferred to Karachi-Dubai command accounts within 90 minutes.',
-          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          timestamp: getISTTimeStr(),
           dataCard: {
             type: 'financial_anomaly',
             title: 'D-Company Hawala Loop #TX-IN-8819',
@@ -130,7 +139,7 @@ export const AiInvestigatorDrawer: React.FC<{ isOpen: boolean; onClose: () => vo
           id: `ai-${Date.now()}`,
           sender: 'ai',
           text: 'Based on Indian underworld graph topology, Subject Dawood Ibrahim Kaskar exhibits the highest Betweenness Centrality (0.992). Intercepting this command node disrupts 88% of the syndicate\'s liquidity and cross-border operational capability.',
-          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          timestamp: getISTTimeStr(),
           dataCard: {
             type: 'centrality',
             title: 'Network Bottleneck Identification',

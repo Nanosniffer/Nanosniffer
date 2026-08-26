@@ -44,12 +44,12 @@ export const dummyCriminals: Criminal[] = [
       { id: 'crm-03', name: 'Yakub Abdul Razak Memon', alias: 'The Accountant', role: 'Chartered Accountant', relationship: 'Financial Custodian', riskScore: 95, avatarUrl: `${BASE_IMG_PATH}crm-03.jpg` }
     ],
     vehicles: [
-      { id: 'veh-01', licensePlate: 'MH-01-BK-9999', make: 'Toyota', model: 'Land Cruiser V8 Armored', year: 2024, color: 'Obsidian Black', registeredOwner: 'D-Logistics Offshore Corp', status: 'ACTIVE', lastSeenLocation: 'South Mumbai Coastal Corridor', lastSeenTime: '2026-08-25 03:20' },
-      { id: 'veh-02', licensePlate: 'MH-04-DX-7007', make: 'Mercedes-Benz', model: 'S680 Guard VR10', year: 2025, color: 'Midnight Blue', registeredOwner: 'Prime Real Estate Trust', status: 'SIGHTED', lastSeenLocation: 'Bandra West Promenade', lastSeenTime: '2026-08-24 22:15' }
+      { id: 'veh-01', licensePlate: 'MH-01-BK-9999', make: 'Toyota', model: 'Land Cruiser V8 Armored', year: 2024, color: 'Obsidian Black', registeredOwner: 'D-Logistics Offshore Corp', status: 'ACTIVE', lastSeenLocation: 'South Mumbai Coastal Corridor', lastSeenTime: '2026-08-25 03:20 IST' },
+      { id: 'veh-02', licensePlate: 'MH-04-DX-7007', make: 'Mercedes-Benz', model: 'S680 Guard VR10', year: 2025, color: 'Midnight Blue', registeredOwner: 'Prime Real Estate Trust', status: 'SIGHTED', lastSeenLocation: 'Bandra West Promenade', lastSeenTime: '2026-08-24 22:15 IST' }
     ],
     phoneNumbers: [
-      { id: 'ph-01', phoneNumber: '+971 50 998 1100', carrier: 'Thuraya Satellite Encrypted', imei: '864920048192014', ownerName: 'Classified Proxy', status: 'TAPPED', totalCallsLogged: 840, lastActive: '2026-08-26 01:10', frequentContacts: [] },
-      { id: 'ph-02', phoneNumber: '+91 98200 44919', carrier: 'Jio 5G eSIM (Encrypted Tunnel)', imei: '358920098716254', ownerName: 'Shell Identity', status: 'BURNER', totalCallsLogged: 412, lastActive: '2026-08-25 21:40', frequentContacts: [] }
+      { id: 'ph-01', phoneNumber: '+971 50 998 1100', carrier: 'Thuraya Satellite Encrypted', imei: '864920048192014', ownerName: 'Classified Proxy', status: 'TAPPED', totalCallsLogged: 840, lastActive: '2026-08-26 01:10 IST', frequentContacts: [] },
+      { id: 'ph-02', phoneNumber: '+91 98200 44919', carrier: 'Jio 5G eSIM (Encrypted Tunnel)', imei: '358920098716254', ownerName: 'Shell Identity', status: 'BURNER', totalCallsLogged: 412, lastActive: '2026-08-25 21:40 IST', frequentContacts: [] }
     ],
     financialAccounts: [
       { id: 'fin-01', accountNumber: '0x99a81b2c4e6f8a9012cd', bankName: 'Tether USDT Cold Core', accountType: 'CRYPTO_WALLET', balance: 1450000000, currency: 'INR', holderName: 'D-Syndicate Treasury', flaggedTransactionsCount: 128, status: 'ACTIVE' },
@@ -99,10 +99,10 @@ export const dummyCriminals: Criminal[] = [
       { id: 'crm-03', name: 'Yakub Abdul Razak Memon', alias: 'The Accountant', role: 'Financial Manager', relationship: 'Brother', riskScore: 95, avatarUrl: `${BASE_IMG_PATH}crm-03.jpg` }
     ],
     vehicles: [
-      { id: 'veh-03', licensePlate: 'MH-02-TM-1993', make: 'Toyota', model: 'Fortuner GR-S Bulletproof', year: 2023, color: 'Silver Metallic', registeredOwner: 'Mahim Freight Forwarders', status: 'ACTIVE', lastSeenLocation: 'Mahim Causeway Bridge', lastSeenTime: '2026-08-24 14:10' }
+      { id: 'veh-03', licensePlate: 'MH-02-TM-1993', make: 'Toyota', model: 'Fortuner GR-S Bulletproof', year: 2023, color: 'Silver Metallic', registeredOwner: 'Mahim Freight Forwarders', status: 'ACTIVE', lastSeenLocation: 'Mahim Causeway Bridge', lastSeenTime: '2026-08-24 14:10 IST' }
     ],
     phoneNumbers: [
-      { id: 'ph-03', phoneNumber: '+971 55 771 9022', carrier: 'Du UAE Encrypted Line', imei: '869201948102948', ownerName: 'Dubai Logistics Agency', status: 'TAPPED', totalCallsLogged: 390, lastActive: '2026-08-25 18:20', frequentContacts: [] }
+      { id: 'ph-03', phoneNumber: '+971 55 771 9022', carrier: 'Du UAE Encrypted Line', imei: '869201948102948', ownerName: 'Dubai Logistics Agency', status: 'TAPPED', totalCallsLogged: 390, lastActive: '2026-08-25 18:20 IST', frequentContacts: [] }
     ],
     financialAccounts: [
       { id: 'fin-03', accountNumber: 'HABIB-UAE-881920', bankName: 'Habib Bank AG Zurich Dubai', accountType: 'OFFSHORE', balance: 520000000, currency: 'INR', holderName: 'Al-Memon Holdings LLC', flaggedTransactionsCount: 64, status: 'MONITORED' }
@@ -203,7 +203,7 @@ export const dummyCriminals: Criminal[] = [
       { id: 'veh-04', licensePlate: 'DL-01-CS-7777', make: 'Mercedes-Benz', model: 'Vintage W123 280E', year: 1982, color: 'Ivory White', registeredOwner: 'Gemstone Export Agency', status: 'SEARCHED', lastSeenLocation: 'Connaught Place Outer Circle', lastSeenTime: 'Historical Archive' }
     ],
     phoneNumbers: [
-      { id: 'ph-04', phoneNumber: '+33 6 49 10 29 38', carrier: 'Orange France (VoIP Routed)', imei: '359018471092837', ownerName: 'Alain Gautier (Alias)', status: 'TAPPED', totalCallsLogged: 120, lastActive: '2026-08-20 10:45', frequentContacts: [] }
+      { id: 'ph-04', phoneNumber: '+33 6 49 10 29 38', carrier: 'Orange France (VoIP Routed)', imei: '359018471092837', ownerName: 'Alain Gautier (Alias)', status: 'TAPPED', totalCallsLogged: 120, lastActive: '2026-08-20 10:45 IST', frequentContacts: [] }
     ],
     financialAccounts: [
       { id: 'fin-05', accountNumber: 'BNP-PARIS-881920', bankName: 'BNP Paribas International', accountType: 'OFFSHORE', balance: 84000000, currency: 'INR', holderName: 'Sobhraj Gemstone Trust', flaggedTransactionsCount: 18, status: 'MONITORED' }
@@ -339,10 +339,10 @@ export const dummyCriminals: Criminal[] = [
       { id: 'crm-14', name: 'Sukesh Chandrashekhar', alias: 'Tihar Conman', role: 'Digital Spoofer Collaborator', relationship: 'VoIP Spoofing Consultant', riskScore: 97, avatarUrl: `${BASE_IMG_PATH}crm-14.jpg` }
     ],
     vehicles: [
-      { id: 'veh-05', licensePlate: 'KA-01-MJ-4004', make: 'Audi', model: 'RS5 Sportback Turbo', year: 2024, color: 'Nardo Grey', registeredOwner: 'Bengaluru Tech Innovations LLP', status: 'ACTIVE', lastSeenLocation: 'Koramangala 4th Block Signal', lastSeenTime: '2026-08-25 19:40' }
+      { id: 'veh-05', licensePlate: 'KA-01-MJ-4004', make: 'Audi', model: 'RS5 Sportback Turbo', year: 2024, color: 'Nardo Grey', registeredOwner: 'Bengaluru Tech Innovations LLP', status: 'ACTIVE', lastSeenLocation: 'Koramangala 4th Block Signal', lastSeenTime: '2026-08-25 19:40 IST' }
     ],
     phoneNumbers: [
-      { id: 'ph-05', phoneNumber: '+91 99018 77201', carrier: 'Airtel 5G (Hardware Tor Bound)', imei: '869201948109923', ownerName: 'Proxy Developer', status: 'TAPPED', totalCallsLogged: 920, lastActive: '2026-08-26 05:45', frequentContacts: [] }
+      { id: 'ph-05', phoneNumber: '+91 99018 77201', carrier: 'Airtel 5G (Hardware Tor Bound)', imei: '869201948109923', ownerName: 'Proxy Developer', status: 'TAPPED', totalCallsLogged: 920, lastActive: '2026-08-26 05:45 IST', frequentContacts: [] }
     ],
     financialAccounts: [
       { id: 'fin-06', accountNumber: 'bc1q98fa83bca9214710bc28194a', bankName: 'Bitcoin Core Multi-Sig Cold Vault', accountType: 'CRYPTO_WALLET', balance: 890000000, currency: 'INR', holderName: 'Sriki Anon Cluster', flaggedTransactionsCount: 310, status: 'MONITORED' },
@@ -441,10 +441,10 @@ export const dummyCriminals: Criminal[] = [
       { id: 'crm-13', name: 'Hasan Ali Khan', alias: 'Swiss Vault King', role: 'Offshore Wealth Conduit', relationship: 'Overseas Funds Facilitation', riskScore: 93, avatarUrl: `${BASE_IMG_PATH}crm-13.jpg` }
     ],
     vehicles: [
-      { id: 'veh-07', licensePlate: 'MH-01-KP-2001', make: 'BMW', model: '740Li M-Sport', year: 2024, color: 'Carbon Black', registeredOwner: 'Triumph Securities Pvt Ltd', status: 'ACTIVE', lastSeenLocation: 'Marine Drive Promenade', lastSeenTime: '2026-08-25 11:30' }
+      { id: 'veh-07', licensePlate: 'MH-01-KP-2001', make: 'BMW', model: '740Li M-Sport', year: 2024, color: 'Carbon Black', registeredOwner: 'Triumph Securities Pvt Ltd', status: 'ACTIVE', lastSeenLocation: 'Marine Drive Promenade', lastSeenTime: '2026-08-25 11:30 IST' }
     ],
     phoneNumbers: [
-      { id: 'ph-07', phoneNumber: '+91 98210 55192', carrier: 'Jio Corporate 5G', imei: '869201948109384', ownerName: 'K Parekh Advisory', status: 'TAPPED', totalCallsLogged: 610, lastActive: '2026-08-25 14:50', frequentContacts: [] }
+      { id: 'ph-07', phoneNumber: '+91 98210 55192', carrier: 'Jio Corporate 5G', imei: '869201948109384', ownerName: 'K Parekh Advisory', status: 'TAPPED', totalCallsLogged: 610, lastActive: '2026-08-25 14:50 IST', frequentContacts: [] }
     ],
     financialAccounts: [
       { id: 'fin-09', accountNumber: 'MMCB0001928471', bankName: 'Madhavpura Mercantile Bank', accountType: 'SHELL_CORP', balance: 410000000, currency: 'INR', holderName: 'Classic Credit Trading LLP', flaggedTransactionsCount: 95, status: 'MONITORED' }
@@ -691,7 +691,7 @@ export const dummyCriminals: Criminal[] = [
       { id: 'veh-12', licensePlate: 'TN-09-SC-7777', make: 'Ferrari', model: '458 Italia', year: 2020, color: 'Rosso Corsa Red', registeredOwner: 'Apex Luxury Fleet Chennai', status: 'IMPOUNDED', lastSeenLocation: 'Chennai Harbor Yard', lastSeenTime: 'ED Seized' }
     ],
     phoneNumbers: [
-      { id: 'ph-08', phoneNumber: '+91 98110 99014', carrier: 'Spoofed Ministry Line (VoIP)', imei: '864920048102914', ownerName: 'Spoofed: Home Secretary Office', status: 'TAPPED', totalCallsLogged: 740, lastActive: '2026-08-25 16:30', frequentContacts: [] }
+      { id: 'ph-08', phoneNumber: '+91 98110 99014', carrier: 'Spoofed Ministry Line (VoIP)', imei: '864920048102914', ownerName: 'Spoofed: Home Secretary Office', status: 'TAPPED', totalCallsLogged: 740, lastActive: '2026-08-25 16:30 IST', frequentContacts: [] }
     ],
     financialAccounts: [
       { id: 'fin-13', accountNumber: 'HDFC-DELHI-9920194', bankName: 'HDFC Bank Green Park', accountType: 'SHELL_CORP', balance: 480000000, currency: 'INR', holderName: 'Super Car Trading LLP', flaggedTransactionsCount: 165, status: 'FROZEN' }
@@ -742,7 +742,7 @@ export const dummyCriminals: Criminal[] = [
       { id: 'veh-13', licensePlate: 'MH-01-NM-1001', make: 'Rolls-Royce', model: 'Phantom VII Drophead', year: 2017, color: 'Arctic White', registeredOwner: 'Firestar International Pvt Ltd', status: 'IMPOUNDED', lastSeenLocation: 'Bandra Kurla Complex (BKC)', lastSeenTime: 'Auctioned' }
     ],
     phoneNumbers: [
-      { id: 'ph-09', phoneNumber: '+44 7911 123456', carrier: 'Vodafone UK Encrypted VIP', imei: '358920194819284', ownerName: 'London Legal Counsel', status: 'TAPPED', totalCallsLogged: 520, lastActive: '2026-08-26 02:45', frequentContacts: [] }
+      { id: 'ph-09', phoneNumber: '+44 7911 123456', carrier: 'Vodafone UK Encrypted VIP', imei: '358920194819284', ownerName: 'London Legal Counsel', status: 'TAPPED', totalCallsLogged: 520, lastActive: '2026-08-26 02:45 IST', frequentContacts: [] }
     ],
     financialAccounts: [
       { id: 'fin-14', accountNumber: 'PNB-BRADY-99018471', bankName: 'Punjab National Bank - Brady House', accountType: 'SHELL_CORP', balance: 13500000000, currency: 'INR', holderName: 'Solar Exports / Stellar Diamond', flaggedTransactionsCount: 290, status: 'FROZEN' }
@@ -939,7 +939,7 @@ export const dummyCriminals: Criminal[] = [
       { id: 'veh-16', licensePlate: 'WB-02-KD-1995', make: 'Antonov', model: 'An-26 Cargo Aircraft (Reg: UN-26496)', year: 1995, color: 'Aviation Silver / Blue Stripe', registeredOwner: 'Carol Air Logistics Bulgaria', status: 'IMPOUNDED', lastSeenLocation: 'Kolkata International Airport', lastSeenTime: 'Impounded' }
     ],
     phoneNumbers: [
-      { id: 'ph-11', phoneNumber: '+45 20 91 82 73', carrier: 'Telenor Denmark Encrypted', imei: '359018294810294', ownerName: 'Danish Engineering Consultant', status: 'TAPPED', totalCallsLogged: 290, lastActive: '2026-08-25 07:30', frequentContacts: [] }
+      { id: 'ph-11', phoneNumber: '+45 20 91 82 73', carrier: 'Telenor Denmark Encrypted', imei: '359018294810294', ownerName: 'Danish Engineering Consultant', status: 'TAPPED', totalCallsLogged: 290, lastActive: '2026-08-25 07:30 IST', frequentContacts: [] }
     ],
     financialAccounts: [
       { id: 'fin-16', accountNumber: 'DANSKE-CPH-990184', bankName: 'Danske Bank Copenhagen', accountType: 'OFFSHORE', balance: 340000000, currency: 'INR', holderName: 'Nordic Humanitarian Logistics (Decoy)', flaggedTransactionsCount: 42, status: 'MONITORED' }
@@ -1031,10 +1031,10 @@ export const dummyCriminals: Criminal[] = [
       { id: 'crm-02', name: 'Tiger Memon', alias: 'Tiger', role: 'Operations Chief', relationship: 'D-Company Tactical Ally', riskScore: 98, avatarUrl: `${BASE_IMG_PATH}crm-02.jpg` }
     ],
     vehicles: [
-      { id: 'veh-17', licensePlate: 'MH-04-CS-9999', make: 'Toyota', model: 'Hilux Armored Interceptor', year: 2024, color: 'Gunmetal Grey', registeredOwner: 'Western Freight Transit Corp', status: 'ACTIVE', lastSeenLocation: 'Navi Mumbai JNPT Corridor', lastSeenTime: '2026-08-25 04:30' }
+      { id: 'veh-17', licensePlate: 'MH-04-CS-9999', make: 'Toyota', model: 'Hilux Armored Interceptor', year: 2024, color: 'Gunmetal Grey', registeredOwner: 'Western Freight Transit Corp', status: 'ACTIVE', lastSeenLocation: 'Navi Mumbai JNPT Corridor', lastSeenTime: '2026-08-25 04:30 IST' }
     ],
     phoneNumbers: [
-      { id: 'ph-12', phoneNumber: '+971 50 192 8472', carrier: 'Etisalat UAE Encrypted Satellite', imei: '864920194819204', ownerName: 'Classified D-Node', status: 'TAPPED', totalCallsLogged: 680, lastActive: '2026-08-26 01:45', frequentContacts: [] }
+      { id: 'ph-12', phoneNumber: '+971 50 192 8472', carrier: 'Etisalat UAE Encrypted Satellite', imei: '864920194819204', ownerName: 'Classified D-Node', status: 'TAPPED', totalCallsLogged: 680, lastActive: '2026-08-26 01:45 IST', frequentContacts: [] }
     ],
     financialAccounts: [
       { id: 'fin-17', accountNumber: 'HABIB-KHI-8819204', bankName: 'Habib Metropolitan Bank Karachi', accountType: 'SHELL_CORP', balance: 640000000, currency: 'INR', holderName: 'Shaikh International Trade LLC', flaggedTransactionsCount: 110, status: 'MONITORED' }
@@ -1089,7 +1089,7 @@ export const dummyCriminals: Criminal[] = [
       { id: 'veh-18', licensePlate: 'GJ-01-VG-9000', make: 'Mercedes-Benz', model: 'Maybach S580 Guard', year: 2022, color: 'Obsidian Black', registeredOwner: 'Goswami Petrochem Exports', status: 'IMPOUNDED', lastSeenLocation: 'Ahmedabad SG Highway', lastSeenTime: 'NCB Seized' }
     ],
     phoneNumbers: [
-      { id: 'ph-13', phoneNumber: '+254 700 192847', carrier: 'Safaricom Kenya Encrypted', imei: '864920194810299', ownerName: 'Mombasa Port Import Trust', status: 'TAPPED', totalCallsLogged: 580, lastActive: '2026-08-24 19:30', frequentContacts: [] }
+      { id: 'ph-13', phoneNumber: '+254 700 192847', carrier: 'Safaricom Kenya Encrypted', imei: '864920194810299', ownerName: 'Mombasa Port Import Trust', status: 'TAPPED', totalCallsLogged: 580, lastActive: '2026-08-24 19:30 IST', frequentContacts: [] }
     ],
     financialAccounts: [
       { id: 'fin-18', accountNumber: 'BARCLAYS-NBO-990184', bankName: 'Barclays Bank of Kenya', accountType: 'OFFSHORE', balance: 1120000000, currency: 'INR', holderName: 'Goswami International Logistics Ltd', flaggedTransactionsCount: 198, status: 'FROZEN' }
@@ -1137,10 +1137,10 @@ export const dummyCriminals: Criminal[] = [
       { id: 'crm-24', name: 'Dharmesh Patel', alias: 'Chemical Don', role: 'Industrial Lab Chemist', relationship: 'Mephedrone Precursor Source', riskScore: 92, avatarUrl: `${BASE_IMG_PATH}crm-24.jpg` }
     ],
     vehicles: [
-      { id: 'veh-19', licensePlate: 'MH-01-BP-5555', make: 'Toyota', model: 'Innova Crysta ZX Luxury', year: 2023, color: 'Pearl White', registeredOwner: 'Patankar Dairy & Properties', status: 'ACTIVE', lastSeenLocation: 'Worli Naka Junction', lastSeenTime: '2026-08-26 04:15' }
+      { id: 'veh-19', licensePlate: 'MH-01-BP-5555', make: 'Toyota', model: 'Innova Crysta ZX Luxury', year: 2023, color: 'Pearl White', registeredOwner: 'Patankar Dairy & Properties', status: 'ACTIVE', lastSeenLocation: 'Worli Naka Junction', lastSeenTime: '2026-08-26 04:15 IST' }
     ],
     phoneNumbers: [
-      { id: 'ph-14', phoneNumber: '+91 98204 88192', carrier: 'Jio 5G Prepaid (Encrypted WhatsApp)', imei: '869201948102910', ownerName: 'Decoy Dairy Assistant', status: 'TAPPED', totalCallsLogged: 890, lastActive: '2026-08-26 05:10', frequentContacts: [] }
+      { id: 'ph-14', phoneNumber: '+91 98204 88192', carrier: 'Jio 5G Prepaid (Encrypted WhatsApp)', imei: '869201948102910', ownerName: 'Decoy Dairy Assistant', status: 'TAPPED', totalCallsLogged: 890, lastActive: '2026-08-26 05:10 IST', frequentContacts: [] }
     ],
     financialAccounts: [
       { id: 'fin-19', accountNumber: 'BOI-WORLI-9901847', bankName: 'Bank of India Worli', accountType: 'SAVINGS', balance: 145000000, currency: 'INR', holderName: 'Shashikala Real Estate Enterprises', flaggedTransactionsCount: 78, status: 'MONITORED' }
@@ -1188,10 +1188,10 @@ export const dummyCriminals: Criminal[] = [
       { id: 'crm-23', name: 'Shashikala Patankar', alias: 'Baby Patankar', role: 'Mumbai Narcotics Queen', relationship: 'Direct MD Product Supplier', riskScore: 94, avatarUrl: `${BASE_IMG_PATH}crm-23.jpg` }
     ],
     vehicles: [
-      { id: 'veh-20', licensePlate: 'GJ-16-DP-4400', make: 'Mahindra', model: 'Scorpio-N Z8 4WD', year: 2024, color: 'Napoli Black', registeredOwner: 'Ankleshwar Specialty Chemical Corp', status: 'ACTIVE', lastSeenLocation: 'Surat-Navsari Toll Plaza', lastSeenTime: '2026-08-26 00:55' }
+      { id: 'veh-20', licensePlate: 'GJ-16-DP-4400', make: 'Mahindra', model: 'Scorpio-N Z8 4WD', year: 2024, color: 'Napoli Black', registeredOwner: 'Ankleshwar Specialty Chemical Corp', status: 'ACTIVE', lastSeenLocation: 'Surat-Navsari Toll Plaza', lastSeenTime: '2026-08-26 00:55 IST' }
     ],
     phoneNumbers: [
-      { id: 'ph-15', phoneNumber: '+91 99250 14920', carrier: 'Airtel 5G Corporate Tunnel', imei: '864920194810283', ownerName: 'Patel Chemical Trading', status: 'TAPPED', totalCallsLogged: 490, lastActive: '2026-08-26 01:20', frequentContacts: [] }
+      { id: 'ph-15', phoneNumber: '+91 99250 14920', carrier: 'Airtel 5G Corporate Tunnel', imei: '864920194810283', ownerName: 'Patel Chemical Trading', status: 'TAPPED', totalCallsLogged: 490, lastActive: '2026-08-26 01:20 IST', frequentContacts: [] }
     ],
     financialAccounts: [
       { id: 'fin-20', accountNumber: 'ICICI-ANKLESHWAR-9901', bankName: 'ICICI Bank Chemical Zone', accountType: 'SHELL_CORP', balance: 280000000, currency: 'INR', holderName: 'Gujarat Pharma Precursors LLP', flaggedTransactionsCount: 92, status: 'MONITORED' }

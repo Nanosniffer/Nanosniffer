@@ -21,14 +21,14 @@ interface NotificationContextType {
   clearNotifications: () => void;
 }
 
-const STORAGE_KEY = 'acn_notifications_cache_v2';
+const STORAGE_KEY = 'acn_notifications_cache_v3';
 
 const INITIAL_NOTIFICATIONS: TacticalNotification[] = [
   {
     id: 'notif-01',
     title: 'High-Priority Hawala Spike Detected',
     message: 'Mumbai-Dubai Angadia corridor flagged ₹45 Cr illegal transfer linked to Dawood Ibrahim & Chhota Shakeel',
-    time: '2m ago',
+    time: '2m ago (05:16 PM IST)',
     type: 'risk',
     severity: 'CRITICAL',
     isRead: false,
@@ -38,7 +38,7 @@ const INITIAL_NOTIFICATIONS: TacticalNotification[] = [
     id: 'notif-02',
     title: 'Tihar VoIP Spoof Intercepted',
     message: 'Delhi Special Cell tagged active extortion call originating from Sukesh Chandrashekhar cell',
-    time: '14m ago',
+    time: '14m ago (05:04 PM IST)',
     type: 'suspect',
     severity: 'HIGH',
     isRead: false,
@@ -48,7 +48,7 @@ const INITIAL_NOTIFICATIONS: TacticalNotification[] = [
     id: 'notif-03',
     title: 'AI Neural Crypto Insight Generated',
     message: 'Cascade analyzer intercepted 120 BTC tumbler hops linked to Sriki (Srikrishna Ramesh) Darknet core',
-    time: '42m ago',
+    time: '42m ago (04:36 PM IST)',
     type: 'ai_insight',
     severity: 'HIGH',
     isRead: false,
@@ -58,7 +58,7 @@ const INITIAL_NOTIFICATIONS: TacticalNotification[] = [
     id: 'notif-04',
     title: 'Worli Narcotics Raid Completed',
     message: 'Anti-Narcotics Cell seized 120kg MD from Shashikala Patankar & Dharmesh Patel syndicate',
-    time: '1h ago',
+    time: '1h ago (04:18 PM IST)',
     type: 'investigation',
     severity: 'MEDIUM',
     isRead: true,

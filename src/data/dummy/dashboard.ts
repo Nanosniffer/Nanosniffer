@@ -135,28 +135,28 @@ export const dummyDashboardSummary: DashboardSummary = {
   recentActivityFeed: [
     {
       id: 'act-01',
-      timestamp: 'Just now (06:15)',
+      timestamp: 'Just now (05:15 PM IST)',
       message: 'New high-priority wire intercept logged: Mumbai-Dubai Hawala transfer (₹45 Crore) linked to Dawood Ibrahim & Chhota Shakeel',
       type: 'alert',
       actor: 'SIGINT Telecom Interception Cell',
     },
     {
       id: 'act-02',
-      timestamp: '18 mins ago',
+      timestamp: '18 mins ago (04:57 PM IST)',
       message: 'Special Cell intercepted virtual VoIP spoofing call originating from Tihar Jail Ward linked to Sukesh Chandrashekhar',
       type: 'surveillance',
       actor: 'Delhi Special Cell Cyber Taskforce',
     },
     {
       id: 'act-03',
-      timestamp: '45 mins ago',
+      timestamp: '45 mins ago (04:30 PM IST)',
       message: 'AI Risk Engine upgraded threat level of Dongri & Nagpada Syndicate Headquarters to CRITICAL (99/100)',
       type: 'update',
       actor: 'A.E.G.I.S. Core Neural Engine',
     },
     {
       id: 'act-04',
-      timestamp: '2 hours ago',
+      timestamp: '2 hours ago (03:15 PM IST)',
       message: 'Enforcement Directorate attached ₹140 Crore in overseas assets linked to Nirav Modi Firestar Diamond Network',
       type: 'arrest',
       actor: 'ED Special Task Force Mumbai',

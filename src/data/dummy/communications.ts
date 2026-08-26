@@ -10,7 +10,7 @@ export const dummyPhoneRecords: PhoneRecord[] = [
     ownerName: 'Dawood Ibrahim Kaskar',
     status: 'TAPPED',
     totalCallsLogged: 840,
-    lastActive: '2026-08-26 01:10',
+    lastActive: '2026-08-26 01:10 IST',
     frequentContacts: [
       { phoneNumber: '+971 55 771 9022', contactName: 'Tiger Memon', callCount: 142 },
       { phoneNumber: '+971 50 882 1099', contactName: 'Chhota Shakeel', callCount: 218 }
@@ -25,7 +25,7 @@ export const dummyPhoneRecords: PhoneRecord[] = [
     ownerName: 'Sukesh Chandrashekhar (Tihar Cell)',
     status: 'TAPPED',
     totalCallsLogged: 920,
-    lastActive: '2026-08-26 03:30',
+    lastActive: '2026-08-26 03:30 IST',
     frequentContacts: [
       { phoneNumber: '+91 98200 44919', contactName: 'Hawala Courier Mumbai', callCount: 94 },
       { phoneNumber: '+91 99102 88401', contactName: 'Corporate Target Legal Counsel', callCount: 45 }
@@ -40,7 +40,7 @@ export const dummyPhoneRecords: PhoneRecord[] = [
     ownerName: 'Srikrishna Ramesh (Sriki)',
     status: 'TAPPED',
     totalCallsLogged: 580,
-    lastActive: '2026-08-26 02:15',
+    lastActive: '2026-08-26 02:15 IST',
     frequentContacts: [
       { phoneNumber: '+91 98220 44102', contactName: 'Amit Bhardwaj (GainBitcoin)', callCount: 78 }
     ]
@@ -54,7 +54,7 @@ export const dummyPhoneRecords: PhoneRecord[] = [
     ownerName: 'Shashikala "Baby" Patankar',
     status: 'TAPPED',
     totalCallsLogged: 680,
-    lastActive: '2026-08-26 01:05',
+    lastActive: '2026-08-26 01:05 IST',
     frequentContacts: [
       { phoneNumber: '+91 99250 14920', contactName: 'Dharmesh Patel (Chemical Don)', callCount: 88 },
       { phoneNumber: '+254 722 990184', contactName: 'Vicky Goswami (Mombasa)', callCount: 52 }

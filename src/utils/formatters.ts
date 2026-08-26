@@ -1,6 +1,13 @@
 import { RiskLevel, SuspectStatus } from '../types';
 
-export const formatCurrency = (amount: number, currency: string = 'USD'): string => {
+export const formatCurrency = (amount: number, currency: string = 'INR'): string => {
+  if (currency === 'INR') {
+    return new Intl.NumberFormat('en-IN', {
+      style: 'currency',
+      currency: 'INR',
+      maximumFractionDigits: 0,
+    }).format(amount);
+  }
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency,
@@ -11,13 +18,46 @@ export const formatCurrency = (amount: number, currency: string = 'USD'): string
 export const formatDate = (isoString: string): string => {
   try {
     const d = new Date(isoString);
-    return new Intl.DateTimeFormat('en-US', {
+    if (isNaN(d.getTime())) return isoString;
+    const formatted = new Intl.DateTimeFormat('en-IN', {
+      timeZone: 'Asia/Kolkata',
+      day: '2-digit',
       month: 'short',
-      day: 'numeric',
       year: 'numeric',
       hour: '2-digit',
       minute: '2-digit',
-      hour12: false,
+      hour12: true,
+    }).format(d);
+    return `${formatted} IST`;
+  } catch (e) {
+    return isoString;
+  }
+};
+
+export const formatTimeIST = (isoString: string): string => {
+  try {
+    const d = new Date(isoString);
+    if (isNaN(d.getTime())) return isoString;
+    return new Intl.DateTimeFormat('en-IN', {
+      timeZone: 'Asia/Kolkata',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true,
+    }).format(d) + ' IST';
+  } catch (e) {
+    return isoString;
+  }
+};
+
+export const formatDateOnlyIST = (isoString: string): string => {
+  try {
+    const d = new Date(isoString);
+    if (isNaN(d.getTime())) return isoString;
+    return new Intl.DateTimeFormat('en-IN', {
+      timeZone: 'Asia/Kolkata',
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
     }).format(d);
   } catch (e) {
     return isoString;
@@ -34,10 +74,10 @@ export const formatRelativeTime = (isoString: string): string => {
     const diffHour = Math.round(diffMin / 60);
     const diffDay = Math.round(diffHour / 24);
 
-    if (diffMin < 1) return 'Just now';
-    if (diffMin < 60) return `${diffMin}m ago`;
-    if (diffHour < 24) return `${diffHour}h ago`;
-    if (diffDay < 7) return `${diffDay}d ago`;
+    if (diffMin < 1) return 'Just now (IST)';
+    if (diffMin < 60) return `${diffMin}m ago (IST)`;
+    if (diffHour < 24) return `${diffHour}h ago (IST)`;
+    if (diffDay < 7) return `${diffDay}d ago (IST)`;
     return formatDate(isoString);
   } catch (e) {
     return isoString;

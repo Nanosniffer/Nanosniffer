@@ -63,7 +63,17 @@ export const Navbar: React.FC<NavbarProps> = ({
   useEffect(() => {
     const updateTime = () => {
       const now = new Date();
-      setCurrentTime(now.toUTCString().replace('GMT', 'UTC').split(' ').slice(1, 5).join(' '));
+      const options: Intl.DateTimeFormatOptions = {
+        timeZone: 'Asia/Kolkata',
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true,
+      };
+      setCurrentTime(new Intl.DateTimeFormat('en-IN', options).format(now) + ' IST');
     };
     updateTime();
     const interval = setInterval(updateTime, 1000);
