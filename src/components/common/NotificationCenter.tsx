@@ -32,30 +32,6 @@ export const NotificationCenter: React.FC<NotificationCenterProps> = ({ isOpen, 
     setSecondsRemaining(30);
   }, []);
 
-  // Universal Click/Touch Anywhere Outside Listener (Works on iOS, Android, Desktop)
-  useEffect(() => {
-    if (!isOpen) return;
-
-    const handlePointerDownOutside = (e: MouseEvent | TouchEvent | PointerEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(e.target as Node)
-      ) {
-        onClose();
-      }
-    };
-
-    document.addEventListener('pointerdown', handlePointerDownOutside, { capture: true });
-    document.addEventListener('touchstart', handlePointerDownOutside, { capture: true, passive: true });
-    document.addEventListener('mousedown', handlePointerDownOutside, { capture: true });
-
-    return () => {
-      document.removeEventListener('pointerdown', handlePointerDownOutside, { capture: true });
-      document.removeEventListener('touchstart', handlePointerDownOutside, { capture: true });
-      document.removeEventListener('mousedown', handlePointerDownOutside, { capture: true });
-    };
-  }, [isOpen, onClose]);
-
   // 30-second countdown timer effect
   useEffect(() => {
     if (!isOpen) return;
