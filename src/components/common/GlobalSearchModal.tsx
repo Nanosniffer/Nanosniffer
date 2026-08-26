@@ -34,12 +34,38 @@ export const GlobalSearchModal: React.FC<{ isOpen: boolean; onClose: () => void 
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [secondsRemaining, setSecondsRemaining] = useState<number>(30);
   const inputRef = useRef<HTMLInputElement>(null);
+  const modalContainerRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
   // Reset 30s timer on user activity
   const resetAutoCloseTimer = useCallback(() => {
     setSecondsRemaining(30);
   }, []);
+
+  // Universal Click/Touch Anywhere Outside Listener (Works on iOS, Android, Desktop)
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handlePointerDownOutside = (e: MouseEvent | TouchEvent | PointerEvent) => {
+      if (
+        modalContainerRef.current &&
+        !modalContainerRef.current.contains(e.target as Node)
+      ) {
+        onClose();
+      }
+    };
+
+    // Listen on pointerdown and touchstart for zero-delay mobile response
+    document.addEventListener('pointerdown', handlePointerDownOutside, { capture: true });
+    document.addEventListener('touchstart', handlePointerDownOutside, { capture: true, passive: true });
+    document.addEventListener('mousedown', handlePointerDownOutside, { capture: true });
+
+    return () => {
+      document.removeEventListener('pointerdown', handlePointerDownOutside, { capture: true });
+      document.removeEventListener('touchstart', handlePointerDownOutside, { capture: true });
+      document.removeEventListener('mousedown', handlePointerDownOutside, { capture: true });
+    };
+  }, [isOpen, onClose]);
 
   // 30-second countdown timer effect
   useEffect(() => {
@@ -161,10 +187,11 @@ export const GlobalSearchModal: React.FC<{ isOpen: boolean; onClose: () => void 
   return (
     <div 
       onClick={onClose}
-      className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/50 backdrop-blur-xs flex items-start justify-center pt-16 sm:pt-24 px-4 animate-in fade-in duration-100"
+      className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/50 backdrop-blur-xs flex items-start justify-center pt-16 sm:pt-24 px-4 animate-in fade-in duration-100 cursor-pointer"
     >
       <div
-        className="w-full max-w-xl bg-white rounded-xl shadow-2xl border border-slate-200 overflow-hidden flex flex-col animate-in zoom-in-95 duration-150"
+        ref={modalContainerRef}
+        className="w-full max-w-xl bg-white rounded-xl shadow-2xl border border-slate-200 overflow-hidden flex flex-col animate-in zoom-in-95 duration-150 cursor-default"
         onClick={e => {
           e.stopPropagation();
           resetAutoCloseTimer();
