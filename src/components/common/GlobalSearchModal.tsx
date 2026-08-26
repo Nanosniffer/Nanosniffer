@@ -15,7 +15,7 @@ import {
   FileText,
   Clock
 } from 'lucide-react';
-import { dummyCriminals } from '../../data/dummy';
+import { getAllMergedCriminals } from '../../api/criminals';
 
 interface SearchResultItem {
   id: string;
@@ -108,31 +108,32 @@ export const GlobalSearchModal: React.FC<{ isOpen: boolean; onClose: () => void 
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, onClose, resetAutoCloseTimer]);
 
-  // Aggregate searchable items
+  // Aggregate searchable items from all suspects
   const allItems: SearchResultItem[] = [];
+  const allCriminals = getAllMergedCriminals();
 
   // Add suspects
-  dummyCriminals.forEach(c => {
+  allCriminals.forEach(c => {
     allItems.push({
       id: c.id,
       name: c.name,
-      subtitle: `${c.alias ? `"${c.alias}" • ` : ''}${c.crimeCategory} • ${c.lastKnownLocation.city}`,
+      subtitle: `${c.alias ? `"${c.alias}" • ` : ''}${c.crimeCategory} • ${c.lastKnownLocation?.city || 'Classified'} • ${c.criminalId}`,
       category: 'Suspects',
       riskLevel: c.riskLevel,
       route: `/criminals`,
     });
 
-    c.phoneNumbers.forEach(p => {
+    (c.phoneNumbers || []).forEach(p => {
       allItems.push({
         id: `${c.id}-phone-${p.phoneNumber}`,
         name: p.phoneNumber,
-        subtitle: `${p.carrier || 'Cellular'} • Linked to ${c.name}`,
+        subtitle: `${p.carrier || 'Cellular'} • Linked to ${c.name} (${c.alias})`,
         category: 'Phones',
         route: `/network`,
       });
     });
 
-    c.vehicles.forEach(v => {
+    (c.vehicles || []).forEach(v => {
       allItems.push({
         id: `${c.id}-veh-${v.licensePlate}`,
         name: `${v.licensePlate} (${v.model})`,
