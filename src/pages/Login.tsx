@@ -160,7 +160,7 @@ export const Login: React.FC = () => {
               variant="default"
               size="lg"
               disabled={loading}
-              className="w-full font-bold h-10 shadow-sm"
+              className="w-full font-bold h-10 shadow-sm bg-slate-900 hover:bg-slate-800 text-white"
             >
               {loading ? (
                 <span className="flex items-center gap-2">
@@ -172,6 +172,50 @@ export const Login: React.FC = () => {
               )}
             </Button>
           </form>
+
+          {/* Quick Demo Access Roles */}
+          <div className="pt-4 border-t border-slate-100 space-y-2">
+            <span className="text-[10px] font-bold tracking-wider text-slate-500 uppercase block text-center">
+              Quick 1-Click Demo Logins
+            </span>
+            <div className="grid grid-cols-3 gap-2">
+              <button
+                type="button"
+                onClick={() => {
+                  setEmail('director.rao@cbi.gov.in');
+                  setPassword('AdminPass2026!');
+                }}
+                className="p-2 rounded-lg border border-slate-200 hover:border-slate-400 hover:bg-slate-50 text-left transition group"
+              >
+                <div className="text-[11px] font-bold text-slate-800 group-hover:text-blue-600">Admin (CBI)</div>
+                <div className="text-[9px] text-slate-500 font-mono truncate">director.rao@cbi</div>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setEmail('acp.rathore@mumbaipolice.gov.in');
+                  setPassword('Password123!');
+                }}
+                className="p-2 rounded-lg border border-slate-200 hover:border-slate-400 hover:bg-slate-50 text-left transition group"
+              >
+                <div className="text-[11px] font-bold text-slate-800 group-hover:text-blue-600">Investigator</div>
+                <div className="text-[9px] text-slate-500 font-mono truncate">acp.rathore@mum</div>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setEmail('meera.rao@delhipolice.gov.in');
+                  setPassword('Password123!');
+                }}
+                className="p-2 rounded-lg border border-slate-200 hover:border-slate-400 hover:bg-slate-50 text-left transition group"
+              >
+                <div className="text-[11px] font-bold text-slate-800 group-hover:text-blue-600">Analyst</div>
+                <div className="text-[9px] text-slate-500 font-mono truncate">meera.rao@delhi</div>
+              </button>
+            </div>
+          </div>
         </div>
 
         {/* Security Warning Notice */}
