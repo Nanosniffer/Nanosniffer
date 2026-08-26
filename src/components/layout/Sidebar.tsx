@@ -51,6 +51,24 @@ export const Sidebar: React.FC<SidebarProps> = ({
   const { user, logout } = useAuth();
   const { unreadCount } = useNotifications();
   const navigate = useNavigate();
+  const [sidebarIST, setSidebarIST] = React.useState<string>('');
+
+  React.useEffect(() => {
+    const updateTime = () => {
+      const now = new Date();
+      const opts: Intl.DateTimeFormatOptions = {
+        timeZone: 'Asia/Kolkata',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true,
+      };
+      setSidebarIST(new Intl.DateTimeFormat('en-IN', opts).format(now) + ' IST');
+    };
+    updateTime();
+    const interval = setInterval(updateTime, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   const { data: criminalsRes } = useQuery({
     queryKey: ['criminals'],
@@ -188,6 +206,31 @@ export const Sidebar: React.FC<SidebarProps> = ({
             </div>
           ))}
         </div>
+
+        {/* Indian Standard Time (IST) Live Widget in Sidebar */}
+        {!collapsed ? (
+          <div className="mx-2.5 mb-2 p-2.5 rounded-lg bg-amber-50/80 border border-amber-200/90 text-slate-700 space-y-1">
+            <div className="flex items-center justify-between text-[10px] font-mono font-bold text-amber-900">
+              <span className="flex items-center gap-1">
+                <span>🇮🇳</span> INDIAN TIME (IST)
+              </span>
+              <span className="text-[9px] bg-amber-200 text-amber-950 px-1 py-0.2 rounded font-mono font-bold">
+                UTC+5:30
+              </span>
+            </div>
+            <div className="text-xs font-mono font-bold text-slate-900 flex items-center gap-1.5 pt-0.5">
+              <Clock className="w-3.5 h-3.5 text-amber-700 animate-pulse shrink-0" />
+              <span>{sidebarIST || 'IST'}</span>
+            </div>
+          </div>
+        ) : (
+          <div 
+            title={`Indian Standard Time: ${sidebarIST}`}
+            className="mx-auto mb-2 w-9 h-9 rounded-lg bg-amber-50 border border-amber-300 flex items-center justify-center text-sm cursor-help"
+          >
+            🇮🇳
+          </div>
+        )}
 
         {/* User Session Footer */}
         <div className="p-2.5 border-t border-slate-100 bg-slate-50/70">

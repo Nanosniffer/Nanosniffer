@@ -38,6 +38,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   const [showNotifications, setShowNotifications] = useState(false);
   const [showRoleMenu, setShowRoleMenu] = useState(false);
   const [currentTime, setCurrentTime] = useState<string>('');
+  const [shortISTTime, setShortISTTime] = useState<string>('');
   const roleMenuRef = React.useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -73,7 +74,15 @@ export const Navbar: React.FC<NavbarProps> = ({
         second: '2-digit',
         hour12: true,
       };
+      const shortOpts: Intl.DateTimeFormatOptions = {
+        timeZone: 'Asia/Kolkata',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true,
+      };
       setCurrentTime(new Intl.DateTimeFormat('en-IN', options).format(now) + ' IST');
+      setShortISTTime(new Intl.DateTimeFormat('en-IN', shortOpts).format(now) + ' IST');
     };
     updateTime();
     const interval = setInterval(updateTime, 1000);
@@ -186,10 +195,15 @@ export const Navbar: React.FC<NavbarProps> = ({
           <span>LIVE INTEL</span>
         </div>
 
-        {/* Tactical Clock */}
-        <div className="hidden xl:flex items-center gap-1.5 text-[11px] font-mono text-slate-500 px-2 py-1 rounded bg-slate-50 border border-slate-100">
-          <Clock className="w-3 h-3 text-slate-400" />
-          <span>{currentTime || 'UTC'}</span>
+        {/* Indian Standard Time (IST) Live Clock */}
+        <div 
+          title="Indian Standard Time (IST / Asia/Kolkata UTC+05:30)"
+          className="flex items-center gap-1.5 text-[11px] font-mono px-2.5 py-1 rounded-md bg-amber-50 border border-amber-300 text-slate-800 shadow-xs"
+        >
+          <span className="text-xs shrink-0">🇮🇳</span>
+          <Clock className="w-3.5 h-3.5 text-amber-700 animate-pulse shrink-0" />
+          <span className="hidden md:inline font-bold text-slate-900">{currentTime || 'Loading IST...'}</span>
+          <span className="md:hidden font-bold text-slate-900">{shortISTTime || 'IST'}</span>
         </div>
 
         {/* Notification Bell */}

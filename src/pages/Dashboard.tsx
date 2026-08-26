@@ -67,11 +67,19 @@ export const Dashboard: React.FC = () => {
       {/* Top Page Title & Subtitle */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-1">
         <div>
+          <div className="flex items-center gap-2 mb-1">
+            <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-amber-50 border border-amber-300 text-[10px] font-mono font-bold text-amber-950 shadow-xs">
+              <span>🇮🇳</span> INDIAN NATIONAL INTELLIGENCE GRID
+            </span>
+            <span className="text-[11px] font-mono font-medium text-slate-500">
+              Timezone: IST (UTC+05:30)
+            </span>
+          </div>
           <h1 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
             Investigation Overview
           </h1>
           <p className="text-xs text-slate-500 mt-0.5">
-            Monitor criminal networks, risk indicators and emerging intelligence.
+            Real-time intelligence and telemetry across 24 Indian underworld syndicates and financial hawala nodes.
           </p>
         </div>
 
