@@ -21,35 +21,47 @@ export const CriminalTable: React.FC<CriminalTableProps> = ({ criminals, onSelec
   const [sortField, setSortField] = useState<'riskScore' | 'name' | 'lastActivity'>('riskScore');
   const [sortAsc, setSortAsc] = useState(false);
 
-  // Extract unique cities
+  // Extract unique cities safely
   const uniqueCities = useMemo(() => {
-    const set = new Set(criminals.map((c) => c.lastKnownLocation.city));
-    return Array.from(set).sort();
+    const set = new Set(
+      (criminals || [])
+        .map((c) => c?.lastKnownLocation?.city)
+        .filter(Boolean)
+    );
+    return Array.from(set).sort() as string[];
   }, [criminals]);
 
   // Filtered & Sorted criminals
   const filteredCriminals = useMemo(() => {
-    return criminals
+    return (criminals || [])
       .filter((c) => {
+        if (!c) return false;
+        const name = (c.name || '').toLowerCase();
+        const alias = (c.alias || '').toLowerCase();
+        const crimId = (c.criminalId || '').toLowerCase();
+        const tags = Array.isArray(c.tags) ? c.tags : [];
+        const city = c.lastKnownLocation?.city || '';
+        const q = searchQuery.toLowerCase();
+
         const matchesSearch =
           !searchQuery ||
-          c.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          c.alias.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          c.criminalId.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          c.tags.some((t) => t.toLowerCase().includes(searchQuery.toLowerCase()));
+          name.includes(q) ||
+          alias.includes(q) ||
+          crimId.includes(q) ||
+          tags.some((t) => typeof t === 'string' && t.toLowerCase().includes(q));
 
         const matchesCrime = selectedCrimeType === 'ALL' || c.crimeCategory === selectedCrimeType;
         const matchesRisk = selectedRiskLevel === 'ALL' || c.riskLevel === selectedRiskLevel;
-        const matchesCity = selectedCity === 'ALL' || c.lastKnownLocation.city === selectedCity;
+        const matchesCity = selectedCity === 'ALL' || city === selectedCity;
         const matchesStatus = selectedStatus === 'ALL' || c.status === selectedStatus;
 
         return matchesSearch && matchesCrime && matchesRisk && matchesCity && matchesStatus;
       })
       .sort((a, b) => {
         let comp = 0;
-        if (sortField === 'riskScore') comp = a.riskScore - b.riskScore;
-        else if (sortField === 'name') comp = a.name.localeCompare(b.name);
-        else if (sortField === 'lastActivity') comp = new Date(a.lastActivity).getTime() - new Date(b.lastActivity).getTime();
+        if (sortField === 'riskScore') comp = (a.riskScore || 0) - (b.riskScore || 0);
+        else if (sortField === 'name') comp = (a.name || '').localeCompare(b.name || '');
+        else if (sortField === 'lastActivity') comp = new Date(a.lastActivity || 0).getTime() - new Date(b.lastActivity || 0).getTime();
         return sortAsc ? comp : -comp;
       });
   }, [
@@ -272,9 +284,9 @@ export const CriminalTable: React.FC<CriminalTableProps> = ({ criminals, onSelec
 
                     {/* Location */}
                     <td className="py-3 px-4 text-slate-700">
-                      <div className="font-medium">{criminal.lastKnownLocation.city}</div>
+                      <div className="font-medium">{criminal.lastKnownLocation?.city || 'Classified'}</div>
                       <div className="text-[10px] text-slate-400 truncate max-w-[130px]">
-                        {criminal.lastKnownLocation.country}
+                        {criminal.lastKnownLocation?.country || 'India'}
                       </div>
                     </td>
 

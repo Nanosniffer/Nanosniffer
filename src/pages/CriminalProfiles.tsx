@@ -12,6 +12,7 @@ import { AddSuspectWizardModal } from '../components/modals/AddSuspectWizardModa
 export const CriminalProfiles: React.FC = () => {
   const [selectedCriminal, setSelectedCriminal] = useState<Criminal | null>(null);
   const [isAddWizardOpen, setIsAddWizardOpen] = useState(false);
+  const [localAddedCriminals, setLocalAddedCriminals] = useState<Criminal[]>([]);
   const queryClient = useQueryClient();
 
   const { data: res, isLoading, refetch, isFetching } = useQuery({
@@ -19,16 +20,19 @@ export const CriminalProfiles: React.FC = () => {
     queryFn: () => getCriminals(),
   });
 
-  const criminals = res?.data || [];
+  const queryCriminals = res?.data || [];
+  
+  // Merge locally added criminals ensuring instant reactive update
+  const criminals = React.useMemo(() => {
+    if (localAddedCriminals.length === 0) return queryCriminals;
+    const addedIds = new Set(localAddedCriminals.map(c => c.id));
+    const addedCrimIds = new Set(localAddedCriminals.map(c => c.criminalId));
+    const filteredQuery = queryCriminals.filter(c => !addedIds.has(c.id) && !addedCrimIds.has(c.criminalId));
+    return [...localAddedCriminals, ...filteredQuery];
+  }, [localAddedCriminals, queryCriminals]);
 
   const handleSuspectCreated = (newSuspect: Criminal) => {
-    queryClient.setQueryData(['criminals'], (old: any) => {
-      const prevData = old?.data || [];
-      return {
-        data: [newSuspect, ...prevData.filter((c: Criminal) => c.id !== newSuspect.id && c.criminalId !== newSuspect.criminalId)],
-        isFallback: old?.isFallback ?? true
-      };
-    });
+    setLocalAddedCriminals(prev => [newSuspect, ...prev.filter(c => c.id !== newSuspect.id && c.criminalId !== newSuspect.criminalId)]);
     queryClient.invalidateQueries({ queryKey: ['criminals'] });
     refetch();
     setSelectedCriminal(newSuspect);
