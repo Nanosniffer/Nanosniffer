@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { getCriminals } from '../api';
 import { CriminalTable } from '../components/tables/CriminalTable';
 import { CriminalProfileDrawer } from '../components/drawers/CriminalProfileDrawer';
@@ -7,11 +7,12 @@ import { TableSkeleton } from '../components/common/SkeletonLoaders';
 import { Criminal } from '../types';
 import { RefreshCw, UserPlus } from 'lucide-react';
 import { Button } from '../components/ui/button';
-import { EvidenceIntakeModal } from '../components/modals/EvidenceIntakeModal';
+import { AddSuspectWizardModal } from '../components/modals/AddSuspectWizardModal';
 
 export const CriminalProfiles: React.FC = () => {
   const [selectedCriminal, setSelectedCriminal] = useState<Criminal | null>(null);
-  const [intakeOpen, setIntakeOpen] = useState(false);
+  const [isAddWizardOpen, setIsAddWizardOpen] = useState(false);
+  const queryClient = useQueryClient();
 
   const { data: res, isLoading, refetch, isFetching } = useQuery({
     queryKey: ['criminals'],
@@ -19,6 +20,12 @@ export const CriminalProfiles: React.FC = () => {
   });
 
   const criminals = res?.data || [];
+
+  const handleSuspectCreated = (newSuspect: Criminal) => {
+    queryClient.invalidateQueries({ queryKey: ['criminals'] });
+    refetch();
+    setSelectedCriminal(newSuspect);
+  };
 
   return (
     <div className="space-y-4 animate-in fade-in duration-150">
@@ -45,11 +52,11 @@ export const CriminalProfiles: React.FC = () => {
           <Button
             variant="default"
             size="sm"
-            onClick={() => setIntakeOpen(true)}
-            className="gap-1.5 bg-brand-600 hover:bg-brand-700 text-white font-semibold"
+            onClick={() => setIsAddWizardOpen(true)}
+            className="gap-1.5 bg-slate-900 hover:bg-slate-800 text-white font-semibold shadow-sm"
           >
             <UserPlus className="w-3.5 h-3.5" />
-            <span>Register Suspect</span>
+            <span>Add Suspect Profile</span>
           </Button>
 
           <Button
@@ -85,10 +92,13 @@ export const CriminalProfiles: React.FC = () => {
         }}
       />
 
-      <EvidenceIntakeModal
-        isOpen={intakeOpen}
-        onClose={() => setIntakeOpen(false)}
+      {/* 5-Step Guided Suspect Addition Wizard Modal */}
+      <AddSuspectWizardModal
+        isOpen={isAddWizardOpen}
+        onClose={() => setIsAddWizardOpen(false)}
+        onSuccess={handleSuspectCreated}
       />
     </div>
   );
 };
+

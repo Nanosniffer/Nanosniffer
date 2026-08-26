@@ -22,16 +22,16 @@ export const getCriminals = async (filters?: CriminalFilterParams): Promise<{ da
   }
 };
 
-export const getCriminalById = async (id: string): Promise<{ data: Criminal | null; isFallback: boolean }> => {
+export const createCriminal = async (criminalData: Criminal): Promise<{ data: Criminal; isFallback: boolean }> => {
   try {
-    const res = await apiClient.get<Criminal>(`/criminals/${id}`);
+    const res = await apiClient.post<Criminal>('/criminals', criminalData);
     if (res.data) {
+      dummyCriminals.unshift(res.data);
       return { data: res.data, isFallback: false };
     }
-    const found = dummyCriminals.find((c) => c.id === id || c.criminalId === id) || null;
-    return { data: found, isFallback: true };
   } catch (error) {
-    const found = dummyCriminals.find((c) => c.id === id || c.criminalId === id) || null;
-    return { data: found, isFallback: true };
+    // Standalone fallback
   }
+  dummyCriminals.unshift(criminalData);
+  return { data: criminalData, isFallback: true };
 };
