@@ -13,6 +13,9 @@ import {
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 
+const BASE_URL = import.meta.env.BASE_URL || '/';
+const LOGO_SRC = `${BASE_URL.endsWith('/') ? BASE_URL : BASE_URL + '/'}images/logo.png`;
+
 export const Login: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -52,22 +55,30 @@ export const Login: React.FC = () => {
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col justify-center items-center px-4 py-12">
       <div className="w-full max-w-md space-y-5">
-        {/* Branding Header */}
-        <div className="text-center space-y-2">
-          <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-slate-900 text-white shadow-card mb-1">
-            <Shield className="w-6 h-6 text-brand-300" />
+        {/* Branding Header with Official NanoSniffer Shield Logo */}
+        <div className="text-center space-y-2.5">
+          <div className="inline-flex items-center justify-center p-3 rounded-2xl bg-white shadow-card border border-slate-200 mb-1 hover:shadow-md transition">
+            <img 
+              src={LOGO_SRC} 
+              alt="NanoSniffer Logo" 
+              className="w-24 h-24 sm:w-28 sm:h-28 object-contain drop-shadow-sm"
+              onError={(e) => {
+                (e.target as HTMLImageElement).src = './images/logo.png';
+              }}
+            />
           </div>
           <div className="flex items-center justify-center gap-2">
-            <span className="text-[10px] font-semibold text-slate-700 px-2 py-0.5 rounded bg-slate-100 border border-slate-200 uppercase tracking-wider">
-              CLASSIFIED ACCESS
+            <span className="text-[10px] font-semibold text-slate-700 px-2 py-0.5 rounded bg-slate-100 border border-slate-200 uppercase tracking-wider flex items-center gap-1">
+              <Shield className="w-3 h-3 text-blue-600" />
+              <span>CLASSIFIED ACCESS</span>
             </span>
             <span className="text-[10px] text-slate-400 font-mono">DEFCON 2</span>
           </div>
-          <h1 className="text-2xl font-bold tracking-tight text-slate-900">
-            ACN
+          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900">
+            NanoSniffer
           </h1>
-          <p className="text-xs text-slate-500">
-            AI Criminal Network Analysis System
+          <p className="text-xs text-slate-500 max-w-xs mx-auto">
+            AI Criminal Network Analysis & Surveillance Intelligence System
           </p>
         </div>
 
