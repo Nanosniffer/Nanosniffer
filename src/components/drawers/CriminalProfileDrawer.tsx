@@ -3,7 +3,7 @@ import { Criminal } from '../../types';
 import { RiskBadge, StatusBadge } from '../common/StatusBadge';
 import { formatCurrency } from '../../utils/formatters';
 import { Button } from '../ui/button';
-import { printCriminalDossier } from '../../utils/exportUtils';
+import { downloadJSON, printCriminalDossier } from '../../utils/exportUtils';
 import {
   X,
   User,
@@ -14,6 +14,7 @@ import {
   Building2,
   MapPin,
   ExternalLink,
+  Download,
   Printer,
   Sparkles
 } from 'lucide-react';
@@ -76,6 +77,15 @@ export const CriminalProfileDrawer: React.FC<CriminalProfileDrawerProps> = ({
               className="h-8 px-2"
             >
               <Printer className="w-3.5 h-3.5" />
+            </Button>
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={() => downloadJSON(criminal, `Dossier_${criminal.criminalId}.json`)}
+              title="Export JSON"
+              className="h-8 px-2"
+            >
+              <Download className="w-3.5 h-3.5" />
             </Button>
             <button
               onClick={onClose}
