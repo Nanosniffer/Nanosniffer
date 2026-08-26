@@ -17,7 +17,8 @@ import {
   Download,
   Printer,
   Sparkles,
-  Edit
+  Edit,
+  Trash2
 } from 'lucide-react';
 
 interface CriminalProfileDrawerProps {
@@ -25,6 +26,7 @@ interface CriminalProfileDrawerProps {
   onClose: () => void;
   onSelectAssociate?: (id: string) => void;
   onEdit?: (criminal: Criminal) => void;
+  onDelete?: (criminal: Criminal) => void;
 }
 
 export const CriminalProfileDrawer: React.FC<CriminalProfileDrawerProps> = ({
@@ -32,6 +34,7 @@ export const CriminalProfileDrawer: React.FC<CriminalProfileDrawerProps> = ({
   onClose,
   onSelectAssociate,
   onEdit,
+  onDelete,
 }) => {
   const [activeTab, setActiveTab] = useState<'overview' | 'associates' | 'vehicles' | 'phones' | 'finance' | 'orgs'>('overview');
 
@@ -105,6 +108,17 @@ export const CriminalProfileDrawer: React.FC<CriminalProfileDrawerProps> = ({
             >
               <Download className="w-3.5 h-3.5" />
             </Button>
+            {onDelete && (
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={() => onDelete(criminal)}
+                title="Delete Criminal Profile"
+                className="h-8 px-2 text-red-600 hover:text-red-700 hover:bg-red-50 hover:border-red-200"
+              >
+                <Trash2 className="w-3.5 h-3.5" />
+              </Button>
+            )}
             <button
               onClick={onClose}
               className="p-1.5 rounded-md text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition ml-1"
@@ -430,9 +444,22 @@ export const CriminalProfileDrawer: React.FC<CriminalProfileDrawerProps> = ({
           <span className="text-[10px] font-mono text-slate-400">
             ACN Intelligence Dossier • Defcon Level 2
           </span>
-          <Button variant="default" size="sm" onClick={onClose} className="h-7 text-xs">
-            Close Dossier
-          </Button>
+          <div className="flex items-center gap-2">
+            {onDelete && (
+              <Button 
+                variant="secondary" 
+                size="sm" 
+                onClick={() => onDelete(criminal)} 
+                className="h-7 text-xs text-red-600 hover:text-red-700 hover:bg-red-50 hover:border-red-200 gap-1"
+              >
+                <Trash2 className="w-3 h-3" />
+                <span>Delete Profile</span>
+              </Button>
+            )}
+            <Button variant="default" size="sm" onClick={onClose} className="h-7 text-xs">
+              Close Dossier
+            </Button>
+          </div>
         </div>
       </div>
     </div>
