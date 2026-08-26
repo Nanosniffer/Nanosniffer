@@ -38,6 +38,27 @@ export const Navbar: React.FC<NavbarProps> = ({
   const [showNotifications, setShowNotifications] = useState(false);
   const [showRoleMenu, setShowRoleMenu] = useState(false);
   const [currentTime, setCurrentTime] = useState<string>('');
+  const roleMenuRef = React.useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!showRoleMenu) return;
+
+    const handlePointerDownOutside = (e: MouseEvent | TouchEvent | PointerEvent) => {
+      if (roleMenuRef.current && !roleMenuRef.current.contains(e.target as Node)) {
+        setShowRoleMenu(false);
+      }
+    };
+
+    document.addEventListener('pointerdown', handlePointerDownOutside, { capture: true });
+    document.addEventListener('touchstart', handlePointerDownOutside, { capture: true, passive: true });
+    document.addEventListener('mousedown', handlePointerDownOutside, { capture: true });
+
+    return () => {
+      document.removeEventListener('pointerdown', handlePointerDownOutside, { capture: true });
+      document.removeEventListener('touchstart', handlePointerDownOutside, { capture: true });
+      document.removeEventListener('mousedown', handlePointerDownOutside, { capture: true });
+    };
+  }, [showRoleMenu]);
 
   useEffect(() => {
     const updateTime = () => {
@@ -182,7 +203,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         </div>
 
         {/* User Profile Dropdown */}
-        <div className="relative">
+        <div ref={roleMenuRef} className="relative">
           <button
             onClick={() => setShowRoleMenu(!showRoleMenu)}
             className="flex items-center gap-2 pl-2 border-l border-slate-200 text-left hover:opacity-90 transition"

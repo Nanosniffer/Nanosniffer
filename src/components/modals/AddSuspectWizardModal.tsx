@@ -4,6 +4,7 @@ import { createCriminal } from '../../api/criminals';
 import { Button } from '../ui/button';
 import { Card } from '../ui/card';
 import { RiskBadge, StatusBadge } from '../common/StatusBadge';
+import { useNotifications } from '../../context/NotificationContext';
 import {
   X,
   User,
@@ -36,6 +37,7 @@ export const AddSuspectWizardModal: React.FC<AddSuspectWizardModalProps> = ({
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [validationError, setValidationError] = useState<string | null>(null);
+  const { addNotification } = useNotifications();
 
   // Question answers for Steps 2, 3, 4, 5 (must be true or false, not null)
   const [hasEvidence, setHasEvidence] = useState<boolean | null>(null);
@@ -336,12 +338,26 @@ export const AddSuspectWizardModal: React.FC<AddSuspectWizardModalProps> = ({
 
     try {
       await createCriminal(newCriminal);
+      addNotification({
+        title: `🎯 New Target Registered: ${newCriminal.name}`,
+        message: `Dossier #${newCriminal.criminalId} ("${newCriminal.alias}") created. Risk Level: ${newCriminal.riskLevel} (${newCriminal.riskScore}/100) • ${newCriminal.crimeCategory} • ${city}.`,
+        type: 'suspect',
+        severity: newCriminal.riskLevel,
+        link: '/criminals'
+      });
       setTimeout(() => {
         setSubmitting(false);
         onSuccess(newCriminal);
         onClose();
       }, 300);
     } catch (err) {
+      addNotification({
+        title: `🎯 New Target Registered: ${newCriminal.name}`,
+        message: `Dossier #${newCriminal.criminalId} ("${newCriminal.alias}") created. Risk Level: ${newCriminal.riskLevel} (${newCriminal.riskScore}/100).`,
+        type: 'suspect',
+        severity: newCriminal.riskLevel,
+        link: '/criminals'
+      });
       setSubmitting(false);
       onSuccess(newCriminal);
       onClose();

@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import { RiskLevel } from '../types';
 
 export interface TacticalNotification {
@@ -20,6 +20,8 @@ interface NotificationContextType {
   markAllAsRead: () => void;
   clearNotifications: () => void;
 }
+
+const STORAGE_KEY = 'acn_notifications_cache';
 
 const INITIAL_NOTIFICATIONS: TacticalNotification[] = [
   {
@@ -64,10 +66,56 @@ const INITIAL_NOTIFICATIONS: TacticalNotification[] = [
   }
 ];
 
+const getStoredNotifications = (): TacticalNotification[] => {
+  try {
+    if (typeof window === 'undefined') return INITIAL_NOTIFICATIONS;
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        return parsed;
+      }
+    }
+  } catch (err) {
+    console.error(err);
+  }
+  return INITIAL_NOTIFICATIONS;
+};
+
 const NotificationContext = createContext<NotificationContextType | undefined>(undefined);
 
 export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [notifications, setNotifications] = useState<TacticalNotification[]>(INITIAL_NOTIFICATIONS);
+  const [notifications, setNotifications] = useState<TacticalNotification[]>(getStoredNotifications);
+
+  // Sync to localStorage
+  useEffect(() => {
+    try {
+      if (typeof window !== 'undefined') {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(notifications));
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }, [notifications]);
+
+  // Listen for cross-component notification broadcasts
+  useEffect(() => {
+    const handleCustomNotif = (e: any) => {
+      if (e?.detail) {
+        const item = e.detail;
+        const newNotif: TacticalNotification = {
+          ...item,
+          id: `notif-${Date.now()}`,
+          time: 'Just now',
+          isRead: false,
+        };
+        setNotifications(prev => [newNotif, ...prev]);
+      }
+    };
+
+    window.addEventListener('acn_broadcast_notification', handleCustomNotif);
+    return () => window.removeEventListener('acn_broadcast_notification', handleCustomNotif);
+  }, []);
 
   const unreadCount = notifications.filter(n => !n.isRead).length;
 
