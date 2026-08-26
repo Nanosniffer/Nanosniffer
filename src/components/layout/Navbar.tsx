@@ -187,7 +187,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           <button
             onClick={() => setShowNotifications(!showNotifications)}
             title="Intelligence Alerts"
-            className="relative p-1.5 rounded-md text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition"
+            className="relative p-1.5 rounded-md text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition z-50"
           >
             <Bell className="w-4 h-4" />
             {unreadCount > 0 && (
@@ -198,7 +198,21 @@ export const Navbar: React.FC<NavbarProps> = ({
           </button>
 
           {showNotifications && (
-            <NotificationCenter isOpen={showNotifications} onClose={() => setShowNotifications(false)} />
+            <>
+              {/* Full-screen invisible backdrop to close notification when clicking anywhere */}
+              <div 
+                className="fixed inset-0 z-40 bg-transparent cursor-pointer"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowNotifications(false);
+                }}
+                onTouchStart={(e) => {
+                  e.stopPropagation();
+                  setShowNotifications(false);
+                }}
+              />
+              <NotificationCenter isOpen={showNotifications} onClose={() => setShowNotifications(false)} />
+            </>
           )}
         </div>
 
@@ -206,7 +220,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         <div ref={roleMenuRef} className="relative">
           <button
             onClick={() => setShowRoleMenu(!showRoleMenu)}
-            className="flex items-center gap-2 pl-2 border-l border-slate-200 text-left hover:opacity-90 transition"
+            className="flex items-center gap-2 pl-2 border-l border-slate-200 text-left hover:opacity-90 transition z-50 relative"
           >
             <img
               src={user?.avatarUrl || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100'}
@@ -226,12 +240,25 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           {/* Quick Role Switcher Dropdown */}
           {showRoleMenu && (
-            <div className="absolute right-0 mt-2 w-60 rounded-lg bg-white border border-slate-200 shadow-popover p-1.5 z-50 animate-in fade-in zoom-in-95 text-xs">
-              <div className="p-2 border-b border-slate-100 mb-1">
-                <p className="text-[10px] font-medium text-slate-400 uppercase tracking-wider">ACTIVE OPERATOR</p>
-                <p className="text-xs font-bold text-slate-900">{user?.name}</p>
-                <p className="text-[10px] text-slate-500 font-mono">{user?.role} • {user?.badgeNumber}</p>
-              </div>
+            <>
+              {/* Full-screen invisible backdrop to close role menu when clicking anywhere */}
+              <div 
+                className="fixed inset-0 z-40 bg-transparent cursor-pointer"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowRoleMenu(false);
+                }}
+                onTouchStart={(e) => {
+                  e.stopPropagation();
+                  setShowRoleMenu(false);
+                }}
+              />
+              <div className="absolute right-0 mt-2 w-60 rounded-lg bg-white border border-slate-200 shadow-popover p-1.5 z-50 animate-in fade-in zoom-in-95 text-xs">
+                <div className="p-2 border-b border-slate-100 mb-1">
+                  <p className="text-[10px] font-medium text-slate-400 uppercase tracking-wider">ACTIVE OPERATOR</p>
+                  <p className="text-xs font-bold text-slate-900">{user?.name}</p>
+                  <p className="text-[10px] text-slate-500 font-mono">{user?.role} • {user?.badgeNumber}</p>
+                </div>
 
               <div className="space-y-0.5 py-1">
                 <p className="text-[10px] font-semibold text-slate-400 px-2 py-0.5 uppercase tracking-wider">
@@ -287,8 +314,9 @@ export const Navbar: React.FC<NavbarProps> = ({
                 </button>
               </div>
             </div>
-          )}
-        </div>
+          </>
+        )}
+      </div>
       </div>
     </header>
   );
