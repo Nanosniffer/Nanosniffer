@@ -790,10 +790,23 @@ export const StandaloneCriminalNetworkSystem: React.FC = () => {
   const [searchModalOpen, setSearchModalOpen] = useState(false);
   const [globalSearchQuery, setGlobalSearchQuery] = useState('');
 
-  // Clock
+  // Clock (Indian Standard Time)
   const [currentTime, setCurrentTime] = useState('');
   useEffect(() => {
-    const updateTime = () => setCurrentTime(new Date().toUTCString().replace('GMT', 'UTC'));
+    const updateTime = () => {
+      const now = new Date();
+      const opts: Intl.DateTimeFormatOptions = {
+        timeZone: 'Asia/Kolkata',
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true,
+      };
+      setCurrentTime(new Intl.DateTimeFormat('en-IN', opts).format(now) + ' IST');
+    };
     updateTime();
     const interval = setInterval(updateTime, 1000);
     return () => clearInterval(interval);
@@ -944,9 +957,10 @@ export const StandaloneCriminalNetworkSystem: React.FC = () => {
           </div>
 
           <div className="flex items-center gap-3 text-xs font-mono">
-            <div className="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300">
-              <Clock className="w-3.5 h-3.5 text-cyan-400" />
-              <span>{currentTime}</span>
+            <div className="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-200">
+              <span className="text-xs">🇮🇳</span>
+              <Clock className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
+              <span className="font-bold text-slate-100">{currentTime}</span>
             </div>
             <div className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-cyan-950 text-cyan-300 border border-cyan-500/30">
               <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping" />

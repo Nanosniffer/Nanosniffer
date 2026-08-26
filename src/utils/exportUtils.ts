@@ -206,7 +206,7 @@ export const printCriminalDossier = (criminal: Criminal) => {
     </div>
     <div class="meta-box">
       <div><strong>DOSSIER ID:</strong> ${criminal.criminalId}</div>
-      <div><strong>DATE PRINTED:</strong> ${new Date().toUTCString()}</div>
+      <div><strong>DATE PRINTED:</strong> ${formatDate(new Date().toISOString())}</div>
       <div><strong>CLEARANCE:</strong> TOP SECRET // NOFORN</div>
     </div>
   </div>
