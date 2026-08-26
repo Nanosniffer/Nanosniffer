@@ -140,20 +140,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
         {/* Brand Header */}
         <div className="h-14 flex items-center justify-between px-3.5 border-b border-slate-100 shrink-0">
           <div className="flex items-center gap-2.5 overflow-hidden">
-            <div className="w-8 h-8 rounded-lg bg-white border border-slate-200 flex items-center justify-center p-0.5 shrink-0 shadow-subtle">
-              <img 
-                src={`${import.meta.env.BASE_URL || '/'}images/logo.png`} 
-                alt="NanoSniffer Logo" 
-                className="w-full h-full object-contain"
-                onError={(e) => {
-                  (e.target as HTMLImageElement).src = './images/logo.png';
-                }}
-              />
+            <div className="w-8 h-8 rounded-lg bg-slate-900 flex items-center justify-center text-white shrink-0 shadow-subtle">
+              <Shield className="w-4 h-4 text-brand-400" />
             </div>
             {!collapsed && (
               <div className="flex flex-col min-w-0">
                 <span className="font-bold text-sm tracking-tight text-slate-900 leading-none">
-                  NanoSniffer
+                  ACN
                 </span>
                 <span className="text-[10px] text-slate-500 font-medium tracking-tight truncate mt-0.5">
                   AI Criminal Network
