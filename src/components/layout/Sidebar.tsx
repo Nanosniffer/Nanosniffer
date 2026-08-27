@@ -17,10 +17,12 @@ import {
   LogOut,
   Sparkles,
   PlusCircle,
-  UserPlus
+  UserPlus,
+  Database
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useNotifications } from '../../context/NotificationContext';
+import { usePoliceDatabase } from '../../context/PoliceDatabaseContext';
 import { useQuery } from '@tanstack/react-query';
 import { getCriminals } from '../../api';
 import nanoSnifferLogo from '../../assets/nanosniffer_logo.png';
@@ -51,6 +53,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 }) => {
   const { user, logout } = useAuth();
   const { unreadCount } = useNotifications();
+  const { isConnected, selectedGateway, openModal: openPoliceDbModal } = usePoliceDatabase();
   const navigate = useNavigate();
   const [sidebarIST, setSidebarIST] = React.useState<string>('');
 
@@ -207,6 +210,45 @@ export const Sidebar: React.FC<SidebarProps> = ({
             </div>
           ))}
         </div>
+
+        {/* Direct Connect Police Database in Sidebar */}
+        {!collapsed ? (
+          <div className="mx-2.5 mb-2">
+            <button
+              onClick={openPoliceDbModal}
+              className={`w-full p-2 rounded-lg border text-left transition flex items-center justify-between shadow-2xs ${
+                isConnected
+                  ? 'bg-emerald-50/90 border-emerald-300 text-emerald-950 hover:bg-emerald-100'
+                  : 'bg-slate-900 border-slate-800 text-white hover:bg-slate-800'
+              }`}
+            >
+              <div className="flex items-center gap-2 overflow-hidden">
+                <Database className={`w-4 h-4 shrink-0 ${isConnected ? 'text-emerald-600' : 'text-emerald-400'}`} />
+                <div className="flex flex-col min-w-0">
+                  <span className="text-[11px] font-bold truncate">
+                    {isConnected ? selectedGateway.shortCode : 'Police Criminal DB'}
+                  </span>
+                  <span className="text-[9px] text-slate-400 truncate">
+                    {isConnected ? 'Direct Grid Active' : 'Click to Direct Connect'}
+                  </span>
+                </div>
+              </div>
+              <span className={`w-2 h-2 rounded-full shrink-0 ${isConnected ? 'bg-emerald-500 animate-pulse' : 'bg-amber-400'}`} />
+            </button>
+          </div>
+        ) : (
+          <div className="mx-auto mb-2">
+            <button
+              onClick={openPoliceDbModal}
+              title={`Police Criminal Database (${isConnected ? selectedGateway.shortCode : 'Connect'})`}
+              className={`w-9 h-9 rounded-lg border flex items-center justify-center transition ${
+                isConnected ? 'bg-emerald-50 border-emerald-300 text-emerald-600' : 'bg-slate-900 border-slate-800 text-white'
+              }`}
+            >
+              <Database className="w-4 h-4" />
+            </button>
+          </div>
+        )}
 
         {/* Indian Standard Time (IST) Live Widget in Sidebar */}
         {!collapsed ? (

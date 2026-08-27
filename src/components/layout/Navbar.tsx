@@ -10,10 +10,12 @@ import {
   Shield,
   Clock,
   PlusCircle,
-  UserPlus
+  UserPlus,
+  Database
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useNotifications } from '../../context/NotificationContext';
+import { usePoliceDatabase } from '../../context/PoliceDatabaseContext';
 import { NotificationCenter } from '../common/NotificationCenter';
 import { Button } from '../ui/button';
 
@@ -32,6 +34,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 }) => {
   const { user, switchRole, logout } = useAuth();
   const { unreadCount } = useNotifications();
+  const { isConnected, selectedGateway, openModal: openPoliceDbModal } = usePoliceDatabase();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -164,6 +167,28 @@ export const Navbar: React.FC<NavbarProps> = ({
         >
           <Search className="w-4 h-4" />
         </button>
+
+        {/* Direct Connect to Police Criminal Database Button */}
+        <Button
+          variant={isConnected ? 'outline' : 'default'}
+          size="sm"
+          onClick={openPoliceDbModal}
+          title="Direct Connect with Police Criminal Database (CCTNS / ICJS / NATGRID)"
+          className={`gap-1.5 h-7 px-2.5 font-semibold text-[11px] shadow-sm transition shrink-0 ${
+            isConnected
+              ? 'bg-emerald-50 text-emerald-800 border-emerald-300 hover:bg-emerald-100 hover:text-emerald-900'
+              : 'bg-emerald-600 hover:bg-emerald-700 text-white border-transparent'
+          }`}
+        >
+          <Database className={`w-3.5 h-3.5 ${isConnected ? 'text-emerald-600' : 'text-white'}`} />
+          <span className="hidden sm:inline font-bold">
+            {isConnected ? selectedGateway.shortCode : 'Connect Police DB'}
+          </span>
+          <span className="sm:hidden font-bold">
+            {isConnected ? 'Police DB' : 'Connect DB'}
+          </span>
+          <span className={`w-1.5 h-1.5 rounded-full ${isConnected ? 'bg-emerald-500 animate-pulse' : 'bg-emerald-200'}`} />
+        </Button>
 
         {/* Police Data Intake / Add Suspect Profile Button */}
         {onOpenIntake && (

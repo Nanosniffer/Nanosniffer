@@ -4,6 +4,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AuthProvider } from './context/AuthContext';
 import { ThemeProvider } from './context/ThemeContext';
 import { NotificationProvider } from './context/NotificationContext';
+import { PoliceDatabaseProvider } from './context/PoliceDatabaseContext';
+import { PoliceDatabaseModal } from './components/modals/PoliceDatabaseModal';
 import { AppRoutes } from './routes';
 
 const queryClient = new QueryClient({
@@ -22,9 +24,12 @@ export const App: React.FC = () => {
       <ThemeProvider>
         <AuthProvider>
           <NotificationProvider>
-            <HashRouter>
-              <AppRoutes />
-            </HashRouter>
+            <PoliceDatabaseProvider>
+              <HashRouter>
+                <AppRoutes />
+                <PoliceDatabaseModal />
+              </HashRouter>
+            </PoliceDatabaseProvider>
           </NotificationProvider>
         </AuthProvider>
       </ThemeProvider>

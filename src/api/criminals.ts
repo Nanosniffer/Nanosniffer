@@ -74,6 +74,46 @@ export const saveCustomCriminal = (criminal: Criminal) => {
   }
 };
 
+export const saveMultipleCustomCriminals = (newCriminals: Criminal[]): number => {
+  try {
+    if (!newCriminals || newCriminals.length === 0) return 0;
+    const existing = getStoredCustomCriminals();
+    const newIds = new Set(newCriminals.map(c => c.id));
+    const newCriminalIds = new Set(newCriminals.map(c => c.criminalId));
+    
+    // Filter out matches from existing custom
+    const filteredExisting = existing.filter(c => !newIds.has(c.id) && !newCriminalIds.has(c.criminalId));
+    const updated = [...newCriminals, ...filteredExisting];
+    
+    // Remove from deleted blacklist if re-added
+    const deletedIds = getStoredDeletedCriminalIds().filter(id => !newIds.has(id) && !newCriminalIds.has(id));
+    
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+      localStorage.setItem(DELETED_STORAGE_KEY, JSON.stringify(deletedIds));
+    }
+
+    // Also update in-memory list
+    newCriminals.forEach(criminal => {
+      const foundIdx = dummyCriminals.findIndex(c => c.id === criminal.id || c.criminalId === criminal.criminalId);
+      if (foundIdx >= 0) {
+        dummyCriminals[foundIdx] = criminal;
+      } else {
+        dummyCriminals.unshift(criminal);
+      }
+    });
+
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('acn_criminals_updated', { detail: updated }));
+    }
+
+    return newCriminals.length;
+  } catch (err) {
+    console.error('Error saving multiple custom criminals to localStorage:', err);
+    return 0;
+  }
+};
+
 export const deleteCriminal = async (id: string): Promise<{ success: boolean }> => {
   try {
     // 1. Remove from custom criminals in localStorage
