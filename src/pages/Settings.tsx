@@ -14,7 +14,14 @@ import {
   Globe,
   Sliders,
   Shield,
-  UserCheck
+  UserCheck,
+  Radio,
+  Car,
+  Camera,
+  Phone,
+  Landmark,
+  Coins,
+  Building2
 } from 'lucide-react';
 import axios from 'axios';
 
@@ -260,6 +267,161 @@ export const Settings: React.FC = () => {
             />
             <span>Enable 0ms Local Fallback Telemetry Stream</span>
           </label>
+        </div>
+      </Card>
+
+      {/* 3. External Surveillance & Telemetry Feed Connectors Grid */}
+      <Card className="p-4 bg-white border border-slate-200 shadow-card space-y-4">
+        <div className="flex items-center gap-2.5 border-b border-slate-100 pb-2.5">
+          <div className="p-2 rounded-md bg-blue-50 border border-blue-200">
+            <Radio className="w-4 h-4 text-blue-700" />
+          </div>
+          <div>
+            <div className="flex items-center gap-2">
+              <h3 className="text-sm font-bold text-slate-900">Connected Surveillance & Telemetry Feeds</h3>
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                6 / 6 GATEWAYS ACTIVE
+              </span>
+            </div>
+            <p className="text-xs text-slate-500">
+              Real-time inbound data streams from highway tolls, telecom towers, municipal cameras, and banking nodes
+            </p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+          {/* Service 1: FASTag & Toll ANPR */}
+          <div className="p-3 rounded-lg border border-slate-200 bg-slate-50/70 hover:bg-slate-50 transition space-y-2">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2 font-bold text-slate-900">
+                <Car className="w-4 h-4 text-blue-600" />
+                <span>NHAI FASTag & Highway Tolls</span>
+              </div>
+              <span className="text-[10px] font-semibold text-emerald-700 bg-emerald-100/70 px-1.5 py-0.5 rounded">
+                CONNECTED
+              </span>
+            </div>
+            <div className="text-[11px] text-slate-600 space-y-0.5 font-mono">
+              <p>• Protocol: <strong className="text-slate-800 font-sans">NETC FASTag v2 Webhook</strong></p>
+              <p>• Monitored Tolls: <strong className="text-slate-800 font-sans">84 Highway Checkpoints</strong></p>
+              <p>• Feed Latency: <strong className="text-emerald-700 font-sans">18 ms</strong></p>
+              <p>• Scanned Today: <strong className="text-slate-800 font-sans">14,290 Plates</strong></p>
+            </div>
+            <div className="text-[10px] text-slate-500 bg-white p-1.5 rounded border border-slate-200">
+              Tracks: <span className="font-semibold text-slate-700">RTO number plates, vehicle speed, lane camera snapshots</span>
+            </div>
+          </div>
+
+          {/* Service 2: Smart City CCTV */}
+          <div className="p-3 rounded-lg border border-slate-200 bg-slate-50/70 hover:bg-slate-50 transition space-y-2">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2 font-bold text-slate-900">
+                <Camera className="w-4 h-4 text-purple-600" />
+                <span>Smart City CCTV & Facial AI</span>
+              </div>
+              <span className="text-[10px] font-semibold text-emerald-700 bg-emerald-100/70 px-1.5 py-0.5 rounded">
+                CONNECTED
+              </span>
+            </div>
+            <div className="text-[11px] text-slate-600 space-y-0.5 font-mono">
+              <p>• Protocol: <strong className="text-slate-800 font-sans">RTSP Video Stream (H.265)</strong></p>
+              <p>• Live AI Cameras: <strong className="text-slate-800 font-sans">1,250 Junction Units</strong></p>
+              <p>• AI Model: <strong className="text-slate-800 font-sans">YOLOv8 + FaceNet 128D</strong></p>
+              <p>• Facial Match Cutoff: <strong className="text-emerald-700 font-sans">88% Confidence</strong></p>
+            </div>
+            <div className="text-[10px] text-slate-500 bg-white p-1.5 rounded border border-slate-200">
+              Tracks: <span className="font-semibold text-slate-700">Airport, railway station, and intersection pedestrian biometrics</span>
+            </div>
+          </div>
+
+          {/* Service 3: Telecom Tower Pings */}
+          <div className="p-3 rounded-lg border border-slate-200 bg-slate-50/70 hover:bg-slate-50 transition space-y-2">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2 font-bold text-slate-900">
+                <Phone className="w-4 h-4 text-emerald-600" />
+                <span>Telecom Lawful Intercept (CMS)</span>
+              </div>
+              <span className="text-[10px] font-semibold text-emerald-700 bg-emerald-100/70 px-1.5 py-0.5 rounded">
+                CONNECTED
+              </span>
+            </div>
+            <div className="text-[11px] text-slate-600 space-y-0.5 font-mono">
+              <p>• Protocol: <strong className="text-slate-800 font-sans">DoT Central Monitoring (ASN.1)</strong></p>
+              <p>• Telcos: <strong className="text-slate-800 font-sans">Jio 5G, Airtel, Vi, BSNL</strong></p>
+              <p>• Monitored Towers: <strong className="text-slate-800 font-sans">18,400 BTS Cells</strong></p>
+              <p>• Tracking Method: <strong className="text-slate-800 font-sans">15-Digit IMEI & Tower Handover</strong></p>
+            </div>
+            <div className="text-[10px] text-slate-500 bg-white p-1.5 rounded border border-slate-200">
+              Tracks: <span className="font-semibold text-slate-700">Cellular base-station azimuths, call logs, burner SIM insertions</span>
+            </div>
+          </div>
+
+          {/* Service 4: Bank Core Systems */}
+          <div className="p-3 rounded-lg border border-slate-200 bg-slate-50/70 hover:bg-slate-50 transition space-y-2">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2 font-bold text-slate-900">
+                <Landmark className="w-4 h-4 text-amber-600" />
+                <span>FIU-IND & Core Banking (FINnet)</span>
+              </div>
+              <span className="text-[10px] font-semibold text-emerald-700 bg-emerald-100/70 px-1.5 py-0.5 rounded">
+                CONNECTED
+              </span>
+            </div>
+            <div className="text-[11px] text-slate-600 space-y-0.5 font-mono">
+              <p>• Protocol: <strong className="text-slate-800 font-sans">FINnet 2.0 SFTP / XML Gateway</strong></p>
+              <p>• Banks: <strong className="text-slate-800 font-sans">42 Scheduled Commercial Banks</strong></p>
+              <p>• Trigger: <strong className="text-slate-800 font-sans">Cash &gt; ₹10 Lakh / Structuring</strong></p>
+              <p>• Auto-Sync: <strong className="text-emerald-700 font-sans">Every 15 Minutes</strong></p>
+            </div>
+            <div className="text-[10px] text-slate-500 bg-white p-1.5 rounded border border-slate-200">
+              Tracks: <span className="font-semibold text-slate-700">Hawala Angadia transactions, shell company fund layering, accounts</span>
+            </div>
+          </div>
+
+          {/* Service 5: Crypto Blockchain Listener */}
+          <div className="p-3 rounded-lg border border-slate-200 bg-slate-50/70 hover:bg-slate-50 transition space-y-2">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2 font-bold text-slate-900">
+                <Coins className="w-4 h-4 text-cyan-600" />
+                <span>Crypto Nodes & Darknet Tumblers</span>
+              </div>
+              <span className="text-[10px] font-semibold text-emerald-700 bg-emerald-100/70 px-1.5 py-0.5 rounded">
+                CONNECTED
+              </span>
+            </div>
+            <div className="text-[11px] text-slate-600 space-y-0.5 font-mono">
+              <p>• Protocol: <strong className="text-slate-800 font-sans">Web3 JSON-RPC / WebSocket (WSS)</strong></p>
+              <p>• Blockchains: <strong className="text-slate-800 font-sans">Tron (USDT), Bitcoin, Ethereum</strong></p>
+              <p>• Monitored Wallets: <strong className="text-slate-800 font-sans">128 Cold Storage / Darknet Pools</strong></p>
+              <p>• Tumbler Detection: <strong className="text-emerald-700 font-sans">Active Real-Time</strong></p>
+            </div>
+            <div className="text-[10px] text-slate-500 bg-white p-1.5 rounded border border-slate-200">
+              Tracks: <span className="font-semibold text-slate-700">GainBitcoin mixers, ransomware payouts, USDT laundering</span>
+            </div>
+          </div>
+
+          {/* Service 6: CCTNS Police FIR Grid */}
+          <div className="p-3 rounded-lg border border-slate-200 bg-slate-50/70 hover:bg-slate-50 transition space-y-2">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2 font-bold text-slate-900">
+                <Building2 className="w-4 h-4 text-red-600" />
+                <span>CCTNS National Police FIR Registry</span>
+              </div>
+              <span className="text-[10px] font-semibold text-emerald-700 bg-emerald-100/70 px-1.5 py-0.5 rounded">
+                CONNECTED
+              </span>
+            </div>
+            <div className="text-[11px] text-slate-600 space-y-0.5 font-mono">
+              <p>• Protocol: <strong className="text-slate-800 font-sans">NCRB National Integration API v3</strong></p>
+              <p>• Police Stations: <strong className="text-slate-800 font-sans">16,000+ Stations Across India</strong></p>
+              <p>• NLP Entity Extractor: <strong className="text-slate-800 font-sans">Automated IPC / BNS Parser</strong></p>
+              <p>• FIR Auto-Sync: <strong className="text-emerald-700 font-sans">Continuous Streaming</strong></p>
+            </div>
+            <div className="text-[10px] text-slate-500 bg-white p-1.5 rounded border border-slate-200">
+              Tracks: <span className="font-semibold text-slate-700">Arrest warrants, FIR sections, court orders, bail violations</span>
+            </div>
+          </div>
         </div>
       </Card>
 
