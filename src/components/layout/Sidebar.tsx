@@ -34,15 +34,19 @@ interface SidebarProps {
   setMobileOpen: (open: boolean) => void;
 }
 
+interface NavItem {
+  label: string;
+  path?: string;
+  icon: React.ComponentType<{ className?: string }>;
+  badge?: string;
+  badgeColor?: string;
+  action?: () => void;
+  isAction?: boolean;
+}
+
 interface NavSection {
   title: string;
-  items: {
-    label: string;
-    path: string;
-    icon: React.ComponentType<{ className?: string }>;
-    badge?: string;
-    badgeColor?: string;
-  }[];
+  items: NavItem[];
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({
@@ -91,6 +95,17 @@ export const Sidebar: React.FC<SidebarProps> = ({
     {
       title: 'INVESTIGATIONS',
       items: [
+        {
+          label: isConnected ? `${selectedGateway.shortCode}` : 'Connect Police DB',
+          icon: Database,
+          action: () => {
+            openPoliceDbModal();
+            setMobileOpen(false);
+          },
+          isAction: true,
+          badge: isConnected ? 'Active' : 'Connect',
+          badgeColor: isConnected ? 'bg-emerald-50 text-emerald-700 border-emerald-300' : 'bg-amber-50 text-amber-800 border-amber-300',
+        },
         { label: 'Network Analysis', path: '/network', icon: Share2, badge: 'Active', badgeColor: 'bg-blue-50 text-blue-700 border-blue-200' },
         { label: 'Criminal Profiles', path: '/criminals', icon: Users, badge: `${totalCriminals}` },
         { label: 'Add Suspect Profile', path: '/collect-evidence', icon: UserPlus, badge: 'Intake', badgeColor: 'bg-emerald-50 text-emerald-700 border-emerald-200' },
@@ -178,10 +193,41 @@ export const Sidebar: React.FC<SidebarProps> = ({
               )}
               {section.items.map(item => {
                 const Icon = item.icon;
+
+                if (item.isAction && item.action) {
+                  return (
+                    <button
+                      key={item.label}
+                      onClick={item.action}
+                      title={item.label}
+                      className={`w-full flex items-center gap-2.5 px-2.5 py-1.5 rounded-md text-xs font-medium transition-colors group relative text-left ${
+                        isConnected
+                          ? 'bg-emerald-50 text-emerald-900 font-semibold border border-emerald-200/90 hover:bg-emerald-100'
+                          : 'text-slate-700 hover:text-slate-900 hover:bg-slate-50'
+                      }`}
+                    >
+                      <Icon className={`w-4 h-4 shrink-0 ${isConnected ? 'text-emerald-600' : 'text-slate-500 group-hover:text-slate-700'}`} />
+                      {!collapsed && (
+                        <span className="truncate flex-1 font-medium">{item.label}</span>
+                      )}
+                      {!collapsed && item.badge && (
+                        <span
+                          className={`px-1.5 py-0.2 rounded text-[10px] font-medium border flex items-center gap-1 shrink-0 ${
+                            item.badgeColor || 'bg-slate-100 text-slate-600 border-slate-200'
+                          }`}
+                        >
+                          {isConnected && <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />}
+                          <span>{item.badge}</span>
+                        </span>
+                      )}
+                    </button>
+                  );
+                }
+
                 return (
                   <NavLink
-                    key={item.path}
-                    to={item.path}
+                    key={item.path || item.label}
+                    to={item.path || '#'}
                     onClick={() => setMobileOpen(false)}
                     className={({ isActive }) =>
                       `flex items-center gap-2.5 px-2.5 py-1.5 rounded-md text-xs font-medium transition-colors group relative ${
@@ -210,45 +256,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
             </div>
           ))}
         </div>
-
-        {/* Direct Connect Police Database in Sidebar */}
-        {!collapsed ? (
-          <div className="mx-2.5 mb-2">
-            <button
-              onClick={openPoliceDbModal}
-              className={`w-full p-2 rounded-lg border text-left transition flex items-center justify-between shadow-2xs ${
-                isConnected
-                  ? 'bg-emerald-50/90 border-emerald-300 text-emerald-950 hover:bg-emerald-100'
-                  : 'bg-slate-900 border-slate-800 text-white hover:bg-slate-800'
-              }`}
-            >
-              <div className="flex items-center gap-2 overflow-hidden">
-                <Database className={`w-4 h-4 shrink-0 ${isConnected ? 'text-emerald-600' : 'text-emerald-400'}`} />
-                <div className="flex flex-col min-w-0">
-                  <span className="text-[11px] font-bold truncate">
-                    {isConnected ? selectedGateway.shortCode : 'Police Criminal DB'}
-                  </span>
-                  <span className="text-[9px] text-slate-400 truncate">
-                    {isConnected ? 'Direct Grid Active' : 'Click to Direct Connect'}
-                  </span>
-                </div>
-              </div>
-              <span className={`w-2 h-2 rounded-full shrink-0 ${isConnected ? 'bg-emerald-500 animate-pulse' : 'bg-amber-400'}`} />
-            </button>
-          </div>
-        ) : (
-          <div className="mx-auto mb-2">
-            <button
-              onClick={openPoliceDbModal}
-              title={`Police Criminal Database (${isConnected ? selectedGateway.shortCode : 'Connect'})`}
-              className={`w-9 h-9 rounded-lg border flex items-center justify-center transition ${
-                isConnected ? 'bg-emerald-50 border-emerald-300 text-emerald-600' : 'bg-slate-900 border-slate-800 text-white'
-              }`}
-            >
-              <Database className="w-4 h-4" />
-            </button>
-          </div>
-        )}
 
         {/* Indian Standard Time (IST) Live Widget in Sidebar */}
         {!collapsed ? (
