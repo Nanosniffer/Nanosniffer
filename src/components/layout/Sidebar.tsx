@@ -95,17 +95,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
     {
       title: 'INVESTIGATIONS',
       items: [
-        {
-          label: isConnected ? `${selectedGateway.shortCode}` : 'Connect Police DB',
-          icon: Database,
-          action: () => {
-            openPoliceDbModal();
-            setMobileOpen(false);
-          },
-          isAction: true,
-          badge: isConnected ? 'Active' : 'Connect',
-          badgeColor: isConnected ? 'bg-emerald-50 text-emerald-700 border-emerald-300' : 'bg-amber-50 text-amber-800 border-amber-300',
-        },
         { label: 'Network Analysis', path: '/network', icon: Share2, badge: 'Active', badgeColor: 'bg-blue-50 text-blue-700 border-blue-200' },
         { label: 'Criminal Profiles', path: '/criminals', icon: Users, badge: `${totalCriminals}` },
         { label: 'Add Suspect Profile', path: '/collect-evidence', icon: UserPlus, badge: 'Intake', badgeColor: 'bg-emerald-50 text-emerald-700 border-emerald-200' },
