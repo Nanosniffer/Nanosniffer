@@ -134,6 +134,11 @@
   background: #ffffff !important;
 }
 
+/* Fix leaflet map bleeding over z-50 modals */
+.leaflet-container {
+  z-index: 10 !important;
+}
+
 @media print {
   body {
     background: #ffffff !important;
