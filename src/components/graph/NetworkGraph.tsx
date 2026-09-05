@@ -13,7 +13,7 @@ import 'reactflow/dist/style.css';
 
 import { nodeTypes } from './CustomNodes';
 import { edgeTypes } from './CustomEdges';
-import { NetworkGraphData, NetworkNodeData, NetworkNode, NetworkEdge } from '../../types';
+import { NetworkGraphData, NetworkNodeData } from '../../types';
 import { GraphControls } from './GraphControls';
 import { NodeDetailPanel } from './NodeDetailPanel';
 
@@ -40,9 +40,9 @@ const GraphCanvas: React.FC<NetworkGraphProps> = ({ initialData, onOpenCriminalD
     edges: new Set(),
   });
 
-  const { fitView, zoomIn, zoomOut } = useReactFlow();
+  const { fitView, zoomIn, zoomOut, setCenter } = useReactFlow();
 
-  // Find 1-hop neighbors of selected node
+  // Find 1-hop neighbors of selected node for progressive expansion
   const connectedNodeIds = useMemo(() => {
     if (!selectedNodeId) return null;
     const connected = new Set<string>([selectedNodeId]);
@@ -53,10 +53,15 @@ const GraphCanvas: React.FC<NetworkGraphProps> = ({ initialData, onOpenCriminalD
     return connected;
   }, [selectedNodeId, initialData.edges]);
 
-  // Filter nodes based on viewMode, search, type, and selection
+  // Filter nodes based on viewMode, search, type, and selection (PROGRESSIVE EXPANSION ON CLICK)
   const filteredNodes = useMemo(() => {
     return initialData.nodes
       .filter((node) => {
+        // FEATURE: When a suspect profile is clicked, AUTOMATICALLY EXPAND & SHOW ALL CONNECTED ITEMS!
+        if (selectedNodeId && connectedNodeIds?.has(node.id)) {
+          return true;
+        }
+
         // Mode 1: Kingpins & Syndicates Only (Clean uncluttered view)
         if (viewMode === 'kingpins') {
           const isKeyPerson = node.data.type === 'person' && (node.data.riskScore || 0) >= 94;
@@ -90,6 +95,9 @@ const GraphCanvas: React.FC<NetworkGraphProps> = ({ initialData, onOpenCriminalD
         return true;
       })
       .map((node) => {
+        const isSelected = node.id === selectedNodeId;
+        const isDirectNeighbor = connectedNodeIds ? connectedNodeIds.has(node.id) : false;
+
         const matchesType = selectedType === 'ALL' || node.data.type === selectedType;
         const matchesSearch =
           !searchQuery ||
@@ -104,10 +112,13 @@ const GraphCanvas: React.FC<NetworkGraphProps> = ({ initialData, onOpenCriminalD
 
         return {
           ...node,
+          selected: isSelected,
           style: {
             ...node.style,
             opacity: isDimmed ? 0.2 : 1,
-            transition: 'opacity 0.2s ease, transform 0.3s ease',
+            transform: isSelected ? 'scale(1.08)' : isDirectNeighbor ? 'scale(1.04)' : 'scale(1)',
+            transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+            zIndex: isSelected ? 999 : isDirectNeighbor ? 99 : 1,
           },
         };
       });
@@ -131,12 +142,12 @@ const GraphCanvas: React.FC<NetworkGraphProps> = ({ initialData, onOpenCriminalD
         return {
           ...edge,
           type: 'tacticalEdge',
-          animated: isInPath || edge.animated,
+          animated: isInPath || (selectedNodeId !== null && isEdgeConnected) || edge.animated,
           style: {
             ...edge.style,
-            stroke: isInPath ? '#0f172a' : undefined,
-            strokeWidth: isInPath ? 2.5 : isEdgeConnected && selectedNodeId ? 2 : 1.25,
-            opacity: isDimmed ? 0.15 : 0.9,
+            stroke: isInPath ? '#0f172a' : isEdgeConnected && selectedNodeId ? '#2563eb' : undefined,
+            strokeWidth: isInPath ? 3 : isEdgeConnected && selectedNodeId ? 2.5 : 1.25,
+            opacity: isDimmed ? 0.15 : 0.95,
           },
         };
       });
@@ -159,16 +170,32 @@ const GraphCanvas: React.FC<NetworkGraphProps> = ({ initialData, onOpenCriminalD
     return () => clearTimeout(timer);
   }, [viewMode, fitView]);
 
-  // Node click handler
+  // Node click handler: EXTEND GRAPH & FOCUS ON SUSPECT
   const onNodeClick = useCallback((_: React.MouseEvent, node: Node) => {
-    setSelectedNodeData(node.data as NetworkNodeData);
-    setSelectedNodeId(node.id);
-  }, []);
+    const isAlreadySelected = selectedNodeId === node.id;
+    
+    if (isAlreadySelected) {
+      // Toggle / Collapse
+      setSelectedNodeData(null);
+      setSelectedNodeId(null);
+      fitView({ duration: 500, padding: 0.25 });
+    } else {
+      // EXTEND & FOCUS ON CLICKED SUSPECT
+      setSelectedNodeData(node.data as NetworkNodeData);
+      setSelectedNodeId(node.id);
+      
+      // Smoothly zoom in and center on the clicked suspect
+      setTimeout(() => {
+        setCenter(node.position.x + 80, node.position.y + 40, { zoom: 1.15, duration: 600 });
+      }, 50);
+    }
+  }, [selectedNodeId, setCenter, fitView]);
 
   const onPaneClick = useCallback(() => {
     setSelectedNodeData(null);
     setSelectedNodeId(null);
-  }, []);
+    fitView({ duration: 500, padding: 0.25 });
+  }, [fitView]);
 
   // Shortest Path Finder (BFS)
   const handleFindPath = useCallback(() => {
@@ -281,6 +308,21 @@ const GraphCanvas: React.FC<NetworkGraphProps> = ({ initialData, onOpenCriminalD
           onViewModeChange={setViewMode}
         />
       </div>
+
+      {/* Active Selection Banner */}
+      {selectedNodeData && (
+        <div className="absolute top-16 left-4 z-20 bg-slate-900/90 backdrop-blur-md text-white px-3 py-1.5 rounded-lg border border-slate-700 shadow-md text-xs flex items-center gap-2 animate-in fade-in slide-in-from-top-2">
+          <span className="w-2 h-2 rounded-full bg-blue-400 animate-ping" />
+          <span className="font-semibold text-blue-300">Network Extended:</span>
+          <span>{selectedNodeData.label}</span>
+          <button
+            onClick={onPaneClick}
+            className="ml-2 text-[10px] bg-slate-800 hover:bg-slate-700 px-1.5 py-0.5 rounded text-slate-300"
+          >
+            Collapse (✕)
+          </button>
+        </div>
+      )}
 
       {/* Canvas */}
       <div className="relative flex-1 w-full h-full">
