@@ -328,6 +328,9 @@ export interface NetworkGraphData {
   };
 }
 
+export type NetworkNode = NetworkGraphData['nodes'][number];
+export type NetworkEdge = NonNullable<NetworkGraphData['edges']>[number];
+
 export interface DashboardSummary {
   totalSuspects: number;
   suspectsTrend: number;

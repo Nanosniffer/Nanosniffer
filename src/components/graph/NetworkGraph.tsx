@@ -224,8 +224,9 @@ const GraphCanvas: React.FC<NetworkGraphProps> = ({ initialData, onOpenCriminalD
           nodeTypes={nodeTypes}
           edgeTypes={edgeTypes}
           fitView
+          fitViewOptions={{ padding: 0.25, maxZoom: 1.0 }}
           attributionPosition="bottom-left"
-          minZoom={0.2}
+          minZoom={0.15}
           maxZoom={2.5}
         >
           <Background color="#cbd5e1" gap={20} size={1} />

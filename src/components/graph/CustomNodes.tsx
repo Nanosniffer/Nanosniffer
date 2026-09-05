@@ -253,11 +253,20 @@ export const EventNode = memo(({ data, selected }: NodeProps<NetworkNodeData>) =
 });
 
 export const nodeTypes = {
+  person: PersonNode,
   personNode: PersonNode,
+  phone: PhoneNode,
   phoneNode: PhoneNode,
+  vehicle: VehicleNode,
   vehicleNode: VehicleNode,
+  bank: BankNode,
   bankNode: BankNode,
+  financialNode: BankNode,
+  location: LocationNode,
   locationNode: LocationNode,
+  event: EventNode,
   eventNode: EventNode,
+  organization: OrganizationNode,
   organizationNode: OrganizationNode,
+  custom: PersonNode,
 };
