@@ -49,8 +49,11 @@ export const Login: React.FC = () => {
   useEffect(() => {
     if (location.state?.notice) {
       setTransferNotice(location.state.notice);
+    } else if (location.search.includes('notice=')) {
+      const params = new URLSearchParams(location.search);
+      setTransferNotice(params.get('notice'));
     }
-  }, [location.state]);
+  }, [location.state, location.search]);
 
   useEffect(() => {
     let timer: any;

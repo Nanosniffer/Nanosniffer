@@ -86,6 +86,43 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return !!token && token !== 'false';
   });
 
+  // 5-Minute Inactivity Auto-Logout Security Feature
+  useEffect(() => {
+    if (!isAuthenticated) return;
+
+    let timeoutId: number;
+
+    const resetTimer = () => {
+      window.clearTimeout(timeoutId);
+      // Set timeout for 5 minutes (300,000 ms)
+      timeoutId = window.setTimeout(() => {
+        // Clear auth state
+        setUser(null);
+        setIsAuthenticated(false);
+        localStorage.removeItem('aegis_auth_user');
+        localStorage.setItem('aegis_auth_token', 'false');
+        // Redirect to login with expired parameter
+        window.location.href = '#/login?notice=Session%20expired%20due%20to%205%20minutes%20of%20inactivity.%20Please%20re-authenticate.';
+      }, 5 * 60 * 1000);
+    };
+
+    resetTimer();
+
+    // Listen for activity to reset the timer
+    window.addEventListener('mousemove', resetTimer);
+    window.addEventListener('keydown', resetTimer);
+    window.addEventListener('click', resetTimer);
+    window.addEventListener('scroll', resetTimer);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+      window.removeEventListener('mousemove', resetTimer);
+      window.removeEventListener('keydown', resetTimer);
+      window.removeEventListener('click', resetTimer);
+      window.removeEventListener('scroll', resetTimer);
+    };
+  }, [isAuthenticated]);
+
   const login = async (email: string, password?: string): Promise<boolean> => {
     const cleanEmail = email.trim().toLowerCase();
     const cleanPass = (password || '').trim();
