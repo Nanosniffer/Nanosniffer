@@ -23,6 +23,7 @@ import { Input } from '../components/ui/input';
 import nanoSnifferLogo from '../assets/nanosniffer_logo.png';
 
 const MASTER_ADMIN_EMAIL = 'taxilpambhar3@gmail.com';
+const MASKED_ADMIN_EMAIL = 't***3@gmail.com';
 
 export const Login: React.FC = () => {
   const location = useLocation();
@@ -67,7 +68,7 @@ export const Login: React.FC = () => {
   // Dispatch real notification email to taxilpambhar3@gmail.com
   const dispatchApprovalEmail = async (targetEmail: string, code: string, requester: string) => {
     setIsSendingEmail(true);
-    setEmailSentStatus('Dispatching security clearance request to ' + MASTER_ADMIN_EMAIL + '...');
+    setEmailSentStatus('Dispatching security clearance request to ' + MASKED_ADMIN_EMAIL + '...');
 
     const payload = {
       _subject: `🚨 [NanoSniffer] High-Clearance Login Approval Request for ${requester}`,
@@ -91,10 +92,10 @@ export const Login: React.FC = () => {
         },
         body: JSON.stringify(payload)
       });
-      setEmailSentStatus(`✅ Approval request & 6-digit token dispatched to ${MASTER_ADMIN_EMAIL}`);
+      setEmailSentStatus(`✅ Approval request & 6-digit token dispatched to ${MASKED_ADMIN_EMAIL}`);
     } catch (err) {
       // Fallback message in case of offline/network restriction
-      setEmailSentStatus(`📡 Telemetry alert transmitted to Master Admin (${MASTER_ADMIN_EMAIL})`);
+      setEmailSentStatus(`📡 Telemetry alert transmitted to Master Admin (${MASKED_ADMIN_EMAIL})`);
     } finally {
       setIsSendingEmail(false);
     }
@@ -137,7 +138,7 @@ export const Login: React.FC = () => {
 
     if (codeToVerify !== approvalCode && codeToVerify !== '123456' && codeToVerify !== '999999') {
       setLoading(false);
-      setError(`INVALID SECURITY TOKEN: The code "${codeToVerify}" does not match the token sent to ${MASTER_ADMIN_EMAIL}.`);
+      setError(`INVALID SECURITY TOKEN: The code "${codeToVerify}" does not match the token sent to ${MASKED_ADMIN_EMAIL}.`);
       return;
     }
 
@@ -267,7 +268,7 @@ export const Login: React.FC = () => {
               <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-[11px] text-slate-600 flex items-center gap-2">
                 <ShieldCheck className="w-4 h-4 text-blue-600 shrink-0" />
                 <span>
-                  Admin approval token will be transmitted to <strong className="text-slate-900">{MASTER_ADMIN_EMAIL}</strong>
+                  Admin approval token will be transmitted to <strong className="text-slate-900">{MASKED_ADMIN_EMAIL}</strong>
                 </span>
               </div>
 
@@ -373,7 +374,7 @@ export const Login: React.FC = () => {
                 <span>Authorization Request Sent To:</span>
               </div>
               <div className="bg-white px-3 py-1.5 rounded-lg border border-blue-200 text-blue-950 font-mono font-bold text-xs flex items-center justify-between">
-                <span>{MASTER_ADMIN_EMAIL}</span>
+                <span>{MASKED_ADMIN_EMAIL}</span>
                 <span className="text-[10px] text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">
                   Target Admin
                 </span>
@@ -468,7 +469,7 @@ export const Login: React.FC = () => {
 
         {/* Security Warning Notice */}
         <p className="text-center text-[10px] text-slate-400 max-w-sm mx-auto leading-relaxed">
-          UNAUTHORIZED ACCESS IS STRICTLY MONITORED UNDER APPLICABLE INTERNATIONAL CYBERSPACE CONVENTIONS. ALL APPROVAL TOKENS RECORDED WITH MASTER ADMINISTRATOR ({MASTER_ADMIN_EMAIL}).
+          UNAUTHORIZED ACCESS IS STRICTLY MONITORED UNDER APPLICABLE INTERNATIONAL CYBERSPACE CONVENTIONS. ALL APPROVAL TOKENS RECORDED WITH MASTER ADMINISTRATOR ({MASKED_ADMIN_EMAIL}).
         </p>
       </div>
     </div>
