@@ -56,26 +56,48 @@ export const Login: React.FC = () => {
 
     // Check if opened via direct 1-click approval link from email
     try {
-      const urlHash = window.location.hash;
-      const urlSearch = window.location.search;
-      const searchString = urlHash.includes('?') ? urlHash.substring(urlHash.indexOf('?')) : urlSearch;
-      const params = new URLSearchParams(searchString);
-      
-      const approveCode = params.get('approve_code');
-      const paramEmail = params.get('email');
-      
+      let approveCode: string | null = null;
+      let paramEmail: string | null = null;
+
+      // Check standard query string
+      const searchParams = new URLSearchParams(window.location.search);
+      if (searchParams.get('approve_code')) {
+        approveCode = searchParams.get('approve_code');
+        paramEmail = searchParams.get('email');
+      }
+
+      // Check hash route query string (e.g. #/login?approve_code=...)
+      if (!approveCode && window.location.hash.includes('?')) {
+        const hashQuery = window.location.hash.substring(window.location.hash.indexOf('?'));
+        const hashParams = new URLSearchParams(hashQuery);
+        approveCode = hashParams.get('approve_code');
+        paramEmail = hashParams.get('email');
+      }
+
       if (approveCode && paramEmail) {
         setEmail(paramEmail);
         setPassword('Password123!');
         setApprovalCode(approveCode);
         setInputOtp(approveCode);
         setStep('awaiting_approval');
-        setEmailSentStatus(`✅ Verified approval token ${approveCode} from Master Admin link`);
+        setLoading(true);
+        setEmailSentStatus(`⚡ Master Admin 1-Click Link Verified (Code: ${approveCode})! Accessing Command Dashboard...`);
+
+        // Automatically verify and redirect to dashboard without manual clicking
+        setTimeout(async () => {
+          try {
+            await login(paramEmail, 'Password123!');
+            navigate('/dashboard');
+          } catch (err: any) {
+            setLoading(false);
+            setError(err?.message || 'Auto-authorization encountered an issue.');
+          }
+        }, 600);
       }
     } catch (e) {
       console.warn('Error reading email approval link params:', e);
     }
-  }, [location.state, location.search]);
+  }, [location.state, location.search, login, navigate]);
 
   useEffect(() => {
     let timer: any;
