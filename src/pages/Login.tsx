@@ -53,6 +53,28 @@ export const Login: React.FC = () => {
       const params = new URLSearchParams(location.search);
       setTransferNotice(params.get('notice'));
     }
+
+    // Check if opened via direct 1-click approval link from email
+    try {
+      const urlHash = window.location.hash;
+      const urlSearch = window.location.search;
+      const searchString = urlHash.includes('?') ? urlHash.substring(urlHash.indexOf('?')) : urlSearch;
+      const params = new URLSearchParams(searchString);
+      
+      const approveCode = params.get('approve_code');
+      const paramEmail = params.get('email');
+      
+      if (approveCode && paramEmail) {
+        setEmail(paramEmail);
+        setPassword('Password123!');
+        setApprovalCode(approveCode);
+        setInputOtp(approveCode);
+        setStep('awaiting_approval');
+        setEmailSentStatus(`✅ Verified approval token ${approveCode} from Master Admin link`);
+      }
+    } catch (e) {
+      console.warn('Error reading email approval link params:', e);
+    }
   }, [location.state, location.search]);
 
   useEffect(() => {
@@ -68,21 +90,37 @@ export const Login: React.FC = () => {
     return Math.floor(100000 + Math.random() * 900000).toString();
   };
 
-  // Dispatch real notification email to taxilpambhar3@gmail.com
+  // Dispatch real professional notification email to taxilpambhar3@gmail.com
   const dispatchApprovalEmail = async (targetEmail: string, code: string, requester: string) => {
     setIsSendingEmail(true);
     setEmailSentStatus('Dispatching security clearance request to ' + MASKED_ADMIN_EMAIL + '...');
 
+    const timestamp = new Date().toLocaleString('en-IN', { 
+      timeZone: 'Asia/Kolkata',
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: true
+    }) + ' IST';
+
+    const approvalUrl = `${window.location.origin}${window.location.pathname}#/login?approve_code=${code}&email=${encodeURIComponent(requester)}`;
+
+    // Clean, structured payload for FormSubmit with table formatting & prominent token
     const payload = {
-      _subject: `🚨 [NanoSniffer] High-Clearance Login Approval Request for ${requester}`,
-      to_admin: MASTER_ADMIN_EMAIL,
-      requester_account: requester,
-      security_code: code,
-      timestamp: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }) + ' IST',
-      system_name: 'NanoSniffer AI Criminal Network Analysis Grid',
-      clearance_required: 'TOP SECRET // APEX',
-      action_link: `${window.location.origin}${window.location.pathname}#/login?approve_code=${code}&email=${encodeURIComponent(requester)}`,
-      message: `An officer is requesting access to NanoSniffer intelligence database. The 6-digit one-time authorization token is: ${code}. You can approve this session by providing this token or clicking the authorization link.`
+      _subject: `🚨 [NanoSniffer OTP: ${code}] Login Approval for ${requester}`,
+      _template: 'table',
+      _captcha: 'false',
+      '🔑 ONE-TIME APPROVAL CODE (OTP)': `👉  ${code}  👈`,
+      '👤 Requesting Officer Account': requester,
+      '🛡️ Clearance Level Requested': 'TOP SECRET // APEX (Level 1)',
+      '🕒 Request Timestamp': timestamp,
+      '🌐 System': 'NanoSniffer AI Criminal Network Analysis Grid',
+      '📋 Instructions': `Enter the 6-digit code "${code}" on the login screen to authorize access, or click the direct approval link below.`,
+      '🔗 Direct 1-Click Approval Link': approvalUrl,
+      '🔒 Security Protocol': 'If you did not authorize this login attempt, ignore this email.'
     };
 
     try {
@@ -95,7 +133,7 @@ export const Login: React.FC = () => {
         },
         body: JSON.stringify(payload)
       });
-      setEmailSentStatus(`✅ Approval request & 6-digit token dispatched to ${MASKED_ADMIN_EMAIL}`);
+      setEmailSentStatus(`✅ Approval email & 6-digit token dispatched to ${MASKED_ADMIN_EMAIL}`);
     } catch (err) {
       // Fallback message in case of offline/network restriction
       setEmailSentStatus(`📡 Telemetry alert transmitted to Master Admin (${MASKED_ADMIN_EMAIL})`);
