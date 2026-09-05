@@ -13,7 +13,7 @@ import 'reactflow/dist/style.css';
 
 import { nodeTypes } from './CustomNodes';
 import { edgeTypes } from './CustomEdges';
-import { NetworkGraphData, NetworkNodeData } from '../../types';
+import { NetworkGraphData, NetworkNodeData, NetworkNode, NetworkEdge } from '../../types';
 import { GraphControls } from './GraphControls';
 import { NodeDetailPanel } from './NodeDetailPanel';
 
@@ -31,6 +31,7 @@ const GraphCanvas: React.FC<NetworkGraphProps> = ({ initialData, onOpenCriminalD
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedType, setSelectedType] = useState('ALL');
+  const [viewMode, setViewMode] = useState<'all' | 'kingpins' | 'persons' | 'vehicles' | 'phones' | 'finance'>('kingpins');
   
   const [sourceNode, setSourceNode] = useState('');
   const [targetNode, setTargetNode] = useState('');
@@ -39,7 +40,7 @@ const GraphCanvas: React.FC<NetworkGraphProps> = ({ initialData, onOpenCriminalD
     edges: new Set(),
   });
 
-  const { fitView } = useReactFlow();
+  const { fitView, zoomIn, zoomOut } = useReactFlow();
 
   // Find 1-hop neighbors of selected node
   const connectedNodeIds = useMemo(() => {
@@ -52,56 +53,94 @@ const GraphCanvas: React.FC<NetworkGraphProps> = ({ initialData, onOpenCriminalD
     return connected;
   }, [selectedNodeId, initialData.edges]);
 
-  // Filter nodes based on search, type, and selection
+  // Filter nodes based on viewMode, search, type, and selection
   const filteredNodes = useMemo(() => {
-    return initialData.nodes.map((node) => {
-      const matchesType = selectedType === 'ALL' || node.data.type === selectedType;
-      const matchesSearch =
-        !searchQuery ||
-        node.data.label.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        node.data.subType?.toLowerCase().includes(searchQuery.toLowerCase());
+    return initialData.nodes
+      .filter((node) => {
+        // Mode 1: Kingpins & Syndicates Only (Clean uncluttered view)
+        if (viewMode === 'kingpins') {
+          const isKeyPerson = node.data.type === 'person' && (node.data.riskScore || 0) >= 94;
+          const isOrg = node.data.type === 'organization';
+          const isLoc = node.data.type === 'location';
+          const isBank = node.data.type === 'bank';
+          return isKeyPerson || isOrg || isLoc || isBank;
+        }
 
-      const isPathActive = highlightedPathIds.nodes.size > 0;
-      const isInPath = highlightedPathIds.nodes.has(node.id);
+        // Mode 2: Persons Only
+        if (viewMode === 'persons') {
+          return node.data.type === 'person';
+        }
 
-      const isConnected = connectedNodeIds ? connectedNodeIds.has(node.id) : true;
-      const isDimmed = (isPathActive && !isInPath) || (!matchesType || !matchesSearch) || (!isConnected && selectedNodeId !== null);
+        // Mode 3: Vehicles & Owners Only
+        if (viewMode === 'vehicles') {
+          return node.data.type === 'vehicle' || node.data.type === 'person';
+        }
 
-      return {
-        ...node,
-        style: {
-          ...node.style,
-          opacity: isDimmed ? 0.25 : 1,
-          transition: 'opacity 0.2s ease',
-        },
-      };
-    });
-  }, [initialData.nodes, selectedType, searchQuery, highlightedPathIds, connectedNodeIds, selectedNodeId]);
+        // Mode 4: Phones & Wiretaps Only
+        if (viewMode === 'phones') {
+          return node.data.type === 'phone' || node.data.type === 'person';
+        }
+
+        // Mode 5: Financial Nodes Only
+        if (viewMode === 'finance') {
+          return node.data.type === 'bank' || node.data.type === 'organization' || node.data.type === 'person';
+        }
+
+        // Mode 6: All Entities
+        return true;
+      })
+      .map((node) => {
+        const matchesType = selectedType === 'ALL' || node.data.type === selectedType;
+        const matchesSearch =
+          !searchQuery ||
+          node.data.label.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          node.data.subType?.toLowerCase().includes(searchQuery.toLowerCase());
+
+        const isPathActive = highlightedPathIds.nodes.size > 0;
+        const isInPath = highlightedPathIds.nodes.has(node.id);
+
+        const isConnected = connectedNodeIds ? connectedNodeIds.has(node.id) : true;
+        const isDimmed = (isPathActive && !isInPath) || (!matchesType || !matchesSearch) || (!isConnected && selectedNodeId !== null);
+
+        return {
+          ...node,
+          style: {
+            ...node.style,
+            opacity: isDimmed ? 0.2 : 1,
+            transition: 'opacity 0.2s ease, transform 0.3s ease',
+          },
+        };
+      });
+  }, [initialData.nodes, viewMode, selectedType, searchQuery, highlightedPathIds, connectedNodeIds, selectedNodeId]);
+
+  const visibleNodeIdSet = useMemo(() => new Set(filteredNodes.map(n => n.id)), [filteredNodes]);
 
   const filteredEdges = useMemo(() => {
-    return initialData.edges.map((edge) => {
-      const isPathActive = highlightedPathIds.edges.size > 0;
-      const isInPath = highlightedPathIds.edges.has(edge.id);
+    return initialData.edges
+      .filter((edge) => visibleNodeIdSet.has(edge.source) && visibleNodeIdSet.has(edge.target))
+      .map((edge) => {
+        const isPathActive = highlightedPathIds.edges.size > 0;
+        const isInPath = highlightedPathIds.edges.has(edge.id);
 
-      const isEdgeConnected = selectedNodeId
-        ? edge.source === selectedNodeId || edge.target === selectedNodeId
-        : true;
+        const isEdgeConnected = selectedNodeId
+          ? edge.source === selectedNodeId || edge.target === selectedNodeId
+          : true;
 
-      const isDimmed = (isPathActive && !isInPath) || (!isEdgeConnected && selectedNodeId !== null);
+        const isDimmed = (isPathActive && !isInPath) || (!isEdgeConnected && selectedNodeId !== null);
 
-      return {
-        ...edge,
-        type: 'tacticalEdge',
-        animated: isInPath || edge.animated,
-        style: {
-          ...edge.style,
-          stroke: isInPath ? '#0f172a' : undefined,
-          strokeWidth: isInPath ? 2.5 : isEdgeConnected && selectedNodeId ? 2 : 1.25,
-          opacity: isDimmed ? 0.15 : 0.9,
-        },
-      };
-    });
-  }, [initialData.edges, highlightedPathIds, selectedNodeId]);
+        return {
+          ...edge,
+          type: 'tacticalEdge',
+          animated: isInPath || edge.animated,
+          style: {
+            ...edge.style,
+            stroke: isInPath ? '#0f172a' : undefined,
+            strokeWidth: isInPath ? 2.5 : isEdgeConnected && selectedNodeId ? 2 : 1.25,
+            opacity: isDimmed ? 0.15 : 0.9,
+          },
+        };
+      });
+  }, [initialData.edges, visibleNodeIdSet, highlightedPathIds, selectedNodeId]);
 
   // Sync state when filtered
   useEffect(() => {
@@ -111,6 +150,14 @@ const GraphCanvas: React.FC<NetworkGraphProps> = ({ initialData, onOpenCriminalD
   useEffect(() => {
     setEdges(filteredEdges);
   }, [filteredEdges, setEdges]);
+
+  // Auto-fit on initial load or viewMode change
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      fitView({ duration: 500, padding: 0.25 });
+    }, 150);
+    return () => clearTimeout(timer);
+  }, [viewMode, fitView]);
 
   // Node click handler
   const onNodeClick = useCallback((_: React.MouseEvent, node: Node) => {
@@ -182,17 +229,34 @@ const GraphCanvas: React.FC<NetworkGraphProps> = ({ initialData, onOpenCriminalD
     handleClearPath();
     setSearchQuery('');
     setSelectedType('ALL');
+    setViewMode('kingpins');
     setSelectedNodeData(null);
     setSelectedNodeId(null);
-    fitView({ duration: 600 });
+    fitView({ duration: 600, padding: 0.25 });
+  };
+
+  const handleAutoSpace = () => {
+    // Spreading out animation
+    setNodes((prevNodes) =>
+      prevNodes.map((n) => ({
+        ...n,
+        position: {
+          x: n.position.x * 1.15,
+          y: n.position.y * 1.15,
+        }
+      }))
+    );
+    setTimeout(() => {
+      fitView({ duration: 600, padding: 0.3 });
+    }, 100);
   };
 
   const nodesList = useMemo(() => {
-    return initialData.nodes.map((n) => ({ id: n.id, label: `${n.data.label} (${n.data.type})` }));
-  }, [initialData.nodes]);
+    return filteredNodes.map((n) => ({ id: n.id, label: `${n.data.label} (${n.data.type})` }));
+  }, [filteredNodes]);
 
   return (
-    <div className="relative w-full h-[720px] rounded-lg overflow-hidden border border-slate-200 bg-slate-50 shadow-card flex flex-col">
+    <div className="relative w-full h-[740px] rounded-lg overflow-hidden border border-slate-200 bg-slate-50 shadow-card flex flex-col">
       {/* Controls Header */}
       <div className="p-2.5 bg-white border-b border-slate-200 z-10">
         <GraphControls
@@ -201,6 +265,10 @@ const GraphCanvas: React.FC<NetworkGraphProps> = ({ initialData, onOpenCriminalD
           selectedType={selectedType}
           onTypeSelect={setSelectedType}
           onResetLayout={handleResetLayout}
+          onAutoSpace={handleAutoSpace}
+          onZoomIn={() => zoomIn({ duration: 300 })}
+          onZoomOut={() => zoomOut({ duration: 300 })}
+          onFitView={() => fitView({ duration: 500, padding: 0.25 })}
           nodesList={nodesList}
           sourceNode={sourceNode}
           targetNode={targetNode}
@@ -209,6 +277,8 @@ const GraphCanvas: React.FC<NetworkGraphProps> = ({ initialData, onOpenCriminalD
           onFindPath={handleFindPath}
           onClearPath={handleClearPath}
           isPathActive={highlightedPathIds.nodes.size > 0}
+          viewMode={viewMode}
+          onViewModeChange={setViewMode}
         />
       </div>
 
@@ -226,10 +296,10 @@ const GraphCanvas: React.FC<NetworkGraphProps> = ({ initialData, onOpenCriminalD
           fitView
           fitViewOptions={{ padding: 0.25, maxZoom: 1.0 }}
           attributionPosition="bottom-left"
-          minZoom={0.15}
+          minZoom={0.1}
           maxZoom={2.5}
         >
-          <Background color="#cbd5e1" gap={20} size={1} />
+          <Background color="#cbd5e1" gap={24} size={1} />
           <Controls className="!bg-white !border-slate-200 !shadow-sm" />
           <MiniMap
             nodeColor={(n) => {
