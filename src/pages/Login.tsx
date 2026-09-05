@@ -181,9 +181,21 @@ export const Login: React.FC = () => {
             <div className="grid grid-cols-3 gap-2">
               <button
                 type="button"
-                onClick={() => {
+                onClick={async () => {
                   setEmail('director.rao@cbi.gov.in');
                   setPassword('AdminPass2026!');
+                  setLoading(true);
+                  setError('');
+                  try {
+                    await login('director.rao@cbi.gov.in', 'AdminPass2026!');
+                    setTimeout(() => {
+                      setLoading(false);
+                      navigate('/dashboard');
+                    }, 400);
+                  } catch (err: any) {
+                    setLoading(false);
+                    setError(err?.message || 'ACCESS DENIED: Incorrect email ID or cryptographic passkey.');
+                  }
                 }}
                 className="p-2 rounded-lg border border-slate-200 hover:border-slate-400 hover:bg-slate-50 text-left transition group"
               >
@@ -193,9 +205,21 @@ export const Login: React.FC = () => {
 
               <button
                 type="button"
-                onClick={() => {
+                onClick={async () => {
                   setEmail('acp.rathore@mumbaipolice.gov.in');
                   setPassword('Password123!');
+                  setLoading(true);
+                  setError('');
+                  try {
+                    await login('acp.rathore@mumbaipolice.gov.in', 'Password123!');
+                    setTimeout(() => {
+                      setLoading(false);
+                      navigate('/dashboard');
+                    }, 400);
+                  } catch (err: any) {
+                    setLoading(false);
+                    setError(err?.message || 'ACCESS DENIED: Incorrect email ID or cryptographic passkey.');
+                  }
                 }}
                 className="p-2 rounded-lg border border-slate-200 hover:border-slate-400 hover:bg-slate-50 text-left transition group"
               >
@@ -205,9 +229,21 @@ export const Login: React.FC = () => {
 
               <button
                 type="button"
-                onClick={() => {
+                onClick={async () => {
                   setEmail('meera.rao@delhipolice.gov.in');
                   setPassword('Password123!');
+                  setLoading(true);
+                  setError('');
+                  try {
+                    await login('meera.rao@delhipolice.gov.in', 'Password123!');
+                    setTimeout(() => {
+                      setLoading(false);
+                      navigate('/dashboard');
+                    }, 400);
+                  } catch (err: any) {
+                    setLoading(false);
+                    setError(err?.message || 'ACCESS DENIED: Incorrect email ID or cryptographic passkey.');
+                  }
                 }}
                 className="p-2 rounded-lg border border-slate-200 hover:border-slate-400 hover:bg-slate-50 text-left transition group"
               >
