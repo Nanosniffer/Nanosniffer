@@ -9,6 +9,7 @@ import {
   LogOut,
   Shield,
   Clock,
+  Timer,
   PlusCircle,
   UserPlus,
   Database
@@ -32,7 +33,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   onOpenAiAssistant,
   onOpenIntake,
 }) => {
-  const { user, switchRole, logout } = useAuth();
+  const { user, switchRole, logout, sessionSecondsLeft, extendSession, formatSessionTime } = useAuth();
   const { unreadCount } = useNotifications();
   const { isConnected, selectedGateway, openModal: openPoliceDbModal } = usePoliceDatabase();
   const location = useLocation();
@@ -218,6 +219,30 @@ export const Navbar: React.FC<NavbarProps> = ({
         <div className="hidden lg:flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-slate-100 border border-slate-200 text-[10px] font-mono text-slate-600">
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
           <span>LIVE INTEL</span>
+        </div>
+
+        {/* 5-Minute Live Session Timeout & Auto-Relogin Countdown */}
+        <div 
+          onClick={extendSession}
+          title={`Active Security Clearance Session: ${formatSessionTime(sessionSecondsLeft)} remaining (Auto-logout & re-login after 5 minutes). Click to extend +5m.`}
+          className={`flex items-center gap-1.5 text-[11px] font-mono px-2.5 py-1 rounded-md border shadow-xs cursor-pointer select-none transition ${
+            sessionSecondsLeft <= 60
+              ? 'bg-red-50 border-red-300 text-red-700 animate-pulse'
+              : 'bg-slate-50 border-slate-200 hover:border-slate-300 text-slate-700 hover:bg-slate-100'
+          }`}
+        >
+          <Timer className={`w-3.5 h-3.5 shrink-0 ${sessionSecondsLeft <= 60 ? 'text-red-600' : 'text-blue-600'}`} />
+          <span className="hidden sm:inline text-slate-500 font-sans text-[10px] uppercase font-bold">Session:</span>
+          <span className="font-bold">{formatSessionTime(sessionSecondsLeft)}</span>
+          {sessionSecondsLeft <= 60 ? (
+            <span className="text-[9px] font-bold bg-red-600 text-white px-1.5 py-0.2 rounded font-sans uppercase">
+              Extend
+            </span>
+          ) : (
+            <span className="hidden xl:inline text-[9px] text-slate-400 font-sans">
+              (+5m)
+            </span>
+          )}
         </div>
 
         {/* Indian Standard Time (IST) Live Clock */}

@@ -60,12 +60,17 @@ export const PRESET_OPERATOR_ACCOUNTS: Record<string, { profile: UserProfile; de
 interface AuthContextType {
   user: UserProfile | null;
   isAuthenticated: boolean;
+  sessionSecondsLeft: number;
+  extendSession: () => void;
+  formatSessionTime: (seconds: number) => string;
   login: (email: string, password?: string) => Promise<boolean>;
   logout: () => void;
   switchRole: (roleKey: 'admin' | 'investigator' | 'analyst') => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
+const SESSION_DURATION_SECONDS = 300; // 5 Minutes (300 Seconds)
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<UserProfile | null>(() => {
@@ -86,40 +91,45 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return !!token && token !== 'false';
   });
 
-  // 5-Minute Inactivity Auto-Logout Security Feature
+  const [sessionSecondsLeft, setSessionSecondsLeft] = useState<number>(SESSION_DURATION_SECONDS);
+
+  // Format seconds into MM:SS
+  const formatSessionTime = (totalSeconds: number): string => {
+    const mins = Math.floor(Math.max(0, totalSeconds) / 60);
+    const secs = Math.max(0, totalSeconds) % 60;
+    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+  };
+
+  // Extend session back to 5 minutes
+  const extendSession = () => {
+    setSessionSecondsLeft(SESSION_DURATION_SECONDS);
+  };
+
+  // 5-Minute Live Countdown Timer & Auto-Relogin
   useEffect(() => {
     if (!isAuthenticated) return;
 
-    let timeoutId: number;
+    // Reset countdown on new authentication
+    setSessionSecondsLeft(SESSION_DURATION_SECONDS);
 
-    const resetTimer = () => {
-      window.clearTimeout(timeoutId);
-      // Set timeout for 5 minutes (300,000 ms)
-      timeoutId = window.setTimeout(() => {
-        // Clear auth state
-        setUser(null);
-        setIsAuthenticated(false);
-        localStorage.removeItem('aegis_auth_user');
-        localStorage.setItem('aegis_auth_token', 'false');
-        // Redirect to login with expired parameter
-        window.location.href = '#/login?notice=Session%20expired%20due%20to%205%20minutes%20of%20inactivity.%20Please%20re-authenticate.';
-      }, 5 * 60 * 1000);
-    };
-
-    resetTimer();
-
-    // Listen for activity to reset the timer
-    window.addEventListener('mousemove', resetTimer);
-    window.addEventListener('keydown', resetTimer);
-    window.addEventListener('click', resetTimer);
-    window.addEventListener('scroll', resetTimer);
+    const timerInterval = window.setInterval(() => {
+      setSessionSecondsLeft((prev) => {
+        if (prev <= 1) {
+          // Session expired! Invalidate session & redirect to login for relogin
+          window.clearInterval(timerInterval);
+          setUser(null);
+          setIsAuthenticated(false);
+          localStorage.removeItem('aegis_auth_user');
+          localStorage.setItem('aegis_auth_token', 'false');
+          window.location.href = '#/login?notice=Session%20expired%20after%205%20minutes.%20Please%20re-authenticate%20to%20continue.';
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
 
     return () => {
-      window.clearTimeout(timeoutId);
-      window.removeEventListener('mousemove', resetTimer);
-      window.removeEventListener('keydown', resetTimer);
-      window.removeEventListener('click', resetTimer);
-      window.removeEventListener('scroll', resetTimer);
+      window.clearInterval(timerInterval);
     };
   }, [isAuthenticated]);
 
@@ -255,7 +265,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated, login, logout, switchRole }}>
+    <AuthContext.Provider value={{ 
+      user, 
+      isAuthenticated, 
+      sessionSecondsLeft, 
+      extendSession, 
+      formatSessionTime, 
+      login, 
+      logout, 
+      switchRole 
+    }}>
       {children}
     </AuthContext.Provider>
   );
