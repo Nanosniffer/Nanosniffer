@@ -84,4 +84,5 @@ export const TacticalEdge = ({
 
 export const edgeTypes = {
   tacticalEdge: TacticalEdge,
+  default: TacticalEdge,
 };
