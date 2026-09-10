@@ -236,26 +236,21 @@ export const Login: React.FC = () => {
     <div className="min-h-screen bg-slate-50 flex flex-col justify-center items-center px-4 py-12">
       <div className="w-full max-w-md space-y-5">
         {/* Branding Header */}
-        <div className="text-center space-y-2">
-          <div className="inline-flex items-center justify-center p-3 rounded-2xl bg-white border border-slate-200 shadow-md mb-1 hover:scale-105 transition-transform">
-            <img 
-              src={acnLogo} 
-              alt="ACN - AI-Powered Criminal Network" 
-              className="h-16 sm:h-20 w-auto object-contain drop-shadow-xs" 
-            />
-          </div>
+        <div className="text-center space-y-3">
           <div className="flex items-center justify-center gap-2">
-            <span className="text-[10px] font-semibold text-slate-700 px-2 py-0.5 rounded bg-slate-100 border border-slate-200 uppercase tracking-wider">
+            <span className="text-[10px] font-semibold text-slate-700 px-2.5 py-0.5 rounded-full bg-slate-100 border border-slate-200 uppercase tracking-wider">
               CLASSIFIED ACCESS
             </span>
             <span className="text-[10px] text-slate-400 font-mono">DEFCON 2</span>
           </div>
-          <h1 className="text-2xl font-extrabold tracking-tight text-slate-900">
-            ACN
-          </h1>
-          <p className="text-xs text-slate-500 font-medium">
-            AI-Powered Criminal Network Analysis & Intelligence Grid
-          </p>
+
+          <div className="inline-flex items-center justify-center p-4 sm:p-5 rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-md transition-all duration-300 w-full max-w-[340px] sm:max-w-[380px] mx-auto">
+            <img 
+              src={acnLogo} 
+              alt="ACN - AI-Powered Criminal Network" 
+              className="w-full h-auto max-h-32 object-contain" 
+            />
+          </div>
         </div>
 
         {/* STEP 1: CREDENTIALS FORM */}
