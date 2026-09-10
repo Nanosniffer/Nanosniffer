@@ -23,24 +23,50 @@ export const TacticalEdge = ({
     targetPosition,
   });
 
-  const getEdgeColor = (type?: string) => {
+  const getEdgeColor = (type?: string, riskLevel?: string) => {
+    if (riskLevel === 'CRITICAL') {
+      if (type === 'Commands' || type === 'Enforces') return '#dc2626'; // red-600
+    }
     switch (type) {
       case 'Money Transfer':
-        return '#7c3aed'; // indigo/purple
+      case 'Hawala':
+      case 'Launders':
+      case 'Escrow':
+        return '#8b5cf6'; // violet-500
       case 'Calls':
-        return '#059669'; // emerald
+      case 'Intercepted':
+      case 'VoIP':
+      case 'Burner':
+        return '#059669'; // emerald-600
       case 'Meeting':
-        return '#dc2626'; // red
+      case 'Commands':
+      case 'Enforces':
+      case 'Hit Contract':
+        return '#ef4444'; // red-500
       case 'Travel':
-        return '#2563eb'; // blue
+      case 'Operates In':
+      case 'Transit':
+        return '#2563eb'; // blue-600
       case 'Supplies':
-        return '#d97706'; // amber
+      case 'Arms Deal':
+      case 'Chemicals':
+        return '#d97706'; // amber-600
+      case 'Associate':
+      case 'Brother':
+      case 'Lieutenant':
+      case 'Chemist':
+      case 'Distributor':
+        return '#0891b2'; // cyan-600
+      case 'Owns':
+      case 'Director':
+      case 'Chief':
+        return '#4f46e5'; // indigo-600
       default:
-        return '#94a3b8'; // slate-400
+        return '#64748b'; // slate-500
     }
   };
 
-  const strokeColor = getEdgeColor(data?.relationshipType);
+  const strokeColor = getEdgeColor(data?.relationshipType, data?.riskLevel);
 
   return (
     <>
@@ -48,9 +74,8 @@ export const TacticalEdge = ({
         id={id}
         style={{
           ...style,
-          stroke: selected ? '#0f172a' : strokeColor,
-          strokeWidth: selected ? 2 : 1.25,
-          strokeDasharray: data?.relationshipType === 'Calls' ? '4,4' : undefined,
+          stroke: selected ? '#0f172a' : (style.stroke || strokeColor),
+          strokeWidth: selected ? 2.5 : (style.strokeWidth || 1.5),
         }}
         className="react-flow__edge-path transition-all duration-150"
         d={edgePath}
@@ -66,10 +91,10 @@ export const TacticalEdge = ({
             className="nodrag nopan"
           >
             <div
-              className={`px-1.5 py-0.2 rounded text-[10px] font-medium border shadow-subtle transition-all ${
+              className={`px-1.5 py-0.5 rounded text-[10px] font-medium border shadow-sm transition-all ${
                 selected
-                  ? 'bg-slate-900 text-white border-slate-900 font-semibold scale-105'
-                  : 'bg-white text-slate-700 border-slate-200 hover:border-slate-400'
+                  ? 'bg-slate-900 text-white border-slate-900 font-bold scale-105 shadow-md'
+                  : 'bg-white/95 backdrop-blur-sm text-slate-700 border-slate-200 hover:border-slate-400 hover:scale-105'
               }`}
             >
               {data.relationshipType}

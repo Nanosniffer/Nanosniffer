@@ -54,33 +54,33 @@ export const GraphControls: React.FC<GraphControlsProps> = ({
             Display Mode:
           </span>
           <button
-            onClick={() => onViewModeChange('kingpins')}
-            className={`px-2.5 py-1 rounded-md text-[11px] font-bold transition flex items-center gap-1.5 ${
-              viewMode === 'kingpins'
+            onClick={() => onViewModeChange('all')}
+            className={`px-3 py-1 rounded-md text-[11px] font-bold transition flex items-center gap-1.5 ${
+              viewMode === 'all'
                 ? 'bg-blue-600 text-white shadow-sm'
                 : 'bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200'
             }`}
           >
-            <Shield className="w-3.5 h-3.5" />
-            <span>👑 Kingpins & Syndicates (Clean View)</span>
+            <span>🌐 Full Topology (All Entities)</span>
           </button>
 
           <button
-            onClick={() => onViewModeChange('all')}
-            className={`px-2.5 py-1 rounded-md text-[11px] font-medium transition ${
-              viewMode === 'all'
-                ? 'bg-slate-900 text-white shadow-sm'
-                : 'bg-slate-50 text-slate-600 hover:bg-slate-100 border border-slate-200'
+            onClick={() => onViewModeChange('kingpins')}
+            className={`px-2.5 py-1 rounded-md text-[11px] font-medium transition flex items-center gap-1.5 ${
+              viewMode === 'kingpins'
+                ? 'bg-purple-600 text-white shadow-sm font-bold'
+                : 'bg-slate-50 text-slate-700 hover:bg-slate-100 border border-slate-200'
             }`}
           >
-            🌐 Full Map (All Entities)
+            <Shield className="w-3.5 h-3.5" />
+            <span>👑 Kingpins & Hubs</span>
           </button>
 
           <button
             onClick={() => onViewModeChange('persons')}
             className={`px-2.5 py-1 rounded-md text-[11px] font-medium transition ${
               viewMode === 'persons'
-                ? 'bg-slate-900 text-white shadow-sm'
+                ? 'bg-slate-900 text-white shadow-sm font-bold'
                 : 'bg-slate-50 text-slate-600 hover:bg-slate-100 border border-slate-200'
             }`}
           >
@@ -88,10 +88,21 @@ export const GraphControls: React.FC<GraphControlsProps> = ({
           </button>
 
           <button
+            onClick={() => onViewModeChange('phones')}
+            className={`px-2.5 py-1 rounded-md text-[11px] font-medium transition ${
+              viewMode === 'phones'
+                ? 'bg-emerald-600 text-white shadow-sm font-bold'
+                : 'bg-slate-50 text-slate-600 hover:bg-slate-100 border border-slate-200'
+            }`}
+          >
+            📱 Wiretaps Only
+          </button>
+
+          <button
             onClick={() => onViewModeChange('vehicles')}
             className={`px-2.5 py-1 rounded-md text-[11px] font-medium transition ${
               viewMode === 'vehicles'
-                ? 'bg-amber-600 text-white shadow-sm'
+                ? 'bg-amber-600 text-white shadow-sm font-bold'
                 : 'bg-slate-50 text-slate-600 hover:bg-slate-100 border border-slate-200'
             }`}
           >
@@ -99,14 +110,14 @@ export const GraphControls: React.FC<GraphControlsProps> = ({
           </button>
 
           <button
-            onClick={() => onViewModeChange('phones')}
+            onClick={() => onViewModeChange('finance')}
             className={`px-2.5 py-1 rounded-md text-[11px] font-medium transition ${
-              viewMode === 'phones'
-                ? 'bg-emerald-600 text-white shadow-sm'
+              viewMode === 'finance'
+                ? 'bg-indigo-600 text-white shadow-sm font-bold'
                 : 'bg-slate-50 text-slate-600 hover:bg-slate-100 border border-slate-200'
             }`}
           >
-            📱 Wiretaps Only
+            💳 Financial Vaults
           </button>
         </div>
 

@@ -23,7 +23,17 @@ export type RelationshipType =
   | 'Travel'
   | 'Owns'
   | 'Operates In'
-  | 'Supplies';
+  | 'Supplies'
+  | 'Commands'
+  | 'Lieutenant'
+  | 'Brother'
+  | 'Distributor'
+  | 'Chemist'
+  | 'Chemicals'
+  | 'Launders'
+  | 'Hawala'
+  | 'Arms Deal'
+  | string;
 
 export interface Criminal {
   id: string;

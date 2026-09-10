@@ -31,7 +31,7 @@ const GraphCanvas: React.FC<NetworkGraphProps> = ({ initialData, onOpenCriminalD
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedType, setSelectedType] = useState('ALL');
-  const [viewMode, setViewMode] = useState<'all' | 'kingpins' | 'persons' | 'vehicles' | 'phones' | 'finance'>('kingpins');
+  const [viewMode, setViewMode] = useState<'all' | 'kingpins' | 'persons' | 'vehicles' | 'phones' | 'finance'>('all');
   
   const [sourceNode, setSourceNode] = useState('');
   const [targetNode, setTargetNode] = useState('');
@@ -42,7 +42,7 @@ const GraphCanvas: React.FC<NetworkGraphProps> = ({ initialData, onOpenCriminalD
 
   const { fitView, zoomIn, zoomOut, setCenter } = useReactFlow();
 
-  // Find 1-hop neighbors of selected node for progressive expansion
+  // Find 1-hop neighbors of selected node for progressive expansion & spotlight
   const connectedNodeIds = useMemo(() => {
     if (!selectedNodeId) return null;
     const connected = new Set<string>([selectedNodeId]);
@@ -53,16 +53,16 @@ const GraphCanvas: React.FC<NetworkGraphProps> = ({ initialData, onOpenCriminalD
     return connected;
   }, [selectedNodeId, initialData.edges]);
 
-  // Filter nodes based on viewMode, search, type, and selection (PROGRESSIVE EXPANSION ON CLICK)
+  // Filter nodes based on viewMode, search, type, and selection
   const filteredNodes = useMemo(() => {
     return initialData.nodes
       .filter((node) => {
-        // FEATURE: When a suspect profile is clicked, AUTOMATICALLY EXPAND & SHOW ALL CONNECTED ITEMS!
-        if (selectedNodeId && connectedNodeIds?.has(node.id)) {
+        // Mode 1: All Entities (Default Complete Rich Topology)
+        if (viewMode === 'all') {
           return true;
         }
 
-        // Mode 1: Kingpins & Syndicates Only (Clean uncluttered view)
+        // Mode 2: Kingpins & Syndicates Only
         if (viewMode === 'kingpins') {
           const isKeyPerson = node.data.type === 'person' && (node.data.riskScore || 0) >= 94;
           const isOrg = node.data.type === 'organization';
@@ -71,27 +71,26 @@ const GraphCanvas: React.FC<NetworkGraphProps> = ({ initialData, onOpenCriminalD
           return isKeyPerson || isOrg || isLoc || isBank;
         }
 
-        // Mode 2: Persons Only
+        // Mode 3: Persons Only
         if (viewMode === 'persons') {
           return node.data.type === 'person';
         }
 
-        // Mode 3: Vehicles & Owners Only
+        // Mode 4: Vehicles & Owners Only
         if (viewMode === 'vehicles') {
           return node.data.type === 'vehicle' || node.data.type === 'person';
         }
 
-        // Mode 4: Phones & Wiretaps Only
+        // Mode 5: Phones & Wiretaps Only
         if (viewMode === 'phones') {
           return node.data.type === 'phone' || node.data.type === 'person';
         }
 
-        // Mode 5: Financial Nodes Only
+        // Mode 6: Financial Nodes Only
         if (viewMode === 'finance') {
           return node.data.type === 'bank' || node.data.type === 'organization' || node.data.type === 'person';
         }
 
-        // Mode 6: All Entities
         return true;
       })
       .map((node) => {
@@ -115,7 +114,7 @@ const GraphCanvas: React.FC<NetworkGraphProps> = ({ initialData, onOpenCriminalD
           selected: isSelected,
           style: {
             ...node.style,
-            opacity: isDimmed ? 0.2 : 1,
+            opacity: isDimmed ? 0.3 : 1,
             transform: isSelected ? 'scale(1.08)' : isDirectNeighbor ? 'scale(1.04)' : 'scale(1)',
             transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
             zIndex: isSelected ? 999 : isDirectNeighbor ? 99 : 1,
