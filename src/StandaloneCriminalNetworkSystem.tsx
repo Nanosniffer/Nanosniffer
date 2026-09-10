@@ -91,7 +91,7 @@ import {
   Compass,
   Menu,
 } from 'lucide-react';
-import nanoSnifferLogo from './assets/nanosniffer_logo.png';
+import acnLogo from './assets/acn_logo.png';
 
 /* =========================================================================
    1. TYPES & INTERFACES
@@ -828,13 +828,13 @@ export const StandaloneCriminalNetworkSystem: React.FC = () => {
       <div className="min-h-screen bg-slate-950 flex flex-col justify-center items-center px-4 relative cyber-grid">
         <div className="w-full max-w-md bg-slate-900/90 border border-slate-800 p-8 rounded-2xl shadow-2xl glass-panel space-y-6">
           <div className="text-center space-y-2">
-            <div className="w-20 h-20 mx-auto rounded-2xl bg-white/95 p-1.5 flex items-center justify-center shadow-lg border border-slate-700">
-              <img src={nanoSnifferLogo} alt="NanoSniffer Logo" className="w-16 h-16 object-contain" />
+            <div className="w-24 h-24 mx-auto rounded-2xl bg-white p-2 flex items-center justify-center shadow-lg border border-slate-700">
+              <img src={acnLogo} alt="ACN Logo" className="w-20 h-20 object-contain" />
             </div>
             <h1 className="text-xl font-bold text-slate-100 uppercase tracking-wider">
-              Nano<span className="text-cyan-400">Sniffer</span> Command
+              ACN <span className="text-cyan-400">Command</span>
             </h1>
-            <p className="text-xs font-mono text-slate-400">Criminal Network & Threat Intelligence Grid</p>
+            <p className="text-xs font-mono text-slate-400">AI-Powered Criminal Network & Threat Intelligence Grid</p>
           </div>
           <form onSubmit={(e) => { e.preventDefault(); setIsAuthenticated(true); }} className="space-y-4 text-xs font-mono">
             <div>

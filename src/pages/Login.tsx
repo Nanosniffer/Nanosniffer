@@ -20,7 +20,7 @@ import {
 } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
-import nanoSnifferLogo from '../assets/nanosniffer_logo.png';
+import acnLogo from '../assets/acn_logo.png';
 
 const MASTER_ADMIN_EMAIL = 'taxilpambhar3@gmail.com';
 const MASKED_ADMIN_EMAIL = 't***3@gmail.com';
@@ -132,14 +132,14 @@ export const Login: React.FC = () => {
 
     // Clean, structured payload for FormSubmit with table formatting & prominent token
     const payload = {
-      _subject: `🚨 [NanoSniffer OTP: ${code}] Login Approval for ${requester}`,
+      _subject: `🚨 [ACN OTP: ${code}] Login Approval for ${requester}`,
       _template: 'table',
       _captcha: 'false',
       '🔑 ONE-TIME APPROVAL CODE (OTP)': `👉  ${code}  👈`,
       '👤 Requesting Officer Account': requester,
       '🛡️ Clearance Level Requested': 'TOP SECRET // APEX (Level 1)',
       '🕒 Request Timestamp': timestamp,
-      '🌐 System': 'NanoSniffer AI Criminal Network Analysis Grid',
+      '🌐 System': 'ACN - AI-Powered Criminal Network Analysis Grid',
       '📋 Instructions': `Enter the 6-digit code "${code}" on the login screen to authorize access, or click the direct approval link below.`,
       '🔗 Direct 1-Click Approval Link': approvalUrl,
       '🔒 Security Protocol': 'If you did not authorize this login attempt, ignore this email.'
@@ -237,11 +237,11 @@ export const Login: React.FC = () => {
       <div className="w-full max-w-md space-y-5">
         {/* Branding Header */}
         <div className="text-center space-y-2">
-          <div className="inline-flex items-center justify-center p-1.5 rounded-2xl bg-white border border-slate-200 shadow-md mb-1 hover:scale-105 transition-transform">
+          <div className="inline-flex items-center justify-center p-3 rounded-2xl bg-white border border-slate-200 shadow-md mb-1 hover:scale-105 transition-transform">
             <img 
-              src={nanoSnifferLogo} 
-              alt="NanoSniffer Logo" 
-              className="w-20 h-20 sm:w-24 sm:h-24 object-contain drop-shadow-sm" 
+              src={acnLogo} 
+              alt="ACN - AI-Powered Criminal Network" 
+              className="h-16 sm:h-20 w-auto object-contain drop-shadow-xs" 
             />
           </div>
           <div className="flex items-center justify-center gap-2">
@@ -251,10 +251,10 @@ export const Login: React.FC = () => {
             <span className="text-[10px] text-slate-400 font-mono">DEFCON 2</span>
           </div>
           <h1 className="text-2xl font-extrabold tracking-tight text-slate-900">
-            Nano<span className="text-blue-600">Sniffer</span>
+            ACN
           </h1>
           <p className="text-xs text-slate-500 font-medium">
-            AI Criminal Network Analysis & Intelligence Grid
+            AI-Powered Criminal Network Analysis & Intelligence Grid
           </p>
         </div>
 

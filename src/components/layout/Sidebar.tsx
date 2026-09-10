@@ -25,7 +25,7 @@ import { useNotifications } from '../../context/NotificationContext';
 import { usePoliceDatabase } from '../../context/PoliceDatabaseContext';
 import { useQuery } from '@tanstack/react-query';
 import { getCriminals } from '../../api';
-import nanoSnifferLogo from '../../assets/nanosniffer_logo.png';
+import acnLogo from '../../assets/acn_logo.png';
 
 interface SidebarProps {
   collapsed: boolean;
@@ -149,15 +149,15 @@ export const Sidebar: React.FC<SidebarProps> = ({
         <div className="h-14 flex items-center justify-between px-3.5 border-b border-slate-100 shrink-0">
           <div className="flex items-center gap-2.5 overflow-hidden">
             <div className="w-8 h-8 rounded-lg bg-white border border-slate-200 flex items-center justify-center p-0.5 shrink-0 shadow-subtle">
-              <img src={nanoSnifferLogo} alt="NanoSniffer Logo" className="w-7 h-7 object-contain" />
+              <img src={acnLogo} alt="ACN Logo" className="w-7 h-7 object-contain" />
             </div>
             {!collapsed && (
               <div className="flex flex-col min-w-0">
                 <span className="font-bold text-sm tracking-tight text-slate-900 leading-none">
-                  Nano<span className="text-blue-600">Sniffer</span>
+                  ACN
                 </span>
                 <span className="text-[10px] text-slate-500 font-medium tracking-tight truncate mt-0.5">
-                  Intelligence Grid
+                  AI Criminal Network
                 </span>
               </div>
             )}
