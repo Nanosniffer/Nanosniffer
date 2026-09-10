@@ -85,21 +85,6 @@ export const CriminalProfiles: React.FC = () => {
 
         <div className="flex items-center gap-2 shrink-0">
           <Button
-            variant={isConnected ? 'outline' : 'default'}
-            size="sm"
-            onClick={openPoliceDbModal}
-            className={`gap-1.5 font-semibold shadow-sm transition ${
-              isConnected
-                ? 'bg-emerald-50 text-emerald-800 border-emerald-300 hover:bg-emerald-100'
-                : 'bg-emerald-600 hover:bg-emerald-700 text-white'
-            }`}
-          >
-            <Database className="w-3.5 h-3.5" />
-            <span>{isConnected ? `${selectedGateway.shortCode} Active` : 'Connect Police DB'}</span>
-            <span className={`w-1.5 h-1.5 rounded-full ${isConnected ? 'bg-emerald-500 animate-pulse' : 'bg-emerald-200'}`} />
-          </Button>
-
-          <Button
             variant="default"
             size="sm"
             onClick={() => setIsAddWizardOpen(true)}
