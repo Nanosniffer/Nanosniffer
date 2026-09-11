@@ -70,7 +70,7 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-const SESSION_DURATION_SECONDS = 300; // 5 Minutes (300 Seconds)
+const SESSION_DURATION_SECONDS = 30 * 60; // 30 Minutes (1800 Seconds)
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<UserProfile | null>(() => {
@@ -100,12 +100,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
 
-  // Extend session back to 5 minutes
+  // Extend session back to 30 minutes
   const extendSession = () => {
     setSessionSecondsLeft(SESSION_DURATION_SECONDS);
   };
 
-  // 5-Minute Live Countdown Timer & Auto-Relogin
+  // 30-Minute Live Countdown Timer & Auto-Relogin
   useEffect(() => {
     if (!isAuthenticated) return;
 
@@ -121,7 +121,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           setIsAuthenticated(false);
           localStorage.removeItem('aegis_auth_user');
           localStorage.setItem('aegis_auth_token', 'false');
-          window.location.href = '#/login?notice=Session%20expired%20after%205%20minutes.%20Please%20re-authenticate%20to%20continue.';
+          window.location.href = '#/login?notice=Session%20expired%20after%2030%20minutes.%20Please%20re-authenticate%20to%20continue.';
           return 0;
         }
         return prev - 1;
