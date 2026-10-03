@@ -14,10 +14,11 @@ import { Settings } from '../pages/Settings';
 import { useAuth } from '../context/AuthContext';
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { isAuthenticated } = useAuth();
-  if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
-  }
+  // Authentication bypassed per user request to open dashboard directly
+  // const { isAuthenticated } = useAuth();
+  // if (!isAuthenticated) {
+  //   return <Navigate to="/login" replace />;
+  // }
   return <>{children}</>;
 };
 
@@ -29,13 +30,13 @@ export const AppRoutes: React.FC = () => {
       {/* Login Route */}
       <Route
         path="/login"
-        element={isAuthenticated ? <Navigate to="/dashboard" replace /> : <Login />}
+        element={<Login />}
       />
 
-      {/* Root redirect: Goes straight to /login if unauthenticated, or /dashboard if logged in */}
+      {/* Root redirect: Goes straight to /dashboard always */}
       <Route
         path="/"
-        element={<Navigate to={isAuthenticated ? "/dashboard" : "/login"} replace />}
+        element={<Navigate to="/dashboard" replace />}
       />
 
       {/* Protected Routes */}
